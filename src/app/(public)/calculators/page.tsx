@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { UnifiedHeader } from '@/components/public/UnifiedHeader'
 
 export const metadata: Metadata = {
   title: 'Медицинские калькуляторы — ЗдравИнфо',
@@ -116,12 +117,7 @@ export default function CalculatorsPage() {
         }
       `}</style>
 
-      <header className="ca">
-        <div className="ca-top">Медицинский информационный портал</div>
-        <div className="ca-main">
-          <Link href="/" className="ca-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      <UnifiedHeader />
 
       <div className="ca-hero">
         <div className="ca-hero-badge">Онлайн-инструменты</div>

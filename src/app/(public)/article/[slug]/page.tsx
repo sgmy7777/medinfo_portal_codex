@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import ViewCounter from '@/components/public/ViewCounter'
+import { UnifiedHeader } from '@/components/public/UnifiedHeader'
 
 async function getArticle(slug: string) {
   const res = await fetch(
@@ -232,16 +233,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       `}</style>
 
       <div className="ap">
-        <header className="ap-hdr">
-          <div className="ap-hdr-top">
-            <div className="ap-hdr-top-in">
-              <span className="ap-hdr-badge">Медицинский информационный портал</span>
-            </div>
-          </div>
-          <div className="ap-hdr-main">
-            <Link href="/" className="ap-logo">Здрав<span>Инфо</span></Link>
-          </div>
-        </header>
+        <UnifiedHeader />
         {categories.length > 0 && (
           <div className="ap-cats">
             <div className="ap-cats-in">

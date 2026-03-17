@@ -1,3 +1,4 @@
+import { UnifiedHeader } from '@/components/public/UnifiedHeader'
 'use client'
 
 import { useState } from 'react'
@@ -173,12 +174,7 @@ export default function BMICalculator() {
         }
       `}</style>
 
-      <header className="bm">
-        <div className="bm-top">Медицинский информационный портал</div>
-        <div className="bm-main">
-          <Link href="/" className="bm-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      <UnifiedHeader />
 
       <div className="bm-bread">
         <div className="bm-bread-in">

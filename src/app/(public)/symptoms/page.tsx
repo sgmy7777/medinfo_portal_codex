@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
+import { UnifiedHeader } from '@/components/public/UnifiedHeader'
 
 export const metadata: Metadata = {
   title: 'Симптомы — ЗдравИнфо',
@@ -139,12 +140,7 @@ export default async function SymptomsPage() {
         }
       `}</style>
 
-      <header className="sy">
-        <div className="sy-top">Медицинский информационный портал</div>
-        <div className="sy-main">
-          <Link href="/" className="sy-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      <UnifiedHeader />
 
       <div className="sy-cats">
         <div className="sy-cats-in">

@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
+import { UnifiedHeader } from '@/components/public/UnifiedHeader'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -240,12 +241,7 @@ export default async function SymptomPage({ params }: Props) {
         }
       `}</style>
 
-      <header className="sp">
-        <div className="sp-top">Медицинский информационный портал</div>
-        <div className="sp-main">
-          <Link href="/" className="sp-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      <UnifiedHeader />
 
       <div className="sp-cats">
         <div className="sp-cats-in">

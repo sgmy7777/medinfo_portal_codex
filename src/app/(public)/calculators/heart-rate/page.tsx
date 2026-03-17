@@ -1,3 +1,4 @@
+import { UnifiedHeader } from '@/components/public/UnifiedHeader'
 'use client'
 
 import { useState } from 'react'
@@ -187,12 +188,7 @@ export default function HeartRateCalculator() {
         }
       `}</style>
 
-      <header className="hr">
-        <div className="hr-top">Медицинский информационный портал</div>
-        <div className="hr-main">
-          <Link href="/" className="hr-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      <UnifiedHeader />
 
       <div className="hr-bread">
         <div className="hr-bread-in">

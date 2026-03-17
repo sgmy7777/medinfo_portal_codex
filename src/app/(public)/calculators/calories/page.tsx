@@ -1,3 +1,4 @@
+import { UnifiedHeader } from '@/components/public/UnifiedHeader'
 'use client'
 
 import { useState } from 'react'
@@ -156,12 +157,7 @@ export default function CaloriesCalculator() {
         }
       `}</style>
 
-      <header className="cl">
-        <div className="cl-top">Медицинский информационный портал</div>
-        <div className="cl-main">
-          <Link href="/" className="cl-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      <UnifiedHeader />
 
       <div className="cl-bread">
         <div className="cl-bread-in">

@@ -1,3 +1,4 @@
+import { UnifiedHeader } from '@/components/public/UnifiedHeader'
 'use client'
 
 import { useState } from 'react'
@@ -223,12 +224,7 @@ export default function LabCalculatorsPage() {
         }
       `}</style>
 
-      <header className="lc">
-        <div className="lc-top">Медицинский информационный портал</div>
-        <div className="lc-main">
-          <Link href="/" className="lc-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      <UnifiedHeader />
 
       <div className="lc-bread">
         <div className="lc-bread-in">
