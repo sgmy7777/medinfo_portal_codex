@@ -1,23 +1,12 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { prisma } from '@/lib/prisma'
 
 export const metadata: Metadata = {
   title: 'Политика конфиденциальности — ЗдравИнфо',
   description: 'Политика конфиденциальности медицинского портала ЗдравИнфо',
 }
 
-async function getAllCategories() {
-  try {
-    return await prisma.category.findMany({
-      orderBy: { title: 'asc' },
-      select: { id: true, title: true, slug: true },
-    })
-  } catch { return [] }
-}
-
 export default async function PrivacyPage() {
-  const categories = await getAllCategories()
   const year = new Date().getFullYear()
 
   return (
@@ -90,15 +79,6 @@ export default async function PrivacyPage() {
 
         
 
-        <div className="pv-cats">
-          <div className="pv-cats-in">
-            {(categories as any[]).map((cat: any) => (
-              <Link key={cat.id} href={`/category/${cat.slug}`} className="pv-cat-lnk">
-                {cat.title}
-              </Link>
-            ))}
-          </div>
-        </div>
 
         <main style={{ flex: 1 }}>
           <div className="pv-wrap">

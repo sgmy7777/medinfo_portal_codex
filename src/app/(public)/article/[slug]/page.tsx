@@ -53,7 +53,6 @@ function formatDate(date: Date | string | null | undefined) {
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const article = await getArticle(slug)
-  const categories = await prisma.category.findMany({ orderBy: { title: 'asc' }, select: { id: true, title: true, slug: true } }).catch(() => [])
   if (!article || !article.isPublished) notFound()
 
   // Похожие статьи из той же категории
@@ -233,16 +232,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
       <div className="ap">
         
-        {categories.length > 0 && (
-          <div className="ap-cats">
-            <div className="ap-cats-in">
-              {(categories as any[]).map((cat: any) => (
-                <Link key={cat.id} href={`/category/${cat.slug}`} className="ap-cat-lnk">{cat.title}</Link>
-              ))}
-            </div>
-          </div>
-        )}
-
         <div className="ap-body">
           <div className="ap-body-in">
             <article>

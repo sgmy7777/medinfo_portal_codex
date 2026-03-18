@@ -31,31 +31,18 @@ async function getData() {
       orderBy: [{ bodySystem: 'asc' }, { title: 'asc' }],
       include: { articles: true },
     })
-    const categories = await prisma.category.findMany({
-      orderBy: { title: 'asc' },
-      select: { id: true, title: true, slug: true },
-    })
-    return { symptoms, categories }
-  } catch { return { symptoms: [], categories: [] } }
+    return { symptoms }
+  } catch { return { symptoms: [] } }
 }
 
 export default async function SymptomsPage() {
-  const { symptoms, categories } = await getData()
+  const { symptoms } = await getData()
 
   // Группируем по системам органов
   const grouped: Record<string, typeof symptoms> = {}
   for (const s of symptoms) {
     if (!grouped[s.bodySystem]) grouped[s.bodySystem] = []
     grouped[s.bodySystem].push(s)
-  }
-
-  const catIcons: Record<string, string> = {
-    'kardiologiya': '❤️', 'nevrologiya': '🧠', 'gastroenterologiya': '🫁',
-    'stomatologiya': '🦷', 'dermatologiya': '🫧', 'pediatriya': '👶',
-    'endokrinologiya': '⚗️', 'onkologiya': '🔬', 'travmatologiya': '🦴',
-    'khirurgiya': '🩺', 'urologiya': '💧', 'ginekologiya': '🌸',
-    'oftalmologiya': '👁️', 'lor': '👂', 'psikhiatriya': '🧩',
-    'pulmonologiya': '💨', 'revmatologiya': '💊', 'nefrologiya': '🫘',
   }
 
   return (
@@ -141,16 +128,6 @@ export default async function SymptomsPage() {
 
       
 
-      <div className="sy-cats">
-        <div className="sy-cats-in">
-          {categories.map((cat: any) => (
-            <Link key={cat.id} href={`/category/${cat.slug}`} className="sy-cat-lnk">
-              {catIcons[cat.slug] && <span>{catIcons[cat.slug]}</span>}
-              {cat.title}
-            </Link>
-          ))}
-        </div>
-      </div>
 
       <div className="sy-hero">
         <div className="sy-hero-badge">Справочник симптомов</div>

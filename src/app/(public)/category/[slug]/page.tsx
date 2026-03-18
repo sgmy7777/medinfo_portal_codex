@@ -232,21 +232,6 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         {/* HEADER */}
         
 
-        {/* CAT BAR */}
-        <div className="cp-cats">
-          <div className="cp-cats-in">
-            {(allCategories as any[]).map((cat: any) => (
-              <Link
-                key={cat.id}
-                href={`/category/${cat.slug}`}
-                className={`cp-cat-lnk${cat.slug === slug ? ' active' : ''}`}
-              >
-                {cat.title}
-              </Link>
-            ))}
-          </div>
-        </div>
-
         {/* HERO BANNER */}
         <div className="cp-hero">
           <div className="cp-hero-in">

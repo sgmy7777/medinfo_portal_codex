@@ -287,20 +287,6 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
         
 
-        {categories.length > 0 && (
-          <div className="zh-cats">
-            <div className="zh-cats-in">
-              {(categories as any[]).map((cat: any) => (
-                <Link key={cat.id} href={`/category/${cat.slug}`} className="zh-cat-lnk">
-                  {catIcons[cat.slug] && <span>{catIcons[cat.slug]}</span>}
-                  {cat.title}
-                  {cat._count?.articles > 0 && <span className="zh-cat-cnt">{cat._count.articles}</span>}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
         <main style={{ flex: 1 }}>
           <div className="zh-wrap">
 
