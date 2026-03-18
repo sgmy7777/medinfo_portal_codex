@@ -223,12 +223,7 @@ export default function LabCalculatorsPage() {
         }
       `}</style>
 
-      <header className="lc">
-        <div className="lc-top">Медицинский информационный портал</div>
-        <div className="lc-main">
-          <Link href="/" className="lc-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="lc-bread">
         <div className="lc-bread-in">

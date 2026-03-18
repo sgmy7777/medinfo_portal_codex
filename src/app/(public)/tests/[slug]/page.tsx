@@ -48,16 +48,12 @@ async function getData(slug: string) {
         }
       }
     })
-    const categories = await prisma.category.findMany({
-      orderBy: { title: 'asc' },
-      select: { id: true, title: true, slug: true },
-    })
     const allTests = await prisma.labTest.findMany({
       orderBy: [{ category: 'asc' }, { title: 'asc' }],
       select: { id: true, title: true, slug: true, category: true, unit: true },
     })
-    return { test, categories, allTests }
-  } catch { return { test: null, categories: [], allTests: [] } }
+    return { test, allTests }
+  } catch { return { test: null, allTests: [] } }
 }
 
 function formatDate(d: Date | string | null | undefined) {
@@ -105,21 +101,12 @@ function TestDescription({ text }: { text: string }) {
 
 export default async function TestPage({ params }: Props) {
   const { slug } = await params
-  const { test, categories, allTests } = await getData(slug)
+  const { test, allTests } = await getData(slug)
   if (!test) notFound()
 
   const cat = CATEGORIES[test.category] ?? { label: test.category, icon: '📋' }
   const articles = test.articles.map((ta: any) => ta.article).filter((a: any) => a && a.isPublished)
   const sameCategory = allTests.filter((t: any) => t.category === test.category && t.slug !== slug)
-
-  const catIcons: Record<string, string> = {
-    'kardiologiya': '❤️', 'nevrologiya': '🧠', 'gastroenterologiya': '🫁',
-    'stomatologiya': '🦷', 'dermatologiya': '🫧', 'pediatriya': '👶',
-    'endokrinologiya': '⚗️', 'onkologiya': '🔬', 'travmatologiya': '🦴',
-    'khirurgiya': '🩺', 'urologiya': '💧', 'ginekologiya': '🌸',
-    'oftalmologiya': '👁️', 'lor': '👂', 'psikhiatriya': '🧩',
-    'pulmonologiya': '💨', 'revmatologiya': '💊', 'nefrologiya': '🫘',
-  }
 
   const hasMaleNorm    = !!test.normMale
   const hasFemaleNorm  = !!test.normFemale
@@ -253,23 +240,8 @@ export default async function TestPage({ params }: Props) {
         }
       `}</style>
 
-      <header className="tt">
-        <div className="tt-top">Медицинский информационный портал</div>
-        <div className="tt-main">
-          <Link href="/" className="tt-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
-      <div className="tt-cats">
-        <div className="tt-cats-in">
-          {categories.map((c: any) => (
-            <Link key={c.id} href={`/category/${c.slug}`} className="tt-cat-lnk">
-              {catIcons[c.slug] && <span>{catIcons[c.slug]}</span>}
-              {c.title}
-            </Link>
-          ))}
-        </div>
-      </div>
 
       <div className="tt-bread">
         <div className="tt-bread-in">

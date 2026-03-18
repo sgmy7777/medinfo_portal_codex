@@ -35,23 +35,7 @@ export default async function AuthorPage() {
   return (
     <div className="min-h-screen bg-[#F7F5F0]">
       {/* Header */}
-      <header className="bg-white border-b border-[#E8E4DC]">
-        <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-[#1A6B4A] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">Д</span>
-            </div>
-            <div>
-              <div className="font-bold text-[#1C1917] text-lg leading-tight">ДентаМед</div>
-              <div className="text-xs text-[#78716C]">Советы стоматолога</div>
-            </div>
-          </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm text-[#57534E]">
-            <Link href="/" className="hover:text-[#1A6B4A] transition-colors">Статьи</Link>
-            <Link href="/author" className="text-[#1A6B4A] font-medium">Об авторе</Link>
-          </nav>
-        </div>
-      </header>
+      
 
       <main className="max-w-5xl mx-auto px-6 py-12">
 
