@@ -124,12 +124,7 @@ export default async function TestsPage() {
         }
       `}</style>
 
-      <header className="ts">
-        <div className="ts-top">Медицинский информационный портал</div>
-        <div className="ts-main">
-          <Link href="/" className="ts-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="ts-cats">
         <div className="ts-cats-in">
