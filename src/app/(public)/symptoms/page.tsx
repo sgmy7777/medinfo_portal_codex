@@ -139,12 +139,7 @@ export default async function SymptomsPage() {
         }
       `}</style>
 
-      <header className="sy">
-        <div className="sy-top">Медицинский информационный портал</div>
-        <div className="sy-main">
-          <Link href="/" className="sy-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="sy-cats">
         <div className="sy-cats-in">

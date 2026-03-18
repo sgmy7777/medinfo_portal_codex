@@ -232,16 +232,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       `}</style>
 
       <div className="ap">
-        <header className="ap-hdr">
-          <div className="ap-hdr-top">
-            <div className="ap-hdr-top-in">
-              <span className="ap-hdr-badge">Медицинский информационный портал</span>
-            </div>
-          </div>
-          <div className="ap-hdr-main">
-            <Link href="/" className="ap-logo">Здрав<span>Инфо</span></Link>
-          </div>
-        </header>
+        
         {categories.length > 0 && (
           <div className="ap-cats">
             <div className="ap-cats-in">

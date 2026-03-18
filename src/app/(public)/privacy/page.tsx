@@ -88,19 +88,7 @@ export default async function PrivacyPage() {
 
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
 
-        <header className="pv-hdr">
-          <div className="pv-hdr-top">
-            <div className="pv-hdr-top-in">
-              <span className="pv-hdr-badge">Медицинский информационный портал</span>
-            </div>
-          </div>
-          <div className="pv-hdr-main">
-            <Link href="/" className="pv-logo">
-              Здрав<span>Инфо</span>
-              <div className="pv-logo-sub">Медицинский портал</div>
-            </Link>
-          </div>
-        </header>
+        
 
         <div className="pv-cats">
           <div className="pv-cats-in">

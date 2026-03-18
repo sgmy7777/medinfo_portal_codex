@@ -240,12 +240,7 @@ export default async function SymptomPage({ params }: Props) {
         }
       `}</style>
 
-      <header className="sp">
-        <div className="sp-top">Медицинский информационный портал</div>
-        <div className="sp-main">
-          <Link href="/" className="sp-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="sp-cats">
         <div className="sp-cats-in">

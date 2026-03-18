@@ -253,12 +253,7 @@ export default async function TestPage({ params }: Props) {
         }
       `}</style>
 
-      <header className="tt">
-        <div className="tt-top">Медицинский информационный портал</div>
-        <div className="tt-main">
-          <Link href="/" className="tt-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="tt-cats">
         <div className="tt-cats-in">

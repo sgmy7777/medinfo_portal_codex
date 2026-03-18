@@ -130,19 +130,7 @@ export default function ContactsPage() {
 
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
 
-        <header className="ct-hdr">
-          <div className="ct-hdr-top">
-            <div className="ct-hdr-top-in">
-              <span className="ct-hdr-badge">Медицинский информационный портал</span>
-            </div>
-          </div>
-          <div className="ct-hdr-main">
-            <Link href="/" className="ct-logo">
-              Здрав<span>Инфо</span>
-              <div className="ct-logo-sub">Медицинский портал</div>
-            </Link>
-          </div>
-        </header>
+        
 
         <main style={{ flex: 1 }}>
           <div className="ct-wrap">

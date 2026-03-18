@@ -187,12 +187,7 @@ export default function HeartRateCalculator() {
         }
       `}</style>
 
-      <header className="hr">
-        <div className="hr-top">Медицинский информационный портал</div>
-        <div className="hr-main">
-          <Link href="/" className="hr-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="hr-bread">
         <div className="hr-bread-in">
