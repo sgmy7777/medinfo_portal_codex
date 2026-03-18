@@ -230,34 +230,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
 
         {/* HEADER */}
-        <header className="cp-hdr">
-          <div className="cp-hdr-top">
-            <div className="cp-hdr-top-in">
-              <span className="cp-hdr-badge">Медицинский информационный портал</span>
-            </div>
-          </div>
-          <div className="cp-hdr-main">
-            <Link href="/" className="cp-logo">
-              Здрав<span>Инфо</span>
-              <div className="cp-logo-sub">Медицинский портал</div>
-            </Link>
-          </div>
-        </header>
-
-        {/* CAT BAR */}
-        <div className="cp-cats">
-          <div className="cp-cats-in">
-            {(allCategories as any[]).map((cat: any) => (
-              <Link
-                key={cat.id}
-                href={`/category/${cat.slug}`}
-                className={`cp-cat-lnk${cat.slug === slug ? ' active' : ''}`}
-              >
-                {cat.title}
-              </Link>
-            ))}
-          </div>
-        </div>
+        
 
         {/* HERO BANNER */}
         <div className="cp-hero">
@@ -378,17 +351,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           </div>
         </main>
 
-        <footer className="cp-footer">
-          <div className="cp-foot-in">
-            <Link href="/" className="cp-foot-logo">Здрав<span>Инфо</span></Link>
-            <div className="cp-foot-lnks">
-              <Link href="/">Главная</Link>
-              <Link href="/privacy">Конфиденциальность</Link>
-              <Link href="/contacts">Контакты</Link>
-            </div>
-            <div className="cp-foot-copy">© {new Date().getFullYear()} ЗдравИнфо</div>
-          </div>
-        </footer>
+        
 
       </div>
     </>

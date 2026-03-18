@@ -551,12 +551,7 @@ export default function DecodePage() {
         }
       `}</style>
 
-      <header className="dc">
-        <div className="dc-top">Медицинский информационный портал</div>
-        <div className="dc-main">
-          <Link href="/" className="dc-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="dc-bread">
         <div className="dc-bread-in">
@@ -670,18 +665,7 @@ export default function DecodePage() {
         </div>
       </div>
 
-      <footer className="dc-foot">
-        <div className="dc-foot-in">
-          <Link href="/" className="dc-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="dc-foot-lnks">
-            <Link href="/tests">Справочник анализов</Link>
-            <Link href="/calculators/lab">Калькуляторы анализов</Link>
-            <Link href="/calculators">Все калькуляторы</Link>
-            <Link href="/symptoms">Симптомы</Link>
-          </div>
-          <div className="dc-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Информация носит образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

@@ -223,12 +223,7 @@ export default function LabCalculatorsPage() {
         }
       `}</style>
 
-      <header className="lc">
-        <div className="lc-top">Медицинский информационный портал</div>
-        <div className="lc-main">
-          <Link href="/" className="lc-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="lc-bread">
         <div className="lc-bread-in">
@@ -452,17 +447,7 @@ export default function LabCalculatorsPage() {
         </div>
       </div>
 
-      <footer className="lc-foot">
-        <div className="lc-foot-in">
-          <Link href="/" className="lc-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="lc-foot-lnks">
-            <Link href="/calculators">Все калькуляторы</Link>
-            <Link href="/tests">Справочник анализов</Link>
-            <Link href="/tests/decode">Расшифровщик</Link>
-          </div>
-          <div className="lc-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Информация носит образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

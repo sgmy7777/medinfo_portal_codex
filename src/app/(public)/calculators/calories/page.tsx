@@ -156,12 +156,7 @@ export default function CaloriesCalculator() {
         }
       `}</style>
 
-      <header className="cl">
-        <div className="cl-top">Медицинский информационный портал</div>
-        <div className="cl-main">
-          <Link href="/" className="cl-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="cl-bread">
         <div className="cl-bread-in">
@@ -282,17 +277,7 @@ export default function CaloriesCalculator() {
         </div>
       </div>
 
-      <footer className="cl-foot">
-        <div className="cl-foot-in">
-          <Link href="/" className="cl-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="cl-foot-lnks">
-            <Link href="/calculators">Калькуляторы</Link>
-            <Link href="/calculators/bmi">ИМТ</Link>
-            <Link href="/calculators/water">Норма воды</Link>
-          </div>
-          <div className="cl-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Информация носит образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

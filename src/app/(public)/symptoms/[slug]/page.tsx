@@ -53,15 +53,11 @@ async function getData(slug: string) {
       }
     }
   })
-  const categories = await prisma.category.findMany({
-    orderBy: { title: 'asc' },
-    select: { id: true, title: true, slug: true },
-  })
   const allSymptoms = await prisma.symptom.findMany({
     orderBy: [{ bodySystem: 'asc' }, { title: 'asc' }],
     select: { id: true, title: true, slug: true, bodySystem: true, severity: true },
   })
-  return { symptom, categories, allSymptoms }
+  return { symptom, allSymptoms }
 }
 
 function formatDate(d: Date | string | null | undefined) {
@@ -110,22 +106,13 @@ function SymptomDescription({ text }: { text: string }) {
 
 export default async function SymptomPage({ params }: Props) {
   const { slug } = await params
-  const { symptom, categories, allSymptoms } = await getData(slug)
+  const { symptom, allSymptoms } = await getData(slug)
   if (!symptom) notFound()
 
   const sys = SYSTEMS[symptom.bodySystem] ?? { label: symptom.bodySystem, icon: '🩺' }
   const sev = SEVERITY[symptom.severity] ?? SEVERITY.medium
   const articles = symptom.articles.map((sa: any) => sa.article).filter((a: any) => a && a.isPublished)
   const sameSystem = allSymptoms.filter((s: any) => s.bodySystem === symptom.bodySystem && s.slug !== slug)
-
-  const catIcons: Record<string, string> = {
-    'kardiologiya': '❤️', 'nevrologiya': '🧠', 'gastroenterologiya': '🫁',
-    'stomatologiya': '🦷', 'dermatologiya': '🫧', 'pediatriya': '👶',
-    'endokrinologiya': '⚗️', 'onkologiya': '🔬', 'travmatologiya': '🦴',
-    'khirurgiya': '🩺', 'urologiya': '💧', 'ginekologiya': '🌸',
-    'oftalmologiya': '👁️', 'lor': '👂', 'psikhiatriya': '🧩',
-    'pulmonologiya': '💨', 'revmatologiya': '💊', 'nefrologiya': '🫘',
-  }
 
   return (
     <>
@@ -240,23 +227,8 @@ export default async function SymptomPage({ params }: Props) {
         }
       `}</style>
 
-      <header className="sp">
-        <div className="sp-top">Медицинский информационный портал</div>
-        <div className="sp-main">
-          <Link href="/" className="sp-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
-      <div className="sp-cats">
-        <div className="sp-cats-in">
-          {categories.map((cat: any) => (
-            <Link key={cat.id} href={`/category/${cat.slug}`} className="sp-cat-lnk">
-              {catIcons[cat.slug] && <span>{catIcons[cat.slug]}</span>}
-              {cat.title}
-            </Link>
-          ))}
-        </div>
-      </div>
 
       <div className="sp-bread">
         <div className="sp-bread-in">
@@ -372,18 +344,7 @@ export default async function SymptomPage({ params }: Props) {
         </div>
       </div>
 
-      <footer className="sp-foot">
-        <div className="sp-foot-in">
-          <Link href="/" className="sp-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="sp-foot-lnks">
-            <Link href="/">Главная</Link>
-            <Link href="/symptoms">Симптомы</Link>
-            <Link href="/privacy">Конфиденциальность</Link>
-            <Link href="/contacts">Контакты</Link>
-          </div>
-          <div className="sp-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Материалы носят образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }
