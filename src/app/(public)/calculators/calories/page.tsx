@@ -156,12 +156,7 @@ export default function CaloriesCalculator() {
         }
       `}</style>
 
-      <header className="cl">
-        <div className="cl-top">Медицинский информационный портал</div>
-        <div className="cl-main">
-          <Link href="/" className="cl-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="cl-bread">
         <div className="cl-bread-in">
