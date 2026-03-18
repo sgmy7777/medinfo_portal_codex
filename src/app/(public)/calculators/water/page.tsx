@@ -153,12 +153,7 @@ export default function WaterCalculator() {
         }
       `}</style>
 
-      <header className="wt">
-        <div className="wt-top">Медицинский информационный портал</div>
-        <div className="wt-main">
-          <Link href="/" className="wt-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="wt-bread">
         <div className="wt-bread-in">

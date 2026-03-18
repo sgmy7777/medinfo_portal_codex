@@ -57,7 +57,6 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   const total = await getArticlesCount()
   const totalPages = Math.ceil(total / PAGE_SIZE)
   const [hero, ...rest] = articles as any[]
-  const todayStr = new Date().toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
 
   return (
     <>
@@ -286,38 +285,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
 
-        <header className="zh">
-          <div className="zh-top">
-            <div className="zh-top-in">
-              <span className="zh-top-badge">Медицинский информационный портал</span>
-              <Link href="/symptoms" className="zh-symptoms-nav-lnk">🌡️ Симптомы</Link>
-              <Link href="/tests" className="zh-symptoms-nav-lnk">🧪 Анализы</Link>
-              <Link href="/tests/decode" className="zh-symptoms-nav-lnk">🔬 Расшифровка</Link>
-              <Link href="/calculators" className="zh-symptoms-nav-lnk">⚖️ Калькуляторы</Link>
-              <span className="zh-top-date">{todayStr}</span>
-            </div>
-          </div>
-          <div className="zh-main">
-            <Link href="/" className="zh-logo">
-              <div className="zh-logo-text">Здрав<span>Инфо</span></div>
-              <div className="zh-logo-sub">Медицинский портал</div>
-            </Link>
-          </div>
-        </header>
-
-        {categories.length > 0 && (
-          <div className="zh-cats">
-            <div className="zh-cats-in">
-              {(categories as any[]).map((cat: any) => (
-                <Link key={cat.id} href={`/category/${cat.slug}`} className="zh-cat-lnk">
-                  {catIcons[cat.slug] && <span>{catIcons[cat.slug]}</span>}
-                  {cat.title}
-                  {cat._count?.articles > 0 && <span className="zh-cat-cnt">{cat._count.articles}</span>}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+        
 
         <main style={{ flex: 1 }}>
           <div className="zh-wrap">

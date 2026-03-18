@@ -551,12 +551,7 @@ export default function DecodePage() {
         }
       `}</style>
 
-      <header className="dc">
-        <div className="dc-top">Медицинский информационный портал</div>
-        <div className="dc-main">
-          <Link href="/" className="dc-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="dc-bread">
         <div className="dc-bread-in">
