@@ -237,17 +237,7 @@ export default function IdealWeightCalculator() {
         </div>
       </div>
 
-      <footer className="iw-foot">
-        <div className="iw-foot-in">
-          <Link href="/" className="iw-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="iw-foot-lnks">
-            <Link href="/calculators">Калькуляторы</Link>
-            <Link href="/calculators/bmi">ИМТ</Link>
-            <Link href="/calculators/calories">Норма калорий</Link>
-          </div>
-          <div className="iw-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Информация носит образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

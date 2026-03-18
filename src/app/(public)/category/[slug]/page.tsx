@@ -351,17 +351,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           </div>
         </main>
 
-        <footer className="cp-footer">
-          <div className="cp-foot-in">
-            <Link href="/" className="cp-foot-logo">Здрав<span>Инфо</span></Link>
-            <div className="cp-foot-lnks">
-              <Link href="/">Главная</Link>
-              <Link href="/privacy">Конфиденциальность</Link>
-              <Link href="/contacts">Контакты</Link>
-            </div>
-            <div className="cp-foot-copy">© {new Date().getFullYear()} ЗдравИнфо</div>
-          </div>
-        </footer>
+        
 
       </div>
     </>

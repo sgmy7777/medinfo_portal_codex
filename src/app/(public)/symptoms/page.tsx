@@ -193,18 +193,7 @@ export default async function SymptomsPage() {
         </div>
       </div>
 
-      <footer className="sy-foot">
-        <div className="sy-foot-in">
-          <Link href="/" className="sy-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="sy-foot-lnks">
-            <Link href="/">Главная</Link>
-            <Link href="/symptoms">Симптомы</Link>
-            <Link href="/privacy">Конфиденциальность</Link>
-            <Link href="/contacts">Контакты</Link>
-          </div>
-          <div className="sy-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Материалы носят образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

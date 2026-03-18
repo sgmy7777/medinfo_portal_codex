@@ -348,17 +348,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
 
-        <footer className="ap-footer">
-          <div className="ap-foot-in">
-            <Link href="/" className="ap-foot-logo">Здрав<span>Инфо</span></Link>
-            <div className="ap-foot-lnks">
-              <Link href="/">Главная</Link>
-              <Link href="/privacy">Конфиденциальность</Link>
-              <Link href="/contacts">Контакты</Link>
-            </div>
-            <div className="ap-foot-copy">© {new Date().getFullYear()} ЗдравИнфо</div>
-          </div>
-        </footer>
+        
       </div>
     </>
   )

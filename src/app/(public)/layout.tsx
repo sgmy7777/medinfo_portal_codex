@@ -1,3 +1,4 @@
+import UnifiedFooter from '@/components/public/UnifiedFooter'
 import UnifiedHeader from '@/components/public/UnifiedHeader'
 import { prisma } from '@/lib/prisma'
 
@@ -24,6 +25,7 @@ export default async function PublicLayout({ children }: { children: React.React
     <>
       <UnifiedHeader categories={categories} />
       {children}
+      <UnifiedFooter />
     </>
   )
 }

@@ -344,18 +344,7 @@ export default async function SymptomPage({ params }: Props) {
         </div>
       </div>
 
-      <footer className="sp-foot">
-        <div className="sp-foot-in">
-          <Link href="/" className="sp-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="sp-foot-lnks">
-            <Link href="/">Главная</Link>
-            <Link href="/symptoms">Симптомы</Link>
-            <Link href="/privacy">Конфиденциальность</Link>
-            <Link href="/contacts">Контакты</Link>
-          </div>
-          <div className="sp-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Материалы носят образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

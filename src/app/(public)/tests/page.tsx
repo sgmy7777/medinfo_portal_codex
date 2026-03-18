@@ -197,19 +197,7 @@ export default async function TestsPage() {
         </div>
       </div>
 
-      <footer className="ts-foot">
-        <div className="ts-foot-in">
-          <Link href="/" className="ts-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="ts-foot-lnks">
-            <Link href="/">Главная</Link>
-            <Link href="/symptoms">Симптомы</Link>
-            <Link href="/calculators">Калькуляторы</Link>
-            <Link href="/privacy">Конфиденциальность</Link>
-            <Link href="/contacts">Контакты</Link>
-          </div>
-          <div className="ts-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Материалы носят образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

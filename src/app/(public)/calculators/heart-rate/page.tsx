@@ -286,17 +286,7 @@ export default function HeartRateCalculator() {
         </div>
       </div>
 
-      <footer className="hr-foot">
-        <div className="hr-foot-in">
-          <Link href="/" className="hr-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="hr-foot-lnks">
-            <Link href="/calculators">Калькуляторы</Link>
-            <Link href="/calculators/bmi">ИМТ</Link>
-            <Link href="/calculators/calories">Норма калорий</Link>
-          </div>
-          <div className="hr-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Информация носит образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

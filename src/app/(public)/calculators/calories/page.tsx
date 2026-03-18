@@ -277,17 +277,7 @@ export default function CaloriesCalculator() {
         </div>
       </div>
 
-      <footer className="cl-foot">
-        <div className="cl-foot-in">
-          <Link href="/" className="cl-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="cl-foot-lnks">
-            <Link href="/calculators">Калькуляторы</Link>
-            <Link href="/calculators/bmi">ИМТ</Link>
-            <Link href="/calculators/water">Норма воды</Link>
-          </div>
-          <div className="cl-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Информация носит образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

@@ -35,7 +35,6 @@ export default function ContactsPage() {
     }
   }
 
-  const year = new Date().getFullYear()
 
   return (
     <>
@@ -243,17 +242,7 @@ export default function ContactsPage() {
           </div>
         </main>
 
-        <footer className="ct-footer">
-          <div className="ct-foot-in">
-            <Link href="/" className="ct-foot-logo">Здрав<span>Инфо</span></Link>
-            <div className="ct-foot-lnks">
-              <Link href="/">Главная</Link>
-              <Link href="/privacy">Конфиденциальность</Link>
-              <Link href="/contacts">Контакты</Link>
-            </div>
-            <div className="ct-foot-copy">© {year} ЗдравИнфо</div>
-          </div>
-        </footer>
+        
 
       </div>
     </>

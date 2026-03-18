@@ -403,19 +403,7 @@ export default async function TestPage({ params }: Props) {
         </div>
       </div>
 
-      <footer className="tt-foot">
-        <div className="tt-foot-in">
-          <Link href="/" className="tt-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="tt-foot-lnks">
-            <Link href="/">Главная</Link>
-            <Link href="/tests">Анализы</Link>
-            <Link href="/symptoms">Симптомы</Link>
-            <Link href="/calculators">Калькуляторы</Link>
-            <Link href="/contacts">Контакты</Link>
-          </div>
-          <div className="tt-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Материалы носят образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

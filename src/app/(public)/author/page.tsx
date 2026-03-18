@@ -192,19 +192,6 @@ export default async function AuthorPage() {
 
       </main>
 
-      {/* Footer */}
-      <footer className="bg-[#1C1917] text-[#A8A29E] text-sm mt-16">
-        <div className="max-w-5xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between gap-4">
-          <div>
-            <div className="text-white font-bold mb-1">ДентаМед</div>
-            <div>Информационный ресурс. Не заменяет консультацию врача.</div>
-          </div>
-          <div className="flex gap-6">
-            <Link href="/" className="hover:text-white transition-colors">Главная</Link>
-            <Link href="/author" className="hover:text-white transition-colors">Об авторе</Link>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

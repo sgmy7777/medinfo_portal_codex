@@ -455,28 +455,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           </div>
         </div>
 
-        <footer className="zh-footer">
-          <div className="zh-foot-in">
-            <div className="zh-foot-top">
-              <div>
-                <Link href="/" className="zh-foot-logo">Здрав<span>Инфо</span></Link>
-                <div className="zh-foot-desc">Медицинский информационный портал. Материалы носят образовательный характер и не заменяют консультацию врача.</div>
-              </div>
-              <div className="zh-foot-lnks">
-                <Link href="/privacy">Конфиденциальность</Link>
-                <Link href="/contacts">Контакты</Link>
-                <Link href="/tests">Анализы</Link>
-                <Link href="/tests/decode">Расшифровка</Link>
-                <Link href="/calculators">Калькуляторы</Link>
-                <Link href="/admin">Для авторов</Link>
-              </div>
-            </div>
-            <div className="zh-foot-btm">
-              <span>© {new Date().getFullYear()} ЗдравИнфо</span>
-              <span>Все материалы носят информационный характер</span>
-            </div>
-          </div>
-        </footer>
+        
 
       </div>
     </>

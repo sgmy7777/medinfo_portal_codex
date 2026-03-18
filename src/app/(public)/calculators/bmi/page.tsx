@@ -322,18 +322,7 @@ export default function BMICalculator() {
         </div>
       </div>
 
-      <footer className="bm-foot">
-        <div className="bm-foot-in">
-          <Link href="/" className="bm-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="bm-foot-lnks">
-            <Link href="/calculators">Калькуляторы</Link>
-            <Link href="/calculators/ideal-weight">Идеальный вес</Link>
-            <Link href="/calculators/calories">Норма калорий</Link>
-            <Link href="/symptoms">Симптомы</Link>
-          </div>
-          <div className="bm-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Информация носит образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

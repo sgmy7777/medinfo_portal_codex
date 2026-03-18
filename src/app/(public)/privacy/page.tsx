@@ -155,17 +155,7 @@ export default async function PrivacyPage() {
           </div>
         </main>
 
-        <footer className="pv-footer">
-          <div className="pv-foot-in">
-            <Link href="/" className="pv-foot-logo">Здрав<span>Инфо</span></Link>
-            <div className="pv-foot-lnks">
-              <Link href="/">Главная</Link>
-              <Link href="/privacy">Конфиденциальность</Link>
-              <Link href="/contacts">Контакты</Link>
-            </div>
-            <div className="pv-foot-copy">© {year} ЗдравИнфо. Все материалы носят информационный характер.</div>
-          </div>
-        </footer>
+        
 
       </div>
     </>
