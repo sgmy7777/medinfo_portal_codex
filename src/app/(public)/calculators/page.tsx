@@ -116,12 +116,7 @@ export default function CalculatorsPage() {
         }
       `}</style>
 
-      <header className="ca">
-        <div className="ca-top">Медицинский информационный портал</div>
-        <div className="ca-main">
-          <Link href="/" className="ca-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="ca-hero">
         <div className="ca-hero-badge">Онлайн-инструменты</div>
@@ -158,18 +153,7 @@ export default function CalculatorsPage() {
         </div>
       </div>
 
-      <footer className="ca-foot">
-        <div className="ca-foot-in">
-          <Link href="/" className="ca-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="ca-foot-lnks">
-            <Link href="/">Главная</Link>
-            <Link href="/symptoms">Симптомы</Link>
-            <Link href="/calculators">Калькуляторы</Link>
-            <Link href="/contacts">Контакты</Link>
-          </div>
-          <div className="ca-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Материалы носят образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

@@ -53,7 +53,6 @@ function formatDate(date: Date | string | null | undefined) {
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const article = await getArticle(slug)
-  const categories = await prisma.category.findMany({ orderBy: { title: 'asc' }, select: { id: true, title: true, slug: true } }).catch(() => [])
   if (!article || !article.isPublished) notFound()
 
   // Похожие статьи из той же категории
@@ -232,26 +231,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       `}</style>
 
       <div className="ap">
-        <header className="ap-hdr">
-          <div className="ap-hdr-top">
-            <div className="ap-hdr-top-in">
-              <span className="ap-hdr-badge">Медицинский информационный портал</span>
-            </div>
-          </div>
-          <div className="ap-hdr-main">
-            <Link href="/" className="ap-logo">Здрав<span>Инфо</span></Link>
-          </div>
-        </header>
-        {categories.length > 0 && (
-          <div className="ap-cats">
-            <div className="ap-cats-in">
-              {(categories as any[]).map((cat: any) => (
-                <Link key={cat.id} href={`/category/${cat.slug}`} className="ap-cat-lnk">{cat.title}</Link>
-              ))}
-            </div>
-          </div>
-        )}
-
+        
         <div className="ap-body">
           <div className="ap-body-in">
             <article>
@@ -368,17 +348,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
 
-        <footer className="ap-footer">
-          <div className="ap-foot-in">
-            <Link href="/" className="ap-foot-logo">Здрав<span>Инфо</span></Link>
-            <div className="ap-foot-lnks">
-              <Link href="/">Главная</Link>
-              <Link href="/privacy">Конфиденциальность</Link>
-              <Link href="/contacts">Контакты</Link>
-            </div>
-            <div className="ap-foot-copy">© {new Date().getFullYear()} ЗдравИнфо</div>
-          </div>
-        </footer>
+        
       </div>
     </>
   )

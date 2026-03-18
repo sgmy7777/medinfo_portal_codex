@@ -153,12 +153,7 @@ export default function WaterCalculator() {
         }
       `}</style>
 
-      <header className="wt">
-        <div className="wt-top">Медицинский информационный портал</div>
-        <div className="wt-main">
-          <Link href="/" className="wt-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="wt-bread">
         <div className="wt-bread-in">
@@ -296,17 +291,7 @@ export default function WaterCalculator() {
         </div>
       </div>
 
-      <footer className="wt-foot">
-        <div className="wt-foot-in">
-          <Link href="/" className="wt-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="wt-foot-lnks">
-            <Link href="/calculators">Калькуляторы</Link>
-            <Link href="/calculators/bmi">ИМТ</Link>
-            <Link href="/calculators/calories">Норма калорий</Link>
-          </div>
-          <div className="wt-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Информация носит образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

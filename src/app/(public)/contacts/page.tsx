@@ -35,7 +35,6 @@ export default function ContactsPage() {
     }
   }
 
-  const year = new Date().getFullYear()
 
   return (
     <>
@@ -130,19 +129,7 @@ export default function ContactsPage() {
 
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
 
-        <header className="ct-hdr">
-          <div className="ct-hdr-top">
-            <div className="ct-hdr-top-in">
-              <span className="ct-hdr-badge">Медицинский информационный портал</span>
-            </div>
-          </div>
-          <div className="ct-hdr-main">
-            <Link href="/" className="ct-logo">
-              Здрав<span>Инфо</span>
-              <div className="ct-logo-sub">Медицинский портал</div>
-            </Link>
-          </div>
-        </header>
+        
 
         <main style={{ flex: 1 }}>
           <div className="ct-wrap">
@@ -255,17 +242,7 @@ export default function ContactsPage() {
           </div>
         </main>
 
-        <footer className="ct-footer">
-          <div className="ct-foot-in">
-            <Link href="/" className="ct-foot-logo">Здрав<span>Инфо</span></Link>
-            <div className="ct-foot-lnks">
-              <Link href="/">Главная</Link>
-              <Link href="/privacy">Конфиденциальность</Link>
-              <Link href="/contacts">Контакты</Link>
-            </div>
-            <div className="ct-foot-copy">© {year} ЗдравИнфо</div>
-          </div>
-        </footer>
+        
 
       </div>
     </>

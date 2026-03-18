@@ -151,12 +151,7 @@ export default function IdealWeightCalculator() {
         }
       `}</style>
 
-      <header className="iw">
-        <div className="iw-top">Медицинский информационный портал</div>
-        <div className="iw-main">
-          <Link href="/" className="iw-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
       <div className="iw-bread">
         <div className="iw-bread-in">
@@ -242,17 +237,7 @@ export default function IdealWeightCalculator() {
         </div>
       </div>
 
-      <footer className="iw-foot">
-        <div className="iw-foot-in">
-          <Link href="/" className="iw-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="iw-foot-lnks">
-            <Link href="/calculators">Калькуляторы</Link>
-            <Link href="/calculators/bmi">ИМТ</Link>
-            <Link href="/calculators/calories">Норма калорий</Link>
-          </div>
-          <div className="iw-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Информация носит образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

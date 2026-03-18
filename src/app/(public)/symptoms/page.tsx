@@ -31,31 +31,18 @@ async function getData() {
       orderBy: [{ bodySystem: 'asc' }, { title: 'asc' }],
       include: { articles: true },
     })
-    const categories = await prisma.category.findMany({
-      orderBy: { title: 'asc' },
-      select: { id: true, title: true, slug: true },
-    })
-    return { symptoms, categories }
-  } catch { return { symptoms: [], categories: [] } }
+    return { symptoms }
+  } catch { return { symptoms: [] } }
 }
 
 export default async function SymptomsPage() {
-  const { symptoms, categories } = await getData()
+  const { symptoms } = await getData()
 
   // Группируем по системам органов
   const grouped: Record<string, typeof symptoms> = {}
   for (const s of symptoms) {
     if (!grouped[s.bodySystem]) grouped[s.bodySystem] = []
     grouped[s.bodySystem].push(s)
-  }
-
-  const catIcons: Record<string, string> = {
-    'kardiologiya': '❤️', 'nevrologiya': '🧠', 'gastroenterologiya': '🫁',
-    'stomatologiya': '🦷', 'dermatologiya': '🫧', 'pediatriya': '👶',
-    'endokrinologiya': '⚗️', 'onkologiya': '🔬', 'travmatologiya': '🦴',
-    'khirurgiya': '🩺', 'urologiya': '💧', 'ginekologiya': '🌸',
-    'oftalmologiya': '👁️', 'lor': '👂', 'psikhiatriya': '🧩',
-    'pulmonologiya': '💨', 'revmatologiya': '💊', 'nefrologiya': '🫘',
   }
 
   return (
@@ -139,23 +126,8 @@ export default async function SymptomsPage() {
         }
       `}</style>
 
-      <header className="sy">
-        <div className="sy-top">Медицинский информационный портал</div>
-        <div className="sy-main">
-          <Link href="/" className="sy-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
-      <div className="sy-cats">
-        <div className="sy-cats-in">
-          {categories.map((cat: any) => (
-            <Link key={cat.id} href={`/category/${cat.slug}`} className="sy-cat-lnk">
-              {catIcons[cat.slug] && <span>{catIcons[cat.slug]}</span>}
-              {cat.title}
-            </Link>
-          ))}
-        </div>
-      </div>
 
       <div className="sy-hero">
         <div className="sy-hero-badge">Справочник симптомов</div>
@@ -221,18 +193,7 @@ export default async function SymptomsPage() {
         </div>
       </div>
 
-      <footer className="sy-foot">
-        <div className="sy-foot-in">
-          <Link href="/" className="sy-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="sy-foot-lnks">
-            <Link href="/">Главная</Link>
-            <Link href="/symptoms">Симптомы</Link>
-            <Link href="/privacy">Конфиденциальность</Link>
-            <Link href="/contacts">Контакты</Link>
-          </div>
-          <div className="sy-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Материалы носят образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }

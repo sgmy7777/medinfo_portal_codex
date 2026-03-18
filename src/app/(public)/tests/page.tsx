@@ -23,27 +23,17 @@ async function getData() {
         orderBy: [{ category: 'asc' }, { title: 'asc' }],
         include: { articles: true },
       })
-    const categories = await prisma.category.findMany({ orderBy: { title: 'asc' }, select: { id: true, title: true, slug: true } })
-    return { tests, categories }
-  } catch { return { tests: [], categories: [] } }
+    return { tests }
+  } catch { return { tests: [] } }
 }
 
 export default async function TestsPage() {
-  const { tests, categories } = await getData()
+  const { tests } = await getData()
 
   const grouped: Record<string, typeof tests> = {}
   for (const t of tests) {
     if (!grouped[t.category]) grouped[t.category] = []
     grouped[t.category].push(t)
-  }
-
-  const catIcons: Record<string, string> = {
-    'kardiologiya':'❤️','nevrologiya':'🧠','gastroenterologiya':'🫁',
-    'stomatologiya':'🦷','dermatologiya':'🫧','pediatriya':'👶',
-    'endokrinologiya':'⚗️','onkologiya':'🔬','travmatologiya':'🦴',
-    'khirurgiya':'🩺','urologiya':'💧','ginekologiya':'🌸',
-    'oftalmologiya':'👁️','lor':'👂','psikhiatriya':'🧩',
-    'pulmonologiya':'💨','revmatologiya':'💊','nefrologiya':'🫘',
   }
 
   return (
@@ -124,23 +114,8 @@ export default async function TestsPage() {
         }
       `}</style>
 
-      <header className="ts">
-        <div className="ts-top">Медицинский информационный портал</div>
-        <div className="ts-main">
-          <Link href="/" className="ts-logo">Здрав<span>Инфо</span></Link>
-        </div>
-      </header>
+      
 
-      <div className="ts-cats">
-        <div className="ts-cats-in">
-          {categories.map((cat: any) => (
-            <Link key={cat.id} href={`/category/${cat.slug}`} className="ts-cat-lnk">
-              {catIcons[cat.slug] && <span>{catIcons[cat.slug]}</span>}
-              {cat.title}
-            </Link>
-          ))}
-        </div>
-      </div>
 
       <div className="ts-hero">
         <div className="ts-hero-badge">Медицинская диагностика</div>
@@ -222,19 +197,7 @@ export default async function TestsPage() {
         </div>
       </div>
 
-      <footer className="ts-foot">
-        <div className="ts-foot-in">
-          <Link href="/" className="ts-foot-logo">Здрав<span>Инфо</span></Link>
-          <div className="ts-foot-lnks">
-            <Link href="/">Главная</Link>
-            <Link href="/symptoms">Симптомы</Link>
-            <Link href="/calculators">Калькуляторы</Link>
-            <Link href="/privacy">Конфиденциальность</Link>
-            <Link href="/contacts">Контакты</Link>
-          </div>
-          <div className="ts-foot-copy">© {new Date().getFullYear()} ЗдравИнфо. Материалы носят образовательный характер.</div>
-        </div>
-      </footer>
+      
     </>
   )
 }
