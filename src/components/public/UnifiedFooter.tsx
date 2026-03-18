@@ -31,7 +31,7 @@ export default function UnifiedFooter() {
           <div>
             <div className="mb-3 text-sm font-semibold uppercase tracking-wide text-white/75">Информация</div>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/author" className="transition-colors hover:text-[#C8913A]">Об авторе</Link></li>
+              <li><Link href="/admin/login" className="transition-colors hover:text-[#C8913A]">Для авторов</Link></li>
               <li><Link href="/contacts" className="transition-colors hover:text-[#C8913A]">Контакты</Link></li>
               <li><Link href="/privacy" className="transition-colors hover:text-[#C8913A]">Политика конфиденциальности</Link></li>
             </ul>
