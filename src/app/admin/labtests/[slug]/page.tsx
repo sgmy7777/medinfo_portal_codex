@@ -1,12 +1,12 @@
 'use client'
 
+import { FlaskConical, ExternalLink, LogOut, Activity, ArrowLeft, Save, FileText, Search, Stethoscope } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { FlaskConical, ExternalLink, LogOut, Activity, ArrowLeft, Save, FileText, Search } from 'lucide-react'
 
 const CATEGORIES = [
   { value: 'blood_general', label: 'Общий анализ крови' },
@@ -135,7 +135,7 @@ export default function AdminLabTestEditPage() {
         <aside className="hidden md:flex w-60 flex-col bg-card border-r border-border">
           <div className="flex items-center gap-3 px-5 py-5 border-b border-border">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <FlaskConical className="h-5 w-5" />
+              <Stethoscope className="h-5 w-5" />
             </div>
             <div>
               <p className="font-semibold text-sm">ЗдравИнфо</p>

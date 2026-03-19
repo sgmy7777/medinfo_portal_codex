@@ -4,7 +4,21 @@ import { prisma } from '@/lib/prisma'
 
 export const metadata: Metadata = {
   title: 'Симптомы — ЗдравИнфо',
-  description: 'Справочник симптомов. Найдите информацию о вашем симптоме и узнайте возможные причины.',
+  description: 'Справочник симптомов. Найдите свой симптом и узнайте возможные причины: головная боль, одышка, усталость и многое другое.',
+  openGraph: {
+    title: 'Справочник симптомов — ЗдравИнфо',
+    description: 'Найдите свой симптом и узнайте возможные причины.',
+    type: 'website',
+  },
+  other: {
+    'script:ld+json': JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'MedicalWebPage',
+      name: 'Справочник симптомов — ЗдравИнфо',
+      description: 'Найдите свой симптом и узнайте возможные причины: головная боль, одышка, усталость и другие.',
+      publisher: { '@type': 'Organization', name: 'ЗдравИнфо' },
+    }),
+  },
 }
 
 const SYSTEMS: Record<string, { label: string; icon: string }> = {

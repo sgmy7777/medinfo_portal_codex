@@ -1,14 +1,15 @@
 'use client'
 
+import {
+  FileText, ExternalLink, LogOut, Activity, Stethoscope,
+  Plus, Pencil, Trash2, Search, FlaskConical
+} from 'lucide-react'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
-import {
-  FileText, ExternalLink, LogOut, Activity,
-  Plus, Pencil, Trash2, Search, FlaskConical} from 'lucide-react'
 
 const SYSTEMS: Record<string, string> = {
   head: 'Голова и шея', chest: 'Грудная клетка', abdomen: 'Живот',
@@ -71,7 +72,7 @@ export default function AdminSymptomsPage() {
         <aside className="hidden md:flex w-60 flex-col bg-card border-r border-border">
           <div className="flex items-center gap-3 px-5 py-5 border-b border-border">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Activity className="h-5 w-5" />
+              <Stethoscope className="h-5 w-5" />
             </div>
             <div>
               <p className="font-semibold text-sm">ЗдравИнфо</p>

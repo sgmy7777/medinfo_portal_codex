@@ -1,31 +1,22 @@
 'use client'
 
+import { FileText, ExternalLink, LogOut, Plus, Pencil, Trash2, Search, Activity, FlaskConical, Stethoscope } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
-import { Card, CardContent } from '@/components/ui/card'
-import { FileText, ExternalLink, LogOut, Plus, Pencil, Trash2, Search } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 
 const CATEGORIES: Record<string, string> = {
   blood_general:  'Общий анализ крови',
   blood_biochem:  'Биохимия крови',
-  blood_hormones: 'Гормоны',
+  hormones:       'Гормоны',
   urine:          'Анализ мочи',
   coagulation:    'Коагулограмма',
-  immunology:     'Иммунология',
-  other:          'Прочие',
-}
-
-const CAT_COLORS: Record<string, string> = {
-  blood_general:  'bg-red-100 text-red-700',
-  blood_biochem:  'bg-orange-100 text-orange-700',
-  blood_hormones: 'bg-purple-100 text-purple-700',
-  urine:          'bg-blue-100 text-blue-700',
-  coagulation:    'bg-pink-100 text-pink-700',
-  immunology:     'bg-green-100 text-green-700',
-  other:          'bg-gray-100 text-gray-700',
+  immune:         'Иммунология',
+  tumor_markers:  'Онкомаркёры',
 }
 
 export default function AdminLabTestsPage() {
@@ -66,97 +57,166 @@ export default function AdminLabTestsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-[#4A0F17] text-white px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-6">
-          <Link href="/" className="font-serif text-xl font-black">
-            Здрав<span className="text-amber-400">Инфо</span>
-          </Link>
-          <nav className="flex gap-1">
-            <Link href="/admin" className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide rounded text-white/60 hover:text-white hover:bg-white/10 transition-colors">
-              <FileText size={13} /> Статьи
+    <div className="min-h-screen bg-muted/30">
+      <div className="flex h-screen overflow-hidden">
+
+        {/* Sidebar */}
+        <aside className="hidden md:flex w-60 flex-col bg-card border-r border-border">
+          <div className="flex items-center gap-3 px-5 py-5 border-b border-border">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <Stethoscope className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="font-semibold text-sm">ЗдравИнфо</p>
+              <p className="text-xs text-muted-foreground">Панель управления</p>
+            </div>
+          </div>
+
+          <nav className="flex-1 px-3 py-4 space-y-1">
+            <Link href="/admin" className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+              <FileText className="h-4 w-4" /> Статьи
             </Link>
-            <Link href="/admin/symptoms" className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide rounded text-white/60 hover:text-white hover:bg-white/10 transition-colors">
-              <ExternalLink size={13} /> Симптомы
+            <Link href="/admin/symptoms" className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+              <Activity className="h-4 w-4" /> Симптомы
             </Link>
-            <Link href="/admin/labtests" className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide rounded bg-white/15 text-white transition-colors">
-              <Search size={13} /> Анализы
+            <Link href="/admin/labtests" className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium bg-accent text-accent-foreground">
+              <FlaskConical className="h-4 w-4" /> Анализы
             </Link>
           </nav>
-        </div>
-        <Button variant="ghost" size="sm" onClick={logout} className="text-white/60 hover:text-white text-xs">
-          <LogOut size={13} className="mr-1" /> Выйти
-        </Button>
-      </header>
 
-      <main className="max-w-6xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Справочник анализов</h1>
-            <p className="text-sm text-gray-500 mt-1">{tests.length} показателей в базе</p>
+          <div className="px-3 py-4 border-t border-border space-y-1">
+            <Link href="/" target="_blank" className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+              <ExternalLink className="h-4 w-4" /> Открыть сайт
+            </Link>
+            <button onClick={logout} className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+              <LogOut className="h-4 w-4" /> Выйти
+            </button>
           </div>
-          <Link href="/admin/labtests/new">
-            <Button className="bg-[#6B1F2A] hover:bg-[#8B2D3A] text-white">
-              <Plus size={15} className="mr-1.5" /> Добавить анализ
+        </aside>
+
+        {/* Main */}
+        <main className="flex-1 overflow-auto">
+          <header className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-border bg-card px-6 py-4">
+            <h1 className="text-lg font-semibold">Справочник анализов</h1>
+            <Button asChild size="sm">
+              <Link href="/admin/labtests/new">
+                <Plus className="h-4 w-4" /> Добавить анализ
+              </Link>
             </Button>
-          </Link>
-        </div>
+          </header>
 
-        <div className="relative mb-6">
-          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <Input placeholder="Поиск по названию или категории..." value={search}
-            onChange={e => setSearch(e.target.value)} className="pl-9 bg-white" />
-        </div>
-
-        {loading ? (
-          <div className="text-center py-16 text-gray-400">Загрузка...</div>
-        ) : filtered.length === 0 ? (
-          <div className="text-center py-16 text-gray-400">Ничего не найдено</div>
-        ) : (
-          Object.entries(CATEGORIES).map(([catKey, catLabel]) => {
-            const list = grouped[catKey]
-            if (!list?.length) return null
-            return (
-              <div key={catKey} className="mb-8">
-                <div className="flex items-center gap-3 mb-3">
-                  <h2 className="text-sm font-bold uppercase tracking-widest text-gray-500">{catLabel}</h2>
-                  <div className="flex-1 h-px bg-gray-200" />
-                  <span className="text-xs text-gray-400">{list.length}</span>
+          <div className="p-6 space-y-6">
+            {/* Stats */}
+            <Card>
+              <CardContent className="p-5">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Всего показателей</p>
+                    <p className="text-2xl font-bold mt-0.5">{tests.length}</p>
+                  </div>
+                  <div className="rounded-lg p-2.5 bg-muted text-blue-600">
+                    <FlaskConical className="h-5 w-5" />
+                  </div>
                 </div>
-                <Card>
-                  <CardContent className="p-0">
-                    {list.map((test: any, i: number) => (
-                      <div key={test.id} className={`flex items-center gap-4 px-5 py-3.5 ${i < list.length - 1 ? 'border-b border-gray-100' : ''}`}>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-semibold text-gray-900 text-sm">{test.title}</span>
-                            {test.unit && <span className="text-xs text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">{test.unit}</span>}
-                            {test.normGeneral && <span className="text-xs text-gray-500">{test.normGeneral}</span>}{test.normMale && <span className="text-xs text-gray-500"> ♂ {test.normMale}</span>}{test.normFemale && <span className="text-xs text-gray-500"> ♀ {test.normFemale}</span>}
-                          </div>
-                          <div className="text-xs text-gray-400 mt-0.5">/tests/{test.slug}</div>
-                        </div>
-                        <Badge className={`text-xs shrink-0 ${CAT_COLORS[test.category] ?? 'bg-gray-100 text-gray-600'}`}>
-                          {CATEGORIES[test.category] ?? test.category}
-                        </Badge>
-                        <div className="flex items-center gap-1 shrink-0">
-                          <Link href={`/tests/${test.slug}`} target="_blank">
-                            <Button variant="ghost" size="sm" className="text-gray-400 hover:text-gray-600 h-8 w-8 p-0"><ExternalLink size={13} /></Button>
-                          </Link>
-                          <Link href={`/admin/labtests/${test.slug}`}>
-                            <Button variant="ghost" size="sm" className="text-gray-400 hover:text-[#6B1F2A] h-8 w-8 p-0"><Pencil size={13} /></Button>
-                          </Link>
-                          <Button variant="ghost" size="sm" onClick={() => deleteTest(test.slug, test.title)}
-                            className="text-gray-400 hover:text-red-600 h-8 w-8 p-0"><Trash2 size={13} /></Button>
-                        </div>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              </div>
-            )
-          })
-        )}
-      </main>
+              </CardContent>
+            </Card>
+
+            {/* Search */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Поиск по названию или категории..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                className="pl-9"
+              />
+            </div>
+
+            {/* List grouped by category */}
+            {loading ? (
+              <Card>
+                <CardContent className="py-20 text-center text-muted-foreground">
+                  <div className="animate-pulse">Загрузка...</div>
+                </CardContent>
+              </Card>
+            ) : filtered.length === 0 ? (
+              <Card>
+                <CardContent className="py-20 text-center">
+                  <FlaskConical className="h-10 w-10 mx-auto text-muted-foreground/50 mb-3" />
+                  <p className="text-muted-foreground mb-3">
+                    {search ? 'Ничего не найдено' : 'Анализов пока нет'}
+                  </p>
+                  {!search && (
+                    <Button asChild size="sm">
+                      <Link href="/admin/labtests/new">Добавить первый</Link>
+                    </Button>
+                  )}
+                </CardContent>
+              </Card>
+            ) : (
+              Object.entries(CATEGORIES).map(([catKey, catLabel]) => {
+                const list = grouped[catKey]
+                if (!list?.length) return null
+                return (
+                  <Card key={catKey}>
+                    <CardHeader className="pb-0">
+                      <CardTitle className="text-base flex items-center justify-between">
+                        <span>{catLabel}</span>
+                        <span className="text-sm font-normal text-muted-foreground">{list.length}</span>
+                      </CardTitle>
+                    </CardHeader>
+                    <Separator className="mt-4" />
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <tbody className="divide-y divide-border">
+                          {list.map((test: any) => (
+                            <tr key={test.id} className="hover:bg-muted/30 transition-colors">
+                              <td className="px-6 py-3.5">
+                                <p className="font-medium text-sm">{test.title}</p>
+                                <p className="text-xs text-muted-foreground font-mono mt-0.5">/tests/{test.slug}</p>
+                              </td>
+                              <td className="px-4 py-3.5 hidden md:table-cell">
+                                <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap">
+                                  {test.unit && <Badge variant="secondary">{test.unit}</Badge>}
+                                  {test.normGeneral && <span>{test.normGeneral}</span>}
+                                  {test.normMale && <span>♂ {test.normMale}</span>}
+                                  {test.normFemale && <span>♀ {test.normFemale}</span>}
+                                </div>
+                              </td>
+                              <td className="px-6 py-3.5">
+                                <div className="flex items-center justify-end gap-1">
+                                  <Button variant="ghost" size="icon" asChild>
+                                    <Link href={`/tests/${test.slug}`} target="_blank">
+                                      <ExternalLink className="h-4 w-4" />
+                                    </Link>
+                                  </Button>
+                                  <Button variant="ghost" size="icon" asChild>
+                                    <Link href={`/admin/labtests/${test.slug}`}>
+                                      <Pencil className="h-4 w-4" />
+                                    </Link>
+                                  </Button>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                                    onClick={() => deleteTest(test.slug, test.title)}
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </Card>
+                )
+              })
+            )}
+          </div>
+        </main>
+      </div>
     </div>
   )
 }

@@ -88,29 +88,14 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
         /* ── HEADER ── */
         .zh { background: var(--bord-d); }
-        .zh-top { border-bottom: 1px solid rgba(255,255,255,0.07); padding: 6px 0; }
-        .zh-top-in { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
-        .zh-symptoms-nav-lnk { font-size: 11px; color: rgba(255,255,255,0.55); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; transition: color 0.15s; }
+
         .zh-symptoms-nav-lnk:hover { color: var(--acc); }
-        .zh-top-badge { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--acc); }
-        .zh-top-date { font-size: 11px; color: rgba(255,255,255,0.3); font-style: italic; }
-        .zh-main { max-width: 1200px; margin: 0 auto; padding: 20px 24px 16px; display: flex; align-items: center; justify-content: center; }
-        .zh-logo { text-decoration: none; }
-        .zh-logo-text { font-family: 'Playfair Display', serif; font-size: 46px; font-weight: 900; color: white; letter-spacing: -2px; line-height: 1; text-align: center; }
-        .zh-logo-text span { color: var(--acc); }
-        .zh-logo-sub { font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.22em; text-transform: uppercase; margin-top: 4px; text-align: center; }
-        .zh-nav { display: flex; gap: 2px; }
-        .zh-nav a { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.55); text-decoration: none; padding: 6px 14px; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.15s; border-bottom: 2px solid transparent; }
-        .zh-nav a:hover { color: var(--acc); border-bottom-color: var(--acc); }
 
         /* ── CAT BAR ── */
-        .zh-cats { background: var(--bord); border-bottom: 1px solid var(--bord-d); overflow-x: auto; scrollbar-width: none; }
-        .zh-cats::-webkit-scrollbar { display: none; }
-        .zh-cats-in { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: center; flex-wrap: wrap; }
+
         @media (max-width: 768px) { .zh-cats-in { padding: 0 8px; justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; } }
-        .zh-cat-lnk { padding: 9px 15px; font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,255,255,0.65); text-decoration: none; white-space: nowrap; transition: all 0.15s; display: flex; align-items: center; gap: 5px; border-right: 1px solid rgba(255,255,255,0.08); border-bottom: 2px solid transparent; }
+
         .zh-cat-lnk:hover { color: white; background: rgba(0,0,0,0.15); border-bottom-color: var(--acc); }
-        .zh-cat-cnt { font-size: 9px; opacity: 0.5; font-weight: 400; }
 
         /* ── LAYOUT ── */
         .zh-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
@@ -218,7 +203,6 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
         .zh-empty-ico { font-size: 56px; margin-bottom: 16px; opacity: 0.3; }
         .zh-empty-txt { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--ink-60); }
 
-
         @media (max-width: 900px) {
           .zh-hero-grid { grid-template-columns: 1fr; }
           .zh-grid { grid-template-columns: repeat(2, 1fr); }
@@ -249,16 +233,13 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           .zh-card-ttl { font-size: 13px; margin-bottom: 4px; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
           .zh-card-exc { display: none; }
           .zh-card-meta { font-size: 10px; }
-          .zh-nav { display: none; }
+
           .zh-specs-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
           .zh-hero-ttl { font-size: 22px; }
-          .zh-logo-text { font-size: 28px; }
-          .zh-logo-sub { display: none; }
-          .zh-top-date { display: none; }
-          .zh-top-in { justify-content: center; }
+
           .zh-hero-img { max-height: 240px; }
           .zh-hero-exc { display: none; }
-          .zh-cat-lnk { padding: 8px 10px; font-size: 10px; }
+
           .zh-trust { padding: 24px 0; }
           .zh-trust-in { padding: 0 14px; }
           .zh-trust-top { margin-bottom: 16px; }
@@ -276,7 +257,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           .zh-foot-lnks { flex-wrap: wrap; gap: 12px; }
           .zh-foot-btm { flex-direction: column; gap: 4px; text-align: center; }
           .zh-foot-desc { max-width: 100%; }
-          .zh-hdr-main { padding: 14px 16px 12px; }
+
           .zh-spec { padding: 10px 12px; }
           .zh-spec-name { font-size: 12px; }
           .zh-sec-hdr { margin-bottom: 16px; }

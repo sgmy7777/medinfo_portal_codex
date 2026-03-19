@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 
-// Простой in-memory rate limiter (сбрасывается при рестарте сервера)
+// Простой in-memory rate limiter
 const rateMap = new Map<string, { count: number; ts: number }>()
-const RATE_LIMIT = 3      // максимум запросов
-const RATE_WINDOW = 60000 // за 60 секунд
+const RATE_LIMIT = 3
+const RATE_WINDOW = 60000
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now()
@@ -20,7 +20,6 @@ function checkRateLimit(ip: string): boolean {
 
 export async function POST(req: Request) {
   try {
-    // Rate limiting
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0] ?? 'unknown'
     if (!checkRateLimit(ip)) {
       return NextResponse.json({ error: 'Слишком много запросов. Попробуйте позже.' }, { status: 429 })
@@ -28,7 +27,6 @@ export async function POST(req: Request) {
 
     const { name, email, message } = await req.json()
 
-    // Валидация
     if (!name?.trim() || !email?.trim() || !message?.trim()) {
       return NextResponse.json({ error: 'Заполните все поля' }, { status: 400 })
     }
@@ -45,10 +43,32 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Сообщение слишком короткое' }, { status: 400 })
     }
 
+    // В dev-режиме не отправляем письмо — только логируем
+    if (process.env.NODE_ENV === 'development') {
+      console.log('\n📧 [DEV] Contact form submission:')
+      console.log(`  Name: ${name.trim()}`)
+      console.log(`  Email: ${email}`)
+      console.log(`  Message: ${message.trim()}`)
+      console.log('  (Email not sent in development mode)\n')
+      return NextResponse.json({ ok: true })
+    }
+
+    // Проверяем что переменные окружения настроены
+    if (!process.env.MAIL_USER || !process.env.MAIL_PASS) {
+      console.error('Contact form: MAIL_USER or MAIL_PASS not set')
+      return NextResponse.json(
+        { error: 'Сервис временно недоступен. Попробуйте позже.' },
+        { status: 503 }
+      )
+    }
+
     const transporter = nodemailer.createTransport({
       host: 'smtp.mail.ru',
       port: 465,
       secure: true,
+      connectionTimeout: 10000,  // 10 секунд вместо 2 минут
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
@@ -57,9 +77,9 @@ export async function POST(req: Request) {
 
     await transporter.sendMail({
       from: `"ЗдравИнфо" <${process.env.MAIL_USER}>`,
-      to: 'sgmy7777@mail.ru',
+      to: process.env.MAIL_USER, // отправляем на тот же ящик
       replyTo: email,
-      subject: `Сообщение с сайта от ${name}`,
+      subject: `Сообщение с сайта от ${name.trim()}`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; padding: 24px;">
           <h2 style="color: #4A0F17; margin-bottom: 20px;">Новое сообщение с ЗдравИнфо</h2>
@@ -83,8 +103,23 @@ export async function POST(req: Request) {
     })
 
     return NextResponse.json({ ok: true })
-  } catch (err) {
+  } catch (err: any) {
     console.error('Contact form error:', err)
-    return NextResponse.json({ error: 'Ошибка отправки' }, { status: 500 })
+
+    // Понятные сообщения для разных типов ошибок
+    if (err?.code === 'ESOCKET' || err?.code === 'ECONNREFUSED' || err?.code === 'EHOSTUNREACH') {
+      return NextResponse.json(
+        { error: 'Не удалось подключиться к почтовому серверу. Попробуйте позже.' },
+        { status: 503 }
+      )
+    }
+    if (err?.responseCode >= 500) {
+      return NextResponse.json(
+        { error: 'Почтовый сервер временно недоступен. Попробуйте позже.' },
+        { status: 503 }
+      )
+    }
+
+    return NextResponse.json({ error: 'Ошибка отправки. Попробуйте позже.' }, { status: 500 })
   }
 }

@@ -1,5 +1,9 @@
 'use client'
 
+import {
+  ArrowLeft, Save, Send, ExternalLink, CheckCircle2,
+  FileText, Search, Stethoscope, AlertCircle
+} from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
@@ -15,12 +19,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue
 } from '@/components/ui/select'
-import {
-  ArrowLeft, Save, Send, ExternalLink, CheckCircle2,
-  FileText, Search, Stethoscope, AlertCircle
-} from 'lucide-react'
 
 interface Category { id: string; title: string }
+interface Tag {
+  id: string
+  title: string
+  slug: string
+}
+
 interface Author { id: string; name: string }
 
 type ArticleFormState = {
@@ -34,6 +40,7 @@ type ArticleFormState = {
   authorId: string
   categoryId: string
   isPublished: boolean
+  tagIds: string[]
 }
 
 function normalizeArticleForm(data?: Partial<ArticleFormState> | null): ArticleFormState {
@@ -48,6 +55,7 @@ function normalizeArticleForm(data?: Partial<ArticleFormState> | null): ArticleF
     authorId: data?.authorId ?? '',
     categoryId: data?.categoryId ?? '',
     isPublished: data?.isPublished ?? false,
+    tagIds: data?.tagIds ?? [],
   }
 }
 
@@ -74,6 +82,8 @@ export default function ArticleEditor() {
 
   const [categories, setCategories] = useState<Category[]>([])
   const [authors, setAuthors] = useState<Author[]>([])
+  const [allTags, setAllTags] = useState<Tag[]>([])
+  const [tagInput, setTagInput] = useState('')
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [saveError, setSaveError] = useState('')
@@ -86,19 +96,41 @@ export default function ArticleEditor() {
     Promise.all([
       fetch('/api/categories').then(r => r.json()),
       fetch('/api/authors').then(r => r.json()),
-    ]).then(([cats, auths]) => {
+      fetch('/api/tags').then(r => r.json()),
+    ]).then(([cats, auths, tags]) => {
       setCategories(cats.data ?? [])
       setAuthors(auths.data ?? [])
+      setAllTags(tags.data ?? [])
     })
 
     if (!isNew) {
       fetch(`/api/articles/${params?.slug}?admin=true`)
         .then(r => r.json())
         .then(json => {
-           if (json.data) setForm(normalizeArticleForm(json.data))
+          if (json.data) {
+            const article = json.data
+            setForm(normalizeArticleForm({
+              ...article,
+              tagIds: article.tags?.map((t: any) => t.tag?.id ?? t.tagId).filter(Boolean) ?? [],
+            }))
+          }
         })
     }
   }, [])
+
+  async function createTag(title: string) {
+    const res = await fetch('/api/tags', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title }),
+    })
+    const json = await res.json()
+    if (json.data) {
+      setAllTags(prev => [...prev, json.data].sort((a: Tag, b: Tag) => a.title.localeCompare(b.title)))
+      setForm(f => ({ ...f, tagIds: [...f.tagIds, json.data.id] }))
+      setTagInput('')
+    }
+  }
 
   function handleTitle(value: string) {
     setForm(f => ({
@@ -403,6 +435,74 @@ export default function ArticleEditor() {
                     ))}
                   </SelectContent>
                 </Select>
+              </CardContent>
+            </Card>
+
+            {/* Tags */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm">Теги</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0 space-y-3">
+                {/* Выбранные теги */}
+                {form.tagIds.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {form.tagIds.map(id => {
+                      const tag = allTags.find(t => t.id === id)
+                      if (!tag) return null
+                      return (
+                        <span key={id} className="inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-0.5 text-xs font-medium">
+                          {tag.title}
+                          <button
+                            type="button"
+                            onClick={() => setForm(f => ({ ...f, tagIds: f.tagIds.filter(t => t !== id) }))}
+                            className="text-muted-foreground hover:text-destructive ml-0.5"
+                          >
+                            ×
+                          </button>
+                        </span>
+                      )
+                    })}
+                  </div>
+                )}
+
+                {/* Доступные теги */}
+                <div className="flex flex-wrap gap-1">
+                  {allTags
+                    .filter(t => !form.tagIds.includes(t.id))
+                    .map(tag => (
+                      <button
+                        key={tag.id}
+                        type="button"
+                        onClick={() => setForm(f => ({ ...f, tagIds: [...f.tagIds, tag.id] }))}
+                        className="rounded-full border border-border px-2.5 py-0.5 text-xs text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                      >
+                        + {tag.title}
+                      </button>
+                    ))}
+                </div>
+
+                {/* Создать новый тег */}
+                <div className="flex gap-1.5">
+                  <Input
+                    placeholder="Новый тег..."
+                    value={tagInput}
+                    onChange={e => setTagInput(e.target.value)}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') { e.preventDefault(); if (tagInput.trim()) createTag(tagInput.trim()) }
+                    }}
+                    className="h-7 text-xs"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="h-7 text-xs px-2 shrink-0"
+                    onClick={() => { if (tagInput.trim()) createTag(tagInput.trim()) }}
+                  >
+                    Добавить
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>

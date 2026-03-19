@@ -4,7 +4,21 @@ import { prisma } from '@/lib/prisma'
 
 export const metadata: Metadata = {
   title: 'Справочник анализов — ЗдравИнфо',
-  description: 'Расшифровка анализов крови, мочи и гормонов. Нормы показателей, причины отклонений, подготовка к сдаче.',
+  description: 'Нормы и расшифровка анализов крови, мочи и гормонов. Гемоглобин, холестерин, ТТГ, глюкоза и 30+ показателей.',
+  openGraph: {
+    title: 'Справочник анализов — ЗдравИнфо',
+    description: 'Нормы и расшифровка: гемоглобин, холестерин, ТТГ, глюкоза и 30+ показателей крови.',
+    type: 'website',
+  },
+  other: {
+    'script:ld+json': JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'MedicalWebPage',
+      name: 'Справочник анализов — ЗдравИнфо',
+      description: 'Нормы и расшифровка анализов крови, мочи и гормонов. Гемоглобин, холестерин, ТТГ, глюкоза и 30+ показателей.',
+      publisher: { '@type': 'Organization', name: 'ЗдравИнфо' },
+    }),
+  },
 }
 
 const CATEGORIES: Record<string, { label: string; icon: string; desc: string }> = {

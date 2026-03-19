@@ -5,13 +5,16 @@ import { prisma } from '@/lib/prisma'
 import ViewCounter from '@/components/public/ViewCounter'
 
 async function getArticle(slug: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/articles/${slug}`,
-    { next: { revalidate: 300 } }
-  )
-  if (!res.ok) return null
-  const json = await res.json()
-  return json.data
+  try {
+    return await prisma.article.findUnique({
+      where: { slug, isPublished: true },
+      include: {
+        author: true,
+        category: true,
+        tags: { include: { tag: true } },
+      },
+    })
+  } catch { return null }
 }
 
 export async function generateMetadata(

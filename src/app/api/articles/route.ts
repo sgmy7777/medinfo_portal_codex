@@ -24,8 +24,7 @@ export async function GET(req: NextRequest) {
     }),
   }
 
-  const [articles, total] = await Promise.all([
-    prisma.article.findMany({
+  const articles = await prisma.article.findMany({
       where,
       orderBy: { publishedAt: 'desc' },
       skip: (page - 1) * pageSize,
@@ -43,9 +42,8 @@ export async function GET(req: NextRequest) {
         category: { select: { id: true, title: true, slug: true, color: true } },
         author: { select: { id: true, name: true, specialty: true, avatarUrl: true } },
       },
-    }),
-    prisma.article.count({ where }),
-  ])
+    })
+  const total = await prisma.article.count({ where })
 
   return NextResponse.json({
     data: articles,

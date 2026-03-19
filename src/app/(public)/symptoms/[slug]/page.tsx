@@ -25,12 +25,32 @@ const SEVERITY: Record<string, { label: string; color: string; bg: string }> = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const symptom = await prisma.symptom.findUnique({ where: { slug } })
-  if (!symptom) return { title: 'Симптом не найден — ЗдравИнфо' }
-  return {
-    title: `${symptom.title} — причины и что делать | ЗдравИнфо`,
-    description: symptom.description ?? `Узнайте о симптоме «${symptom.title}»: возможные причины, когда обратиться к врачу и полезные статьи.`,
-  }
+  try {
+    const symptom = await prisma.symptom.findUnique({ where: { slug }, select: { title: true, description: true } })
+    if (!symptom) return { title: 'Симптом не найден — ЗдравИнфо' }
+    const desc = symptom.description
+      ? symptom.description.slice(0, 160).split('\n').join(' ')
+      : `${symptom.title}: возможные причины, когда обратиться к врачу и полезные статьи.`
+    return {
+      title: `${symptom.title} — причины и что делать | ЗдравИнфо`,
+      description: desc,
+      openGraph: {
+        title: `${symptom.title} — причины и что делать`,
+        description: desc,
+        type: 'article',
+      },
+      other: {
+        'script:ld+json': JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'MedicalWebPage',
+          name: symptom.title,
+          description: desc,
+          about: { '@type': 'MedicalCondition', name: symptom.title },
+          publisher: { '@type': 'Organization', name: 'ЗдравИнфо' },
+        }),
+      },
+    }
+  } catch { return { title: 'Симптом — ЗдравИнфо' } }
 }
 
 async function getData(slug: string) {

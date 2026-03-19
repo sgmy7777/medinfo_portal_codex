@@ -1,12 +1,12 @@
 'use client'
 
+import { FileText, ExternalLink, LogOut, Activity, ArrowLeft, Save, X, FlaskConical, Stethoscope } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { FileText, ExternalLink, LogOut, Activity, ArrowLeft, Save, X } from 'lucide-react'
 
 const SYSTEMS = [
   { value: 'head',    label: 'Голова и шея' },
@@ -127,7 +127,7 @@ export default function AdminSymptomEditPage() {
         <aside className="hidden md:flex w-60 flex-col bg-card border-r border-border">
           <div className="flex items-center gap-3 px-5 py-5 border-b border-border">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Activity className="h-5 w-5" />
+              <Stethoscope className="h-5 w-5" />
             </div>
             <div>
               <p className="font-semibold text-sm">ЗдравИнфо</p>
@@ -140,6 +140,10 @@ export default function AdminSymptomEditPage() {
             </Link>
             <Link href="/admin/symptoms" className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium bg-accent text-accent-foreground">
               <Activity className="h-4 w-4" />Симптомы
+            </Link>
+            <Link href="/admin/labtests" className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+              <FlaskConical className="h-4 w-4" />
+              Анализы
             </Link>
           </nav>
           <div className="px-3 py-4 border-t border-border space-y-1">

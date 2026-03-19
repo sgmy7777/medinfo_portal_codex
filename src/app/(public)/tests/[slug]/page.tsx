@@ -18,11 +18,32 @@ const CATEGORIES: Record<string, { label: string; icon: string }> = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   try {
-    const test = await prisma.labTest.findUnique({ where: { slug }, select: { title: true } })
+    const test = await prisma.labTest.findUnique({ where: { slug }, select: { title: true, normMale: true, normFemale: true, normGeneral: true, unit: true } })
     if (!test) return { title: 'Анализ не найден — ЗдравИнфо' }
+    const normStr = test.normGeneral
+      ? `Норма: ${test.normGeneral}${test.unit ? ' ' + test.unit : ''}.`
+      : test.normMale
+        ? `Норма: муж. ${test.normMale}, жен. ${test.normFemale ?? '—'}${test.unit ? ' ' + test.unit : ''}.`
+        : ''
+    const desc = `${test.title}: норма у мужчин и женщин, причины отклонений, подготовка к сдаче. ${normStr} Расшифровка на ЗдравИнфо.`.trim()
     return {
       title: `${test.title} — норма и расшифровка | ЗдравИнфо`,
-      description: `${test.title}: норма у мужчин и женщин, причины отклонений, как подготовиться к сдаче. Расшифровка анализа на ЗдравИнфо.`,
+      description: desc.slice(0, 160),
+      openGraph: {
+        title: `${test.title} — норма и расшифровка`,
+        description: desc.slice(0, 160),
+        type: 'article',
+      },
+      other: {
+        'script:ld+json': JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'MedicalWebPage',
+          name: test.title,
+          description: desc.slice(0, 300),
+          about: { '@type': 'MedicalTest', name: test.title },
+          publisher: { '@type': 'Organization', name: 'ЗдравИнфо' },
+        }),
+      },
     }
   } catch { return { title: 'Анализ — ЗдравИнфо' } }
 }
