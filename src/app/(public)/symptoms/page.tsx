@@ -1,3 +1,4 @@
+import React from 'react'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
@@ -131,6 +132,12 @@ export default async function SymptomsPage() {
         .sy-foot-copy { font-size: 11px; color: rgba(255,255,255,0.35); width: 100%; text-align: center; margin-top: 8px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
 
         @media (max-width: 900px) { .sy-grid { grid-template-columns: repeat(2, 1fr); } }
+        .sy-ad { background: white; border: 1px solid var(--rule); padding: 14px; margin: 28px 0; }
+        .sy-ad-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 8px; }
+        .sy-ad-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
+        .sy-ad-slot-tall { min-height: 250px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
+        .sy-ad-under { background: white; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; margin-top: 8px; }
+        .sy-ad-under-in { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         @media (max-width: 600px) {
           .sy-hero-ttl { font-size: 28px; }
           .sy-wrap { padding: 28px 14px; }
@@ -167,11 +174,12 @@ export default async function SymptomsPage() {
           </div>
 
           {/* Секции по системам */}
-          {Object.entries(SYSTEMS).map(([key, sys]) => {
+          {Object.entries(SYSTEMS).map(([key, sys], idx) => {
             const list = grouped[key]
             if (!list?.length) return null
             return (
-              <section key={key} id={key} className="sy-section">
+              <React.Fragment key={key}>
+                <section id={key} className="sy-section">
                 <div className="sy-sec-hdr">
                   <span className="sy-sec-ico">{sys.icon}</span>
                   <h2 className="sy-sec-ttl">{sys.label}</h2>
@@ -200,14 +208,33 @@ export default async function SymptomsPage() {
                     )
                   })}
                 </div>
-              </section>
+                </section>
+                {idx === 1 && (
+                  <div className="sy-ad">
+                    <div className="sy-ad-label">Реклама</div>
+                    <div id="yandex_rtb_symptoms_hub_1" className="sy-ad-slot">Реклама РСЯ — 728×90</div>
+                  </div>
+                )}
+                {idx === 3 && (
+                  <div className="sy-ad">
+                    <div className="sy-ad-label">Реклама</div>
+                    <div id="yandex_rtb_symptoms_hub_2" className="sy-ad-slot">Реклама РСЯ — 728×90</div>
+                  </div>
+                )}
+              </React.Fragment>
             )
           })}
 
         </div>
       </div>
 
-      
+      <div className="sy-ad-under">
+        <div className="sy-ad-under-in">
+          <div className="sy-ad-label">Реклама</div>
+          <div id="yandex_rtb_symptoms_hub_under" className="sy-ad-slot">Реклама РСЯ — горизонтальный баннер 728×90</div>
+        </div>
+      </div>
+
     </>
   )
 }

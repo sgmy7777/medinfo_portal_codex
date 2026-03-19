@@ -108,6 +108,9 @@ export default async function TestsPage() {
         .ts-card-foot strong { color: var(--bord); }
 
         .ts-ad-box { background: white; border: 1px solid var(--rule); padding: 14px; margin: 32px 0; }
+        .ts-ad-under { background: white; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; margin-top: 8px; }
+        .ts-ad-under-in { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .ts-ad-under-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
         .ts-ad-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 8px; }
         .ts-ad-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
 
@@ -211,7 +214,13 @@ export default async function TestsPage() {
         </div>
       </div>
 
-      
+      <div className="ts-ad-under">
+        <div className="ts-ad-under-in">
+          <div className="ts-ad-label">Реклама</div>
+          <div id="yandex_rtb_tests_hub_under" className="ts-ad-under-slot">Реклама РСЯ — горизонтальный баннер 728×90</div>
+        </div>
+      </div>
+
     </>
   )
 }
