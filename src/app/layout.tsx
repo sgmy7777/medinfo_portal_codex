@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, PT_Serif, PT_Sans } from 'next/font/google'
 import './globals.css'
 import CookieBanner from '@/components/public/CookieBanner'
+import SearchHotkey from '@/components/public/SearchHotkey'
 
 const playfair = Playfair_Display({
   subsets: ['latin', 'cyrillic'],
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ru" className={`${playfair.variable} ${ptSerif.variable} ${ptSans.variable}`}>
       <body className="font-sans antialiased">
         {children}
+        <SearchHotkey />
         <CookieBanner />
       </body>
     </html>

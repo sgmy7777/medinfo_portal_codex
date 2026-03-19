@@ -21,6 +21,7 @@ export default function UnifiedFooter() {
           <div>
             <div className="mb-3 text-sm font-semibold uppercase tracking-wide text-white/75">Разделы</div>
             <ul className="space-y-2 text-sm">
+              <li><Link href="/search" className="transition-colors hover:text-[#C8913A]">Поиск по сайту</Link></li>
               <li><Link href="/symptoms" className="transition-colors hover:text-[#C8913A]">Симптомы</Link></li>
               <li><Link href="/tests" className="transition-colors hover:text-[#C8913A]">Анализы</Link></li>
               <li><Link href="/tests/decode" className="transition-colors hover:text-[#C8913A]">Расшифровка анализов</Link></li>

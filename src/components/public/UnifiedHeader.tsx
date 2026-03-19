@@ -65,7 +65,19 @@ export default function UnifiedHeader({ categories }: { categories: HeaderCatego
             ))}
           </nav>
 
-          <span className="text-[11px] italic text-white/30">{today}</span>
+          <form action="/search" method="get" className="hidden md:flex items-center gap-1.5">
+            <input
+              name="q"
+              placeholder="Поиск... (Ctrl+K)"
+              className="w-36 rounded px-2.5 py-1 text-[11px] bg-white/10 text-white placeholder-white/35 border border-white/15 outline-none focus:bg-white/20 focus:border-white/30 transition-all"
+              autoComplete="off"
+            />
+            <button type="submit" className="text-white/40 hover:text-white/70 transition-colors text-[11px]">
+              →
+            </button>
+          </form>
+
+          <span className="hidden lg:block text-[11px] italic text-white/30">{today}</span>
         </div>
       </div>
 
