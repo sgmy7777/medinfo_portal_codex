@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 // ─── Типы ──────────────────────────────────────────────────────────────────────
-type CalcId = 'gfr' | 'ldl' | 'ath' | 'homa'
+type CalcId = 'gfr' | 'ldl' | 'ath' | 'homa' | 'score2' | 'cha2ds2' | 'childpugh'
 type Sex = 'male' | 'female'
 
 // ─── Расчёты ──────────────────────────────────────────────────────────────────
@@ -58,6 +58,86 @@ function calcHOMA(glucose: number, insulin: number): { homa: number; category: s
   return { homa, category: 'Инсулинорезистентность', color: '#DC2626', bg: '#FFF1F2', desc: 'Выраженная инсулинорезистентность. Высокий риск СД 2 типа и метаболического синдрома. Консультация эндокринолога.' }
 }
 
+
+// ─── SCORE2 (риск ССЗ за 10 лет, Европа высокий риск) ─────────────────────
+function calcSCORE2(age: number, sex: Sex, sbp: number, totalChol: number, hdl: number, smoker: boolean): { risk: number; category: string; color: string; bg: string; desc: string; action: string } {
+  // SCORE2 2021 — регион высокого риска (Россия)
+  // Логарифмическая модель на основе публикации ESC 2021
+  const nonHDL = totalChol - hdl
+  const ageFactor = sex === 'male' ? 0.3742 : 0.4648
+  const sbpFactor = sex === 'male' ? 0.2628 : 0.3131
+  const smokFactor = sex === 'male' ? 0.6010 : 0.7744
+  const cholFactor = sex === 'male' ? 0.1249 : 0.1002
+  
+  const lp = (age - 60) * ageFactor +
+             (sbp - 120) / 20 * sbpFactor +
+             (smoker ? 1 : 0) * smokFactor +
+             (nonHDL - 3.3) * cholFactor
+  
+  // Базовая выживаемость для высокого риска (Россия)
+  const s0 = sex === 'male' ? 0.9605 : 0.9776
+  const risk10 = Math.round((1 - Math.pow(s0, Math.exp(lp))) * 100 * 10) / 10
+
+  const r = Math.max(0.1, Math.min(risk10, 50))
+  
+  if (age < 50) {
+    if (r < 2.5) return { risk: r, category: 'Низкий / умеренный', color: '#16A34A', bg: '#F0FDF4', desc: 'Риск ССЗ за 10 лет низкий или умеренный.', action: 'Контроль факторов риска, здоровый образ жизни.' }
+    if (r < 7.5) return { risk: r, category: 'Высокий', color: '#D97706', bg: '#FFFBEB', desc: 'Высокий сердечно-сосудистый риск.', action: 'Интенсивное изменение образа жизни. Рассмотреть медикаментозное лечение.' }
+    return { risk: r, category: 'Очень высокий', color: '#DC2626', bg: '#FFF1F2', desc: 'Очень высокий риск сердечно-сосудистых событий.', action: 'Обязательное медикаментозное лечение. Консультация кардиолога.' }
+  } else {
+    if (r < 5) return { risk: r, category: 'Низкий / умеренный', color: '#16A34A', bg: '#F0FDF4', desc: 'Риск ССЗ за 10 лет низкий или умеренный.', action: 'Контроль факторов риска, здоровый образ жизни.' }
+    if (r < 10) return { risk: r, category: 'Высокий', color: '#D97706', bg: '#FFFBEB', desc: 'Высокий сердечно-сосудистый риск.', action: 'Интенсивное изменение образа жизни и медикаментозное лечение.' }
+    return { risk: r, category: 'Очень высокий', color: '#DC2626', bg: '#FFF1F2', desc: 'Очень высокий риск сердечно-сосудистых событий.', action: 'Обязательное медикаментозное лечение. Консультация кардиолога.' }
+  }
+}
+
+// ─── CHA₂DS₂-VASc (риск инсульта при фибрилляции предсердий) ──────────────
+function calcCHA2DS2(age: number, sex: Sex, chf: boolean, hyp: boolean, stroke: boolean, vasc: boolean, diabetes: boolean): { score: number; riskPct: number; category: string; color: string; bg: string; desc: string; action: string } {
+  let score = 0
+  if (chf) score += 1
+  if (hyp) score += 1
+  if (age >= 75) score += 2
+  else if (age >= 65) score += 1
+  if (diabetes) score += 1
+  if (stroke) score += 2
+  if (vasc) score += 1
+  if (sex === 'female') score += 1
+
+  // Скорректированный годовой риск инсульта (%)
+  const riskTable: Record<number, number> = { 0: 0, 1: 1.3, 2: 2.2, 3: 3.2, 4: 4.0, 5: 6.7, 6: 9.8, 7: 9.6, 8: 6.7, 9: 15.2 }
+  const riskPct = riskTable[Math.min(score, 9)] ?? 15.2
+
+  if (score === 0 && sex === 'male') return { score, riskPct, category: 'Низкий риск', color: '#16A34A', bg: '#F0FDF4', desc: 'Антикоагулянты не показаны.', action: 'Антикоагулянты не нужны.' }
+  if (score === 1 && sex === 'male') return { score, riskPct, category: 'Умеренный риск', color: '#D97706', bg: '#FFFBEB', desc: 'Возможно назначение антикоагулянтов.', action: 'Рассмотреть НОАК с учётом риска кровотечений (HAS-BLED).' }
+  if ((score === 0 || score === 1) && sex === 'female') return { score, riskPct, category: 'Низкий риск', color: '#16A34A', bg: '#F0FDF4', desc: 'Пол сам по себе не является показанием.', action: 'Антикоагулянты, как правило, не нужны.' }
+  return { score, riskPct, category: 'Высокий риск', color: '#DC2626', bg: '#FFF1F2', desc: 'Антикоагулянтная терапия показана.', action: 'НОАК (апиксабан, ривароксабан, дабигатран) или варфарин. Консультация кардиолога.' }
+}
+
+// ─── Child-Pugh (тяжесть цирроза печени) ───────────────────────────────────
+function calcChildPugh(bilirubin: number, albumin: number, pt: number, ascites: number, encephalopathy: number): { score: number; cls: string; color: string; bg: string; survival1yr: string; survival2yr: string; desc: string } {
+  let score = 0
+  // Билирубин (мкмоль/л)
+  if (bilirubin < 34) score += 1
+  else if (bilirubin <= 51) score += 2
+  else score += 3
+  // Альбумин (г/л)
+  if (albumin > 35) score += 1
+  else if (albumin >= 28) score += 2
+  else score += 3
+  // Протромбиновое время (удлинение в секундах)
+  if (pt < 4) score += 1
+  else if (pt <= 6) score += 2
+  else score += 3
+  // Асцит (0=нет, 1=лёгкий, 2=тяжёлый)
+  score += ascites === 0 ? 1 : ascites === 1 ? 2 : 3
+  // Энцефалопатия (0=нет, 1=I-II, 2=III-IV)
+  score += encephalopathy === 0 ? 1 : encephalopathy === 1 ? 2 : 3
+
+  if (score <= 6) return { score, cls: 'A', color: '#16A34A', bg: '#F0FDF4', survival1yr: '100%', survival2yr: '85%', desc: 'Компенсированный цирроз. Хорошая переносимость операций.' }
+  if (score <= 9) return { score, cls: 'B', color: '#D97706', bg: '#FFFBEB', survival1yr: '80%', survival2yr: '60%', desc: 'Умеренная декомпенсация. Операционный риск повышен.' }
+  return { score, cls: 'C', color: '#DC2626', bg: '#FFF1F2', survival1yr: '45%', survival2yr: '35%', desc: 'Тяжёлая декомпенсация. Высокий операционный риск. Рассмотреть трансплантацию печени.' }
+}
+
 // ─── Компонент ────────────────────────────────────────────────────────────────
 
 export default function LabCalculatorsPageClient() {
@@ -78,6 +158,25 @@ export default function LabCalculatorsPageClient() {
   // HOMA fields
   const [homaGluc, setHomaGluc] = useState(''); const [homaIns, setHomaIns] = useState('')
   const [homaResult, setHomaResult] = useState<ReturnType<typeof calcHOMA> | null>(null)
+
+  // SCORE2 fields
+  const [s2age, setS2age] = useState(''); const [s2sex, setS2sex] = useState<Sex>('male')
+  const [s2sbp, setS2sbp] = useState(''); const [s2chol, setS2chol] = useState('')
+  const [s2hdl, setS2hdl] = useState(''); const [s2smoke, setS2smoke] = useState(false)
+  const [s2result, setS2result] = useState<ReturnType<typeof calcSCORE2> | null>(null)
+
+  // CHA2DS2-VASc fields
+  const [chaAge, setChaAge] = useState(''); const [chaSex, setChaSex] = useState<Sex>('male')
+  const [chaChf, setChaChf] = useState(false); const [chaHyp, setChaHyp] = useState(false)
+  const [chaStroke, setChaStroke] = useState(false); const [chaVasc, setChaVasc] = useState(false)
+  const [chaDm, setChaDm] = useState(false)
+  const [chaResult, setChaResult] = useState<ReturnType<typeof calcCHA2DS2> | null>(null)
+
+  // Child-Pugh fields
+  const [cpBili, setCpBili] = useState(''); const [cpAlb, setCpAlb] = useState('')
+  const [cpPt, setCpPt] = useState(''); const [cpAscites, setCpAscites] = useState(0)
+  const [cpEnc, setCpEnc] = useState(0)
+  const [cpResult, setCpResult] = useState<ReturnType<typeof calcChildPugh> | null>(null)
 
   const [errors, setErrors] = useState<Record<string, string>>({})
 
@@ -123,7 +222,10 @@ export default function LabCalculatorsPageClient() {
     { id: 'gfr' as CalcId,  label: 'СКФ',           icon: '🫘', desc: 'Скорость клубочковой фильтрации (CKD-EPI)' },
     { id: 'ldl' as CalcId,  label: 'ЛПНП',          icon: '🧪', desc: 'Расчёт LDL по Фридевальду' },
     { id: 'ath' as CalcId,  label: 'Индекс атерогенности', icon: '❤️', desc: 'Атерогенный потенциал крови' },
-    { id: 'homa' as CalcId, label: 'HOMA-IR',        icon: '⚗️', desc: 'Индекс инсулинорезистентности' },
+    { id: 'homa' as CalcId,     label: 'HOMA-IR',         icon: '⚗️', desc: 'Индекс инсулинорезистентности' },
+    { id: 'score2' as CalcId,    label: 'SCORE2',          icon: '❤️‍🔥', desc: 'Риск инфаркта/инсульта за 10 лет' },
+    { id: 'cha2ds2' as CalcId,   label: 'CHA₂DS₂-VASc',   icon: '🩺', desc: 'Риск инсульта при фибрилляции' },
+    { id: 'childpugh' as CalcId, label: 'Child-Pugh',      icon: '🫁', desc: 'Тяжесть цирроза печени' },
   ]
 
   return (
@@ -240,7 +342,7 @@ export default function LabCalculatorsPageClient() {
           <div className="lc-hdr">
             <span className="lc-ico">🧪</span>
             <h1 className="lc-ttl">Калькуляторы анализов</h1>
-            <p className="lc-sub">СКФ (функция почек), ЛПНП по Фридевальду, индекс атерогенности и HOMA-IR</p>
+            <p className="lc-sub">СКФ, ЛПНП, HOMA-IR, SCORE2, CHA₂DS₂-VASc, Child-Pugh</p>
           </div>
 
           {/* Вкладки */}
@@ -426,6 +528,218 @@ export default function LabCalculatorsPageClient() {
               </div>
             </>
           )}
+
+                    {/* ── SCORE2 ────────────────────────────────────────────────────────── */}
+          {active === 'score2' && (
+            <>
+              <div className="lc-card">
+                <div className="lc-card-ttl">❤️‍🔥 SCORE2 — риск сердечно-сосудистых событий</div>
+                <div className="lc-card-sub">10-летний риск инфаркта и инсульта. Шкала ESC 2021, регион высокого риска (Россия). Возраст 40–79 лет.</div>
+                <div className="lc-sex">
+                  <button className={`lc-sex-btn${s2sex==='male'?' active':''}`} onClick={()=>setS2sex('male')}>👨 Мужской</button>
+                  <button className={`lc-sex-btn${s2sex==='female'?' active':''}`} onClick={()=>setS2sex('female')}>👩 Женский</button>
+                </div>
+                <div className="lc-sex" style={{ marginTop: 10 }}>
+                  <button className={`lc-sex-btn${!s2smoke?' active':''}`} onClick={()=>setS2smoke(false)}>🚭 Не курит</button>
+                  <button className={`lc-sex-btn${s2smoke?' active':''}`} onClick={()=>setS2smoke(true)}>🚬 Курит</button>
+                </div>
+                <div className="lc-row" style={{ marginTop: 16 }}>
+                  <div className="lc-field">
+                    <label className="lc-label">Возраст</label>
+                    <input className="lc-input" type="number" placeholder="55" value={s2age} onChange={e=>setS2age(e.target.value)} />
+                    <span className="lc-sublabel">лет (40–79)</span>
+                  </div>
+                  <div className="lc-field">
+                    <label className="lc-label">Систолическое АД</label>
+                    <input className="lc-input" type="number" placeholder="130" value={s2sbp} onChange={e=>setS2sbp(e.target.value)} />
+                    <span className="lc-sublabel">мм рт.ст.</span>
+                  </div>
+                </div>
+                <div className="lc-row">
+                  <div className="lc-field">
+                    <label className="lc-label">Общий холестерин</label>
+                    <input className="lc-input" type="number" step="0.1" placeholder="5.2" value={s2chol} onChange={e=>setS2chol(e.target.value)} />
+                    <span className="lc-sublabel">ммоль/л</span>
+                  </div>
+                  <div className="lc-field">
+                    <label className="lc-label">ЛПВП (хороший холестерин)</label>
+                    <input className="lc-input" type="number" step="0.1" placeholder="1.3" value={s2hdl} onChange={e=>setS2hdl(e.target.value)} />
+                    <span className="lc-sublabel">ммоль/л</span>
+                  </div>
+                </div>
+                <button className="lc-btn" onClick={()=>{
+                  clearError('score2')
+                  if (!s2age||!s2sbp||!s2chol||!s2hdl){setError('score2','Заполните все поля');return}
+                  const age=parseInt(s2age),sbp=parseInt(s2sbp),chol=parseFloat(s2chol),hdl=parseFloat(s2hdl)
+                  if(age<40||age>79){setError('score2','Возраст должен быть 40–79 лет');return}
+                  if(sbp<80||sbp>250){setError('score2','Проверьте значение АД');return}
+                  setS2result(calcSCORE2(age,s2sex,sbp,chol,hdl,s2smoke))
+                }}>Рассчитать SCORE2</button>
+                {errors.score2 && <div className="lc-error">{errors.score2}</div>}
+                {s2result && (
+                  <div className="lc-result" style={{ background: s2result.bg, color: s2result.color }}>
+                    <div className="lc-result-left">
+                      <div className="lc-result-val">{s2result.risk}%<span className="lc-result-unit"> риск/10 лет</span></div>
+                      <button className="lc-reset" style={{ color: s2result.color }} onClick={()=>setS2result(null)}>← заново</button>
+                    </div>
+                    <div className="lc-result-right">
+                      <div className="lc-result-cat">{s2result.category}</div>
+                      <div className="lc-result-desc">{s2result.desc}</div>
+                      <div className="lc-result-desc" style={{ marginTop: 4, fontWeight: 600 }}>{s2result.action}</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="lc-info">
+                <div className="lc-info-ttl">О шкале SCORE2</div>
+                <p className="lc-info-p">SCORE2 (Systematic Coronary Risk Estimation 2) — европейская шкала оценки 10-летнего риска фатальных и нефатальных сердечно-сосудистых событий у лиц 40–79 лет без установленных ССЗ и СД. Разработана ESC в 2021 году. Россия — регион высокого риска.</p>
+                <p className="lc-info-p" style={{ marginBottom: 0 }}>Высокий риск (≥5% до 50 лет, ≥10% после 50 лет) — показание для назначения статинов и антигипертензивной терапии. Результат ориентировочный — решение принимает врач с учётом полной клинической картины.</p>
+              </div>
+            </>
+          )}
+
+          {/* ── CHA₂DS₂-VASc ────────────────────────────────────────────────────── */}
+          {active === 'cha2ds2' && (
+            <>
+              <div className="lc-card">
+                <div className="lc-card-ttl">🩺 CHA₂DS₂-VASc — риск инсульта при фибрилляции предсердий</div>
+                <div className="lc-card-sub">Оценка показаний к антикоагулянтной терапии. Применяется только при установленной фибрилляции предсердий.</div>
+                <div className="lc-sex">
+                  <button className={`lc-sex-btn${chaSex==='male'?' active':''}`} onClick={()=>setChaSex('male')}>👨 Мужской</button>
+                  <button className={`lc-sex-btn${chaSex==='female'?' active':''}`} onClick={()=>setChaSex('female')}>👩 Женский</button>
+                </div>
+                <div className="lc-row" style={{ marginTop: 16 }}>
+                  <div className="lc-field">
+                    <label className="lc-label">Возраст пациента</label>
+                    <input className="lc-input" type="number" placeholder="68" value={chaAge} onChange={e=>setChaAge(e.target.value)} />
+                    <span className="lc-sublabel">65–74 = +1 балл, ≥75 = +2 балла</span>
+                  </div>
+                </div>
+                <div style={{ marginBottom: 16 }}>
+                  <div className="lc-label" style={{ marginBottom: 8 }}>Факторы риска (отметьте все присутствующие):</div>
+                  {([
+                    [chaChf, setChaChf, 'Сердечная недостаточность / дисфункция ЛЖ (+1)'],
+                    [chaHyp, setChaHyp, 'Артериальная гипертония (+1)'],
+                    [chaStroke, setChaStroke, 'Инсульт / ТИА / тромбоэмболия в анамнезе (+2)'],
+                    [chaVasc, setChaVasc, 'Сосудистые заболевания: ИМ, бляшки аорты (+1)'],
+                    [chaDm, setChaDm, 'Сахарный диабет (+1)'],
+                  ] as [boolean, (v: boolean) => void, string][]).map(([val, setter, label], i) => (
+                    <label key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 8, cursor: 'pointer' }}>
+                      <input type="checkbox" checked={val} onChange={e=>setter(e.target.checked)}
+                        style={{ marginTop: 2, width: 16, height: 16, accentColor: '#6B1F2A', flexShrink: 0 }} />
+                      <span style={{ fontSize: 13, lineHeight: 1.4 }}>{label}</span>
+                    </label>
+                  ))}
+                </div>
+                <button className="lc-btn" onClick={()=>{
+                  clearError('cha2ds2')
+                  if(!chaAge){setError('cha2ds2','Введите возраст пациента');return}
+                  const age=parseInt(chaAge)
+                  if(age<18||age>120){setError('cha2ds2','Проверьте значение возраста');return}
+                  setChaResult(calcCHA2DS2(age,chaSex,chaChf,chaHyp,chaStroke,chaVasc,chaDm))
+                }}>Рассчитать CHA₂DS₂-VASc</button>
+                {errors.cha2ds2 && <div className="lc-error">{errors.cha2ds2}</div>}
+                {chaResult && (
+                  <div className="lc-result" style={{ background: chaResult.bg, color: chaResult.color }}>
+                    <div className="lc-result-left">
+                      <div className="lc-result-val">{chaResult.score}<span className="lc-result-unit"> баллов</span></div>
+                      <div style={{ fontSize: 12, marginTop: 4, opacity: 0.85 }}>Риск: {chaResult.riskPct}%/год</div>
+                      <button className="lc-reset" style={{ color: chaResult.color }} onClick={()=>setChaResult(null)}>← заново</button>
+                    </div>
+                    <div className="lc-result-right">
+                      <div className="lc-result-cat">{chaResult.category}</div>
+                      <div className="lc-result-desc">{chaResult.desc}</div>
+                      <div className="lc-result-desc" style={{ marginTop: 4, fontWeight: 600 }}>{chaResult.action}</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="lc-info">
+                <div className="lc-info-ttl">О шкале CHA₂DS₂-VASc</div>
+                <p className="lc-info-p">Шкала применяется у пациентов с фибрилляцией предсердий для оценки годового риска инсульта. C — сердечная недостаточность, H — гипертония, A₂ — возраст ≥75 лет (2 балла), D — диабет, S₂ — инсульт/ТИА (2 балла), V — сосудистые болезни, A — возраст 65–74, Sc — женский пол.</p>
+                <p className="lc-info-p" style={{ marginBottom: 0 }}>Балл ≥2 у мужчин и ≥3 у женщин — показание к НОАК (апиксабан, ривароксабан, дабигатран). Решение принимает врач с учётом риска кровотечений (шкала HAS-BLED).</p>
+              </div>
+            </>
+          )}
+
+          {/* ── Child-Pugh ───────────────────────────────────────────────────────── */}
+          {active === 'childpugh' && (
+            <>
+              <div className="lc-card">
+                <div className="lc-card-ttl">🫁 Child-Pugh — тяжесть цирроза печени</div>
+                <div className="lc-card-sub">Классификация тяжести цирроза по 5 критериям. Класс A (5–6 б.), B (7–9 б.), C (10–15 б.).</div>
+                <div className="lc-row3">
+                  <div className="lc-field">
+                    <label className="lc-label">Билирубин общий</label>
+                    <input className="lc-input" type="number" placeholder="20" value={cpBili} onChange={e=>setCpBili(e.target.value)} />
+                    <span className="lc-sublabel">мкмоль/л</span>
+                  </div>
+                  <div className="lc-field">
+                    <label className="lc-label">Альбумин</label>
+                    <input className="lc-input" type="number" placeholder="38" value={cpAlb} onChange={e=>setCpAlb(e.target.value)} />
+                    <span className="lc-sublabel">г/л</span>
+                  </div>
+                  <div className="lc-field">
+                    <label className="lc-label">Удлинение ПВ</label>
+                    <input className="lc-input" type="number" placeholder="2" value={cpPt} onChange={e=>setCpPt(e.target.value)} />
+                    <span className="lc-sublabel">секунд</span>
+                  </div>
+                </div>
+                <div className="lc-row">
+                  <div className="lc-field">
+                    <label className="lc-label">Асцит</label>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 4 }}>
+                      {([['Нет', 0], ['Лёгкий (поддаётся лечению)', 1], ['Напряжённый (рефрактерный)', 2]] as [string, number][]).map(([l, v]) => (
+                        <label key={v} style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', fontSize: 13 }}>
+                          <input type="radio" name="cpAscites" checked={cpAscites===v} onChange={()=>setCpAscites(v)}
+                            style={{ width: 15, height: 15, accentColor: '#6B1F2A' }} />
+                          {l}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="lc-field">
+                    <label className="lc-label">Печёночная энцефалопатия</label>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 4 }}>
+                      {([['Нет', 0], ['I–II степень (лёгкая)', 1], ['III–IV степень (тяжёлая)', 2]] as [string, number][]).map(([l, v]) => (
+                        <label key={v} style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', fontSize: 13 }}>
+                          <input type="radio" name="cpEnc" checked={cpEnc===v} onChange={()=>setCpEnc(v)}
+                            style={{ width: 15, height: 15, accentColor: '#6B1F2A' }} />
+                          {l}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <button className="lc-btn" onClick={()=>{
+                  clearError('childpugh')
+                  if(!cpBili||!cpAlb||!cpPt){setError('childpugh','Заполните все числовые поля');return}
+                  const bili=parseFloat(cpBili),alb=parseFloat(cpAlb),pt=parseFloat(cpPt)
+                  if(bili<=0||alb<=0||pt<0){setError('childpugh','Проверьте введённые значения');return}
+                  setCpResult(calcChildPugh(bili,alb,pt,cpAscites,cpEnc))
+                }}>Рассчитать Child-Pugh</button>
+                {errors.childpugh && <div className="lc-error">{errors.childpugh}</div>}
+                {cpResult && (
+                  <div className="lc-result" style={{ background: cpResult.bg, color: cpResult.color }}>
+                    <div className="lc-result-left">
+                      <div className="lc-result-val">Класс {cpResult.cls}<span className="lc-result-unit"> ({cpResult.score} б.)</span></div>
+                      <div style={{ fontSize: 12, marginTop: 4, opacity: 0.85 }}>1 год: {cpResult.survival1yr} · 2 года: {cpResult.survival2yr}</div>
+                      <button className="lc-reset" style={{ color: cpResult.color }} onClick={()=>setCpResult(null)}>← заново</button>
+                    </div>
+                    <div className="lc-result-right">
+                      <div className="lc-result-desc">{cpResult.desc}</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="lc-info">
+                <div className="lc-info-ttl">О шкале Child-Pugh</div>
+                <p className="lc-info-p">Шкала Child-Turcotte-Pugh оценивает тяжесть цирроза по 5 параметрам. Каждый оценивается 1–3 баллами. Класс A (5–6 баллов) — компенсированный цирроз, хорошая переносимость операций. Класс B (7–9) — субкомпенсация, повышенный операционный риск. Класс C (10–15) — декомпенсация.</p>
+                <p className="lc-info-p" style={{ marginBottom: 0 }}>Удлинение протромбинового времени вводится как разница со стандартом (нормой), в секундах. Класс C — абсолютное показание для рассмотрения трансплантации печени.</p>
+              </div>
+            </>
+          )}
+
 
           <div className="lc-ad-box">
             <div className="lc-ad-label">Реклама</div>

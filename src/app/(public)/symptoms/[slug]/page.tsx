@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import Breadcrumbs from '@/components/public/Breadcrumbs'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
@@ -23,6 +24,48 @@ const SEVERITY: Record<string, { label: string; color: string; bg: string }> = {
   high:   { label: 'Срочно — требуется скорейшая консультация врача',   color: '#8B1F2A', bg: '#F9EAEC' },
 }
 
+
+// Строим FAQ из структурированного описания симптома
+function buildFAQ(title: string, description: string | null): Array<{q: string; a: string}> {
+  const faq: Array<{q: string; a: string}> = []
+  if (!description) return faq
+
+  // Стандартные вопросы всегда
+  faq.push({ q: `Что такое симптом «${title}»?`, a: description.split('\n')[0].slice(0, 300) })
+
+  // Извлекаем разделы КАПСОМ
+  const SECTION_LABELS: Record<string, string> = {
+    'ОСНОВНЫЕ ПРИЧИНЫ':       `Каковы основные причины симптома «${title}»?`,
+    'ПРИЧИНЫ':                `Каковы причины симптома «${title}»?`,
+    'ТРЕВОЖНЫЕ ПРИЗНАКИ':     `Какие тревожные признаки требуют срочного обращения к врачу?`,
+    'КОГДА К ВРАЧУ':          'Когда нужно срочно обратиться к врачу?',
+    'ДИАГНОСТИКА':            'Как диагностируется это состояние?',
+    'ЛЕЧЕНИЕ':                'Как лечится это состояние?',
+    'ОБСЛЕДОВАНИЕ':           'Какие анализы нужно сдать?',
+    'ПРОФИЛАКТИКА':           'Как предотвратить этот симптом?',
+  }
+
+  const sections = description.split(/\n(?=[А-ЯA-Z][А-ЯA-Z\s«»()\/–-]{3,}:)/u)
+  for (const section of sections.slice(1)) {
+    const lines = section.trim().split('\n').filter(Boolean)
+    if (!lines.length) continue
+    const header = lines[0].replace(/:$/, '').trim().toUpperCase()
+    const body = lines.slice(1).join(' ').replace(/•\s*/g, '').slice(0, 400)
+    if (!body) continue
+
+    // Ищем подходящий вопрос
+    const question = Object.entries(SECTION_LABELS).find(([key]) =>
+      header.includes(key)
+    )?.[1]
+
+    if (question && body.length > 30) {
+      faq.push({ q: question, a: body })
+    }
+  }
+
+  return faq.slice(0, 6) // Не более 6 вопросов
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   try {
@@ -40,14 +83,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         type: 'article',
       },
       other: {
-        'script:ld+json': JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'MedicalWebPage',
-          name: symptom.title,
-          description: desc,
-          about: { '@type': 'MedicalCondition', name: symptom.title },
-          publisher: { '@type': 'Organization', name: 'ЗдравИнфо' },
-        }),
+        'script:ld+json': JSON.stringify([
+          {
+            '@context': 'https://schema.org',
+            '@type': 'MedicalWebPage',
+            name: symptom.title,
+            description: desc,
+            about: { '@type': 'MedicalCondition', name: symptom.title },
+            publisher: { '@type': 'Organization', name: 'ЗдравИнфо' },
+          },
+          ...(buildFAQ(symptom.title, symptom.description ?? null).length > 0 ? [{
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: buildFAQ(symptom.title, symptom.description ?? null).map(item => ({
+              '@type': 'Question',
+              name: item.q,
+              acceptedAnswer: { '@type': 'Answer', text: item.a },
+            })),
+          }] : []),
+        ]),
       },
     }
   } catch { return { title: 'Симптом — ЗдравИнфо' } }
@@ -165,6 +219,8 @@ export default async function SymptomPage({ params }: Props) {
         .sp-bread-sep { color: var(--rule); }
 
         /* HERO */
+        .sp-crumbs { background: #EDE5D8; border-bottom: 1px solid #DDD5C5; }
+        .sp-crumbs-in { max-width: 1200px; margin: 0 auto; padding: 10px 24px; }
         .sp-hero { background: white; border-bottom: 2px solid var(--ink); padding: 40px 24px 36px; }
         .sp-hero-in { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 280px; gap: 48px; align-items: start; }
         .sp-sys-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bord); margin-bottom: 14px; }
@@ -245,6 +301,16 @@ export default async function SymptomPage({ params }: Props) {
           .sp-ad-under-slot { min-height: 60px; font-size: 11px; }
           .sp-ad-under-in { padding: 0 14px; }
         }
+        .sp-faq { margin-top: 32px; margin-bottom: 8px; }
+        .sp-faq-ttl { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: var(--bord); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--bord); }
+        .sp-faq-item { border: 1px solid var(--rule); border-radius: 2px; margin-bottom: 6px; background: white; transition: border-color 0.15s; }
+        .sp-faq-item:hover { border-color: var(--bord); }
+        .sp-faq-q { padding: 13px 16px; font-size: 14px; font-weight: 600; color: var(--ink); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; line-height: 1.4; }
+        .sp-faq-q::-webkit-details-marker { display: none; }
+        .sp-faq-q::after { content: '+'; color: var(--bord); font-size: 20px; font-weight: 300; flex-shrink: 0; margin-left: 12px; }
+        details[open] .sp-faq-q::after { content: '−'; }
+        .sp-faq-q:hover { background: var(--bord-l); color: var(--bord); }
+        .sp-faq-a { padding: 10px 16px 14px; font-size: 13px; color: var(--ink-60); line-height: 1.7; border-top: 1px solid var(--rule); }
       `}</style>
 
       
@@ -261,6 +327,14 @@ export default async function SymptomPage({ params }: Props) {
       </div>
 
       <div style={{ background: 'white' }}>
+        <div className="sp-crumbs">
+          <div className="sp-crumbs-in">
+            <Breadcrumbs items={[
+              { label: 'Симптомы', href: '/symptoms' },
+              { label: symptom.title },
+            ]} />
+          </div>
+        </div>
         <div className="sp-hero">
           <div className="sp-hero-in">
             <div>
@@ -321,6 +395,24 @@ export default async function SymptomPage({ params }: Props) {
 
       <div className="sp-body">
         <div className="sp-wrap">
+
+            {/* FAQ блок — Schema.org + визуальный */}
+            {symptom.description && (() => {
+              const faqItems = buildFAQ(symptom.title, symptom.description)
+              if (faqItems.length < 2) return null
+              return (
+                <div className="sp-faq">
+                  <h2 className="sp-faq-ttl">Частые вопросы</h2>
+                  {faqItems.map((item, i) => (
+                    <details key={i} className="sp-faq-item">
+                      <summary className="sp-faq-q">{item.q}</summary>
+                      <div className="sp-faq-a">{item.a}</div>
+                    </details>
+                  ))}
+                </div>
+              )
+            })()}
+
           {articles.length > 0 ? (
             <>
               <div className="sp-sec-hdr">

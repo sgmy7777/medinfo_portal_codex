@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import Breadcrumbs from '@/components/public/Breadcrumbs'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
@@ -264,118 +265,93 @@ export default async function TestPage({ params }: Props) {
       
 
 
-      <div className="tt-bread">
-        <div className="tt-bread-in">
-          <Link href="/">Главная</Link>
-          <span className="tt-bread-sep">›</span>
-          <Link href="/tests">Справочник анализов</Link>
-          <span className="tt-bread-sep">›</span>
-          <span>{test.title}</span>
+      <div style={{ background: '#EDE5D8', borderBottom: '1px solid #DDD5C5' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', padding: '10px 24px' }}>
+            <Breadcrumbs items={[
+              { label: 'Анализы', href: '/tests' },
+              { label: test.title },
+            ]} />
+          </div>
         </div>
-      </div>
 
-      <div style={{ background: 'white' }}>
-        <div className="tt-hero">
-          <div className="tt-hero-in">
-            <div>
-              <div className="tt-cat-badge">{cat.icon} {cat.label}</div>
-              <h1 className="tt-title">{test.title}</h1>
+      {/* ── HERO ── */}
+      <div className="tt-hero">
+        <div className="tt-hero-in">
+          <div>
+            <div className="tt-cat-badge">{cat.icon} {cat.label}</div>
+            <h1 className="tt-title">{test.title}</h1>
 
-              {/* Таблица норм */}
-              {(hasMaleNorm || hasFemaleNorm || hasGeneralNorm) && (
-                <div className="tt-norms">
-                  <div className="tt-norms-hdr">Референсные значения</div>
-                  {hasGeneralNorm && (
-                    <div className="tt-norms-row">
-                      <div className="tt-norms-cell tt-norms-cell-lbl">Норма</div>
-                      <div className="tt-norms-cell" style={{ gridColumn: 'span 2' }}>
-                        <span className="tt-norms-val">{test.normGeneral}</span>
-                      </div>
+            {/* Нормы */}
+            {(hasMaleNorm || hasGeneralNorm) && (
+              <div className="tt-norms">
+                <div className="tt-norms-hdr">📋 Референсные значения</div>
+                {hasGeneralNorm ? (
+                  <div className="tt-norms-row">
+                    <div className="tt-norms-cell tt-norms-cell-lbl">Норма</div>
+                    <div className="tt-norms-cell" style={{ gridColumn: 'span 2' }}>
+                      <span className="tt-norms-val">{test.normGeneral}</span>
+                      {test.unit && <span className="tt-norms-unit">{test.unit}</span>}
                     </div>
-                  )}
-                  {hasMaleNorm && (
+                  </div>
+                ) : (
+                  <>
                     <div className="tt-norms-row">
                       <div className="tt-norms-cell tt-norms-cell-lbl">♂ Мужчины</div>
                       <div className="tt-norms-cell" style={{ gridColumn: 'span 2' }}>
                         <span className="tt-norms-val">{test.normMale}</span>
+                        {test.unit && <span className="tt-norms-unit">{test.unit}</span>}
                       </div>
                     </div>
-                  )}
-                  {hasFemaleNorm && (
-                    <div className="tt-norms-row">
-                      <div className="tt-norms-cell tt-norms-cell-lbl">♀ Женщины</div>
-                      <div className="tt-norms-cell" style={{ gridColumn: 'span 2' }}>
-                        <span className="tt-norms-val">{test.normFemale}</span>
+                    {hasFemaleNorm && (
+                      <div className="tt-norms-row">
+                        <div className="tt-norms-cell tt-norms-cell-lbl">♀ Женщины</div>
+                        <div className="tt-norms-cell" style={{ gridColumn: 'span 2' }}>
+                          <span className="tt-norms-val">{test.normFemale}</span>
+                          {test.unit && <span className="tt-norms-unit">{test.unit}</span>}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Подготовка к сдаче */}
-              {test.preparation && (
-                <div className="tt-prep">
-                  <div className="tt-prep-ttl">📋 Подготовка к сдаче</div>
-                  <div className="tt-prep-txt">{test.preparation}</div>
-                </div>
-              )}
-
-              {/* Описание */}
-              {test.description && <TestDescription text={test.description} />}
-            </div>
-
-            <div className="tt-side">
-              {/* Другие анализы той же категории */}
-              {sameCategory.length > 0 && (
-                <div className="tt-side-box">
-                  <div className="tt-side-ttl">{cat.icon} {cat.label}</div>
-                  <ul className="tt-side-list">
-                    {sameCategory.slice(0, 10).map((t: any) => (
-                      <li key={t.id} className="tt-side-item">
-                        <Link href={`/tests/${t.slug}`}>
-                          {t.title}
-                          {t.unit && <span className="tt-side-unit">{t.unit}</span>}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                  {sameCategory.length > 10 && (
-                    <div style={{ marginTop: 10, fontSize: 12 }}>
-                      <Link href="/tests" style={{ color: 'var(--bord)', textDecoration: 'none' }}>Все анализы →</Link>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Рекламный блок 1 */}
-              <div className="tt-ad-box">
-                <div className="tt-ad-label">Реклама</div>
-                <div id="yandex_rtb_test_sidebar_1" className="tt-ad-slot">Реклама РСЯ — блок 1</div>
+                    )}
+                  </>
+                )}
+                {test.normNote && <div className="tt-norms-note">{test.normNote}</div>}
               </div>
+            )}
 
+            {/* Подготовка к сдаче */}
+            {test.preparation && (
+              <div className="tt-prep">
+                <div className="tt-prep-ttl">📋 Подготовка к сдаче</div>
+                <div className="tt-prep-txt">{test.preparation}</div>
+              </div>
+            )}
+
+            {/* Описание */}
+            {test.description && (
+              <TestDescription text={test.description} />
+            )}
+          </div>
+
+          {/* Sidebar */}
+          <div className="tt-side">
+            <div className="tt-ad-box">
+              <div className="tt-ad-label">Реклама</div>
+              <div id="yandex_rtb_test_sidebar_1" className="tt-ad-slot">Реклама РСЯ</div>
+            </div>
+            {sameCategory.length > 0 && (
               <div className="tt-side-box">
-                <div className="tt-side-ttl">🔍 Разделы</div>
+                <div className="tt-side-ttl">Другие анализы</div>
                 <ul className="tt-side-list">
-                  {[
-                    { href: '/tests/decode', label: '🔬 Расшифровать анализы' },
-                    { href: '/calculators/lab', label: '🧪 Калькуляторы анализов' },
-                    { href: '/tests', label: 'Все анализы' },
-                    { href: '/symptoms', label: 'Справочник симптомов' },
-                    { href: '/contacts', label: 'Задать вопрос' },
-                  ].map(l => (
-                    <li key={l.href} className="tt-side-item">
-                      <Link href={l.href}>{l.label}</Link>
+                  {sameCategory.slice(0, 8).map((t: any) => (
+                    <li key={t.id} className="tt-side-item">
+                      <Link href={`/tests/${t.slug}`}>
+                        {t.title}
+                        {t.unit && <span className="tt-side-unit">{t.unit}</span>}
+                      </Link>
                     </li>
                   ))}
                 </ul>
               </div>
-
-              {/* Рекламный блок 2 */}
-              <div className="tt-ad-box">
-                <div className="tt-ad-label">Реклама</div>
-                <div id="yandex_rtb_test_sidebar_2" className="tt-ad-slot">Реклама РСЯ — блок 2</div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

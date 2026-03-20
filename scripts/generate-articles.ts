@@ -1,5 +1,19 @@
+require('dotenv').config({ path: '.env.local' })
+
 const ARTICLES_PLAN = [
-  { title: 'Гипертония: причины, симптомы и лечение', category: 'kardiologiya', tags: ['гипертония', 'давление', 'сердце'] },
+  { title: 'Гипертония: причины, симптомы и лечение', category: 'kardiologiya', tags: ['гипертония', 'давление', 'сердце'
+  // --- Дополнительные темы (слабые категории) ---
+  { title: 'Зубные импланты: кому показаны и как ухаживать', category: 'stomatologiya', tags: ['импланты', 'зубы', 'стоматология'] },
+  { title: 'Рак молочной железы: факторы риска и ранняя диагностика', category: 'onkologiya', tags: ['рак', 'молочная железа', 'онкология'] },
+  { title: 'Простатит: симптомы, виды и эффективное лечение', category: 'urologiya', tags: ['простатит', 'урология', 'мужское здоровье'] },
+  { title: 'Глаукома: как сохранить зрение при повышенном давлении в глазу', category: 'oftalmologiya', tags: ['глаукома', 'зрение', 'офтальмология'] },
+  { title: 'Синдром сухого глаза: причины и современное лечение', category: 'oftalmologiya', tags: ['сухой глаз', 'зрение', 'офтальмология'] },
+  { title: 'Хронический тонзиллит: лечить или удалять миндалины', category: 'lor', tags: ['тонзиллит', 'миндалины', 'лор'] },
+  { title: 'Тревожное расстройство: когда тревога становится болезнью', category: 'psikhiatriya', tags: ['тревога', 'психиатрия', 'здоровье'] },
+  { title: 'ХОБЛ: как замедлить прогрессирование болезни лёгких', category: 'pulmonologiya', tags: ['ХОБЛ', 'лёгкие', 'пульмонология'] },
+  { title: 'Остеопороз: как сохранить кости крепкими после 50', category: 'revmatologiya', tags: ['остеопороз', 'кости', 'ревматология'] },
+  { title: 'Пиелонефрит: симптомы воспаления почек и лечение', category: 'nefrologiya', tags: ['пиелонефрит', 'почки', 'нефрология'] },
+] },
   { title: 'Инфаркт миокарда: первые признаки и что делать', category: 'kardiologiya', tags: ['инфаркт', 'сердце', 'скорая помощь'] },
   { title: 'Аритмия сердца: виды, симптомы и лечение', category: 'kardiologiya', tags: ['аритмия', 'сердечный ритм'] },
   { title: 'Мигрень: как отличить от обычной головной боли', category: 'nevrologiya', tags: ['мигрень', 'головная боль'] },
@@ -56,9 +70,15 @@ async function generateArticle(title: string, category: string): Promise<{ conte
 }`
 
   try {
+    const apiKey = process.env.ANTHROPIC_API_KEY
+    if (!apiKey) throw new Error('ANTHROPIC_API_KEY не задан в .env.local')
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+      },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 2000,

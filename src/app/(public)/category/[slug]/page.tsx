@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
+import Breadcrumbs from '@/components/public/Breadcrumbs'
 import { prisma } from '@/lib/prisma'
 
 const catIcons: Record<string, string> = {
@@ -231,6 +232,13 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
         {/* HEADER */}
         
+
+        {/* BREADCRUMBS */}
+        <div style={{ background: '#EDE5D8', borderBottom: '1px solid #DDD5C5' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', padding: '10px 24px' }}>
+            <Breadcrumbs items={[{ label: category.title }]} />
+          </div>
+        </div>
 
         {/* HERO BANNER */}
         <div className="cp-hero">

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
+import Breadcrumbs from '@/components/public/Breadcrumbs'
 import { prisma } from '@/lib/prisma'
 import ViewCounter from '@/components/public/ViewCounter'
 
@@ -112,6 +113,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         .ap-cat-lnk:hover { color: white; background: rgba(0,0,0,0.15); border-bottom-color: var(--acc); }
 
         /* BODY */
+        .ap-crumbs { background: var(--paper-d, #EDE5D8); border-bottom: 1px solid var(--rule, #DDD5C5); }
+        .ap-crumbs-in { max-width: 1200px; margin: 0 auto; padding: 10px 24px; }
         .ap-body { flex: 1; }
         .ap-body-in { max-width: 1200px; width: 100%; margin: 0 auto; padding: 40px 24px 60px; display: grid; grid-template-columns: 1fr 280px; gap: 52px; }
 
@@ -235,6 +238,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
       <div className="ap">
         
+        <div className="ap-crumbs">
+          <div className="ap-crumbs-in">
+            <Breadcrumbs items={[
+              { label: article.category.title, href: `/category/${article.category.slug}` },
+              { label: article.title },
+            ]} />
+          </div>
+        </div>
         <div className="ap-body">
           <div className="ap-body-in">
             <article>
