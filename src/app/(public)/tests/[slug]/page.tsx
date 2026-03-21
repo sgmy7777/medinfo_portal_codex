@@ -56,7 +56,7 @@ async function getData(slug: string) {
       where: { slug },
       select: {
         id: true, title: true, slug: true, category: true, unit: true,
-        normMale: true, normFemale: true, normGeneral: true, normNote: true,
+        normMale: true, normFemale: true, normGeneral: true,
         description: true, preparation: true,
         articles: {
           select: {
@@ -311,7 +311,6 @@ export default async function TestPage({ params }: Props) {
                     )}
                   </>
                 )}
-                {test.normNote && <div className="tt-norms-note">{test.normNote}</div>}
               </div>
             )}
 
