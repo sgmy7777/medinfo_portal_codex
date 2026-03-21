@@ -26,13 +26,13 @@ export async function generateMetadata(
   if (!article) return { title: 'Статья не найдена' }
   return {
     title: article.metaTitle ?? article.title,
-    description: article.metaDescription ?? article.excerpt,
+    description: (article.metaDescription ?? article.excerpt) ?? undefined,
     openGraph: {
       title: article.metaTitle ?? article.title,
-      description: article.metaDescription ?? article.excerpt,
+      description: (article.metaDescription ?? article.excerpt) ?? undefined,
       images: article.ogImageUrl ? [article.ogImageUrl] : [],
       type: 'article',
-      publishedTime: article.publishedAt,
+      publishedTime: article.publishedAt ?? undefined,
     },
     other: {
       'script:ld+json': JSON.stringify({
