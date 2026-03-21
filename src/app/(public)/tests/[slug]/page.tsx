@@ -54,9 +54,12 @@ async function getData(slug: string) {
     // Последовательные запросы — connection_limit=1 не позволяет параллельные
     const test = await prisma.labTest.findUnique({
       where: { slug },
-      include: {
+      select: {
+        id: true, title: true, slug: true, category: true, unit: true,
+        normMale: true, normFemale: true, normGeneral: true, normNote: true,
+        description: true, preparation: true,
         articles: {
-          include: {
+          select: {
             article: {
               select: {
                 id: true, title: true, slug: true, excerpt: true,
