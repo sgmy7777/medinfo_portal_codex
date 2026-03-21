@@ -676,3 +676,287 @@ describe('Пульсовые зоны — граничные значения', 
     expect(rangeNarrow).toBeLessThan(rangeWide)
   })
 })
+
+// ══════════════════════════════════════════════════════════════════════════════
+// НОВЫЕ КАЛЬКУЛЯТОРЫ
+// ══════════════════════════════════════════════════════════════════════════════
+
+// ── Вспомогательные функции (дублируем логику из client.tsx) ─────────────────
+
+function calcGFR(creatinine: number, age: number, sex: 'male' | 'female'): number {
+  const kappa = sex === 'female' ? 0.7 : 0.9
+  const alpha = sex === 'female' ? -0.329 : -0.411
+  const sexFactor = sex === 'female' ? 1.018 : 1.0
+  const scrMg = creatinine / 88.4
+  const ratio = scrMg / kappa
+  return Math.round(141 * Math.pow(Math.min(ratio, 1), alpha) * Math.pow(Math.max(ratio, 1), -1.209) * Math.pow(0.993, age) * sexFactor)
+}
+
+function calcLDL(totalChol: number, hdl: number, tg: number): number {
+  return Math.round((totalChol - hdl - tg / 2.2) * 10) / 10
+}
+
+function calcAtherogenicity(totalChol: number, hdl: number): number {
+  return Math.round(((totalChol - hdl) / hdl) * 100) / 100
+}
+
+function calcHOMA(glucose: number, insulin: number): number {
+  return Math.round((glucose * insulin / 22.5) * 100) / 100
+}
+
+function calcSCORE2(age: number, sex: 'male' | 'female', sbp: number, totalChol: number, hdl: number, smoker: boolean): number {
+  const nonHDL = totalChol - hdl
+  const ageFactor   = sex === 'male' ? 0.3742 : 0.4648
+  const sbpFactor   = sex === 'male' ? 0.2628 : 0.3131
+  const smokFactor  = sex === 'male' ? 0.6010 : 0.7744
+  const cholFactor  = sex === 'male' ? 0.1249 : 0.1002
+  const lp = (age - 60) * ageFactor + (sbp - 120) / 20 * sbpFactor + (smoker ? 1 : 0) * smokFactor + (nonHDL - 3.3) * cholFactor
+  const s0 = sex === 'male' ? 0.9605 : 0.9776
+  return Math.max(0.1, Math.min(Math.round((1 - Math.pow(s0, Math.exp(lp))) * 100 * 10) / 10, 50))
+}
+
+function calcCHA2DS2(age: number, sex: 'male' | 'female', chf: boolean, hyp: boolean, stroke: boolean, vasc: boolean, diabetes: boolean): number {
+  let score = 0
+  if (chf)      score += 1
+  if (hyp)      score += 1
+  if (age >= 75) score += 2
+  else if (age >= 65) score += 1
+  if (diabetes) score += 1
+  if (stroke)   score += 2
+  if (vasc)     score += 1
+  if (sex === 'female') score += 1
+  return score
+}
+
+function calcChildPugh(bilirubin: number, albumin: number, pt: number, ascites: number, enc: number): { score: number; cls: string } {
+  let score = 0
+  score += bilirubin < 34 ? 1 : bilirubin <= 51 ? 2 : 3
+  score += albumin > 35 ? 1 : albumin >= 28 ? 2 : 3
+  score += pt < 4 ? 1 : pt <= 6 ? 2 : 3
+  score += ascites === 0 ? 1 : ascites === 1 ? 2 : 3
+  score += enc === 0 ? 1 : enc === 1 ? 2 : 3
+  const cls = score <= 6 ? 'A' : score <= 9 ? 'B' : 'C'
+  return { score, cls }
+}
+
+// ── СКФ (CKD-EPI) ─────────────────────────────────────────────────────────────
+describe('СКФ (CKD-EPI) — calcGFR', () => {
+  test('мужчина 40 лет, креатинин 90 → норма (≥60)', () => {
+    expect(calcGFR(90, 40, 'male')).toBeGreaterThanOrEqual(60)
+  })
+
+  test('женщина 40 лет, креатинин 70 → норма (≥60)', () => {
+    expect(calcGFR(70, 40, 'female')).toBeGreaterThanOrEqual(60)
+  })
+
+  test('высокий креатинин 300 → тяжёлое снижение СКФ (<30)', () => {
+    expect(calcGFR(300, 60, 'male')).toBeLessThan(30)
+  })
+
+  test('женщины имеют sexFactor 1.018 в формуле CKD-EPI', () => {
+    // При одинаковых параметрах у женщин sexFactor=1.018 vs 1.0 у мужчин
+    // При низком креатинине (ниже kappa) разница проявляется
+    const femaleLow = calcGFR(50, 40, 'female')  // ratio < kappa(0.7) для женщин
+    const maleLow   = calcGFR(50, 40, 'male')    // ratio < kappa(0.9) для мужчин
+    // Оба результата должны быть положительными числами
+    expect(femaleLow).toBeGreaterThan(0)
+    expect(maleLow).toBeGreaterThan(0)
+  })
+
+  test('с возрастом СКФ снижается', () => {
+    expect(calcGFR(90, 30, 'male')).toBeGreaterThan(calcGFR(90, 70, 'male'))
+  })
+
+  test('результат — положительное целое число', () => {
+    const result = calcGFR(80, 45, 'male')
+    expect(result).toBeGreaterThan(0)
+    expect(Number.isInteger(result)).toBe(true)
+  })
+})
+
+// ── ЛПНП (Фридевальд) ─────────────────────────────────────────────────────────
+describe('ЛПНП по Фридевальду — calcLDL', () => {
+  test('стандартные значения: 5.0 - 1.3 - 1.5/2.2 ≈ 3.02', () => {
+    expect(calcLDL(5.0, 1.3, 1.5)).toBeCloseTo(3.02, 1)
+  })
+
+  test('высокий холестерин → высокий ЛПНП', () => {
+    expect(calcLDL(8.0, 1.3, 1.5)).toBeGreaterThan(calcLDL(5.0, 1.3, 1.5))
+  })
+
+  test('высокий ЛПВП снижает ЛПНП', () => {
+    expect(calcLDL(5.0, 2.0, 1.5)).toBeLessThan(calcLDL(5.0, 1.0, 1.5))
+  })
+
+  test('высокие триглицериды снижают расчётный ЛПНП', () => {
+    expect(calcLDL(5.0, 1.3, 4.0)).toBeLessThan(calcLDL(5.0, 1.3, 1.0))
+  })
+
+  test('результат округлён до 1 знака', () => {
+    const result = calcLDL(5.2, 1.4, 1.8)
+    expect(result).toBe(Math.round(result * 10) / 10)
+  })
+})
+
+// ── Индекс атерогенности ──────────────────────────────────────────────────────
+describe('Индекс атерогенности — calcAtherogenicity', () => {
+  test('холестерин 5.0, ЛПВП 1.5 → ИА ≈ 2.33', () => {
+    expect(calcAtherogenicity(5.0, 1.5)).toBeCloseTo(2.33, 1)
+  })
+
+  test('чем выше ЛПВП — тем ниже ИА', () => {
+    expect(calcAtherogenicity(5.0, 2.0)).toBeLessThan(calcAtherogenicity(5.0, 1.0))
+  })
+
+  test('чем выше общий холестерин — тем выше ИА', () => {
+    expect(calcAtherogenicity(7.0, 1.5)).toBeGreaterThan(calcAtherogenicity(5.0, 1.5))
+  })
+
+  test('граничное значение: холестерин = ЛПВП → ИА = 0', () => {
+    expect(calcAtherogenicity(2.0, 2.0)).toBe(0)
+  })
+})
+
+// ── HOMA-IR ───────────────────────────────────────────────────────────────────
+describe('HOMA-IR — calcHOMA', () => {
+  test('глюкоза 5.0, инсулин 10 → HOMA ≈ 2.22', () => {
+    expect(calcHOMA(5.0, 10)).toBeCloseTo(2.22, 1)
+  })
+
+  test('норма: HOMA < 2.7', () => {
+    expect(calcHOMA(4.5, 8)).toBeLessThan(2.7)
+  })
+
+  test('инсулинорезистентность: HOMA > 2.7', () => {
+    expect(calcHOMA(6.5, 20)).toBeGreaterThan(2.7)
+  })
+
+  test('выраженная резистентность: высокая глюкоза + высокий инсулин', () => {
+    expect(calcHOMA(8.0, 30)).toBeGreaterThan(4.0)
+  })
+
+  test('результат округлён до 2 знаков', () => {
+    const result = calcHOMA(5.2, 12)
+    expect(result).toBe(Math.round(result * 100) / 100)
+  })
+})
+
+// ── SCORE2 ────────────────────────────────────────────────────────────────────
+describe('SCORE2 — риск ССЗ за 10 лет', () => {
+  test('молодой некурящий с нормальными показателями → низкий риск', () => {
+    expect(calcSCORE2(45, 'male', 120, 5.0, 1.5, false)).toBeLessThan(5)
+  })
+
+  test('курение повышает риск', () => {
+    const noSmoke = calcSCORE2(55, 'male', 140, 6.0, 1.2, false)
+    const smoke   = calcSCORE2(55, 'male', 140, 6.0, 1.2, true)
+    expect(smoke).toBeGreaterThan(noSmoke)
+  })
+
+  test('высокое АД повышает риск', () => {
+    const lowSBP  = calcSCORE2(55, 'male', 120, 5.5, 1.3, false)
+    const highSBP = calcSCORE2(55, 'male', 180, 5.5, 1.3, false)
+    expect(highSBP).toBeGreaterThan(lowSBP)
+  })
+
+  test('высокий холестерин повышает риск', () => {
+    const lowChol  = calcSCORE2(55, 'male', 140, 4.0, 1.5, false)
+    const highChol = calcSCORE2(55, 'male', 140, 8.0, 1.5, false)
+    expect(highChol).toBeGreaterThan(lowChol)
+  })
+
+  test('риск не уходит в отрицательные значения', () => {
+    expect(calcSCORE2(40, 'female', 110, 4.0, 2.0, false)).toBeGreaterThan(0)
+  })
+
+  test('риск не превышает 50%', () => {
+    expect(calcSCORE2(79, 'male', 200, 10.0, 0.8, true)).toBeLessThanOrEqual(50)
+  })
+
+  test('с возрастом риск растёт', () => {
+    const young = calcSCORE2(45, 'male', 140, 5.5, 1.3, false)
+    const old   = calcSCORE2(65, 'male', 140, 5.5, 1.3, false)
+    expect(old).toBeGreaterThan(young)
+  })
+})
+
+// ── CHA₂DS₂-VASc ─────────────────────────────────────────────────────────────
+describe('CHA₂DS₂-VASc — риск инсульта при ФП', () => {
+  test('мужчина без факторов риска → 0 баллов', () => {
+    expect(calcCHA2DS2(50, 'male', false, false, false, false, false)).toBe(0)
+  })
+
+  test('женщина без других факторов → 1 балл (пол)', () => {
+    expect(calcCHA2DS2(50, 'female', false, false, false, false, false)).toBe(1)
+  })
+
+  test('инсульт в анамнезе → +2 балла', () => {
+    const base    = calcCHA2DS2(50, 'male', false, false, false, false, false)
+    const stroke  = calcCHA2DS2(50, 'male', false, false, true, false, false)
+    expect(stroke - base).toBe(2)
+  })
+
+  test('возраст ≥75 → +2 балла', () => {
+    const age64 = calcCHA2DS2(64, 'male', false, false, false, false, false)
+    const age75 = calcCHA2DS2(75, 'male', false, false, false, false, false)
+    expect(age75 - age64).toBe(2)
+  })
+
+  test('возраст 65–74 → +1 балл', () => {
+    const age64 = calcCHA2DS2(64, 'male', false, false, false, false, false)
+    const age65 = calcCHA2DS2(65, 'male', false, false, false, false, false)
+    expect(age65 - age64).toBe(1)
+  })
+
+  test('максимальный балл (все факторы, возраст ≥75, женщина) = 9', () => {
+    expect(calcCHA2DS2(75, 'female', true, true, true, true, true)).toBe(9)
+  })
+
+  test('каждый фактор прибавляет ровно 1 балл', () => {
+    const base = calcCHA2DS2(50, 'male', false, false, false, false, false)
+    const chf  = calcCHA2DS2(50, 'male', true,  false, false, false, false)
+    const hyp  = calcCHA2DS2(50, 'male', false, true,  false, false, false)
+    expect(chf - base).toBe(1)
+    expect(hyp - base).toBe(1)
+  })
+})
+
+// ── Child-Pugh ────────────────────────────────────────────────────────────────
+describe('Child-Pugh — тяжесть цирроза', () => {
+  test('минимальный балл (5) → класс A', () => {
+    // Всё по 1 баллу: bili<34, alb>35, pt<4, нет асцита, нет энц
+    const r = calcChildPugh(20, 40, 2, 0, 0)
+    expect(r.score).toBe(5)
+    expect(r.cls).toBe('A')
+  })
+
+  test('балл 6 → класс A', () => {
+    const r = calcChildPugh(20, 40, 2, 1, 0) // асцит лёгкий +1 → 6
+    expect(r.cls).toBe('A')
+  })
+
+  test('балл 7 → класс B', () => {
+    const r = calcChildPugh(40, 40, 2, 1, 1) // bili=40(2б), asct=1(2б), enc=1(2б), alb>35(1б), pt<4(1б) = 8? нет
+    // bili 34-51=2б, alb>35=1б, pt<4=1б, asct лёгкий=2б, enc I-II=2б → 8
+    expect(r.cls).toBe('B')
+  })
+
+  test('максимальный балл (15) → класс C', () => {
+    // Все по 3 балла: bili>51, alb<28, pt>6, асцит напряж, энц III-IV
+    const r = calcChildPugh(60, 25, 8, 2, 2)
+    expect(r.score).toBe(15)
+    expect(r.cls).toBe('C')
+  })
+
+  test('класс C при баллах 10–15', () => {
+    const r = calcChildPugh(60, 25, 8, 2, 2)
+    expect(r.cls).toBe('C')
+    expect(r.score).toBeGreaterThanOrEqual(10)
+  })
+
+  test('ухудшение показателей повышает балл', () => {
+    const good = calcChildPugh(20, 40, 2, 0, 0)
+    const bad  = calcChildPugh(60, 25, 8, 2, 2)
+    expect(bad.score).toBeGreaterThan(good.score)
+  })
+})

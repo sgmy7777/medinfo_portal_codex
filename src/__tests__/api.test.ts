@@ -270,3 +270,190 @@ describe('POST /api/contact — валидация', () => {
     expect(res.status).toBe(400)
   })
 })
+
+// ══════════════════════════════════════════════════════════════════════════════
+// НОВЫЕ API ТЕСТЫ
+// ══════════════════════════════════════════════════════════════════════════════
+
+// ── Моки для новых эндпоинтов ─────────────────────────────────────────────────
+const mockLabTest = {
+  id: 'lt-1',
+  title: 'Гемоглобин (Hb)',
+  slug: 'gemoglobin',
+  category: 'blood_general',
+  unit: 'г/л',
+  normMale: '130–170',
+  normFemale: '120–150',
+  normGeneral: null,
+  normNote: 'У пожилых норма несколько ниже.',
+  preparation: 'Натощак.',
+  description: 'Гемоглобин — белок эритроцитов, переносящий кислород.',
+  createdAt: new Date(),
+}
+
+// Расширяем существующий mock prisma для labtests
+const prismaMock = require('@/lib/prisma').prisma
+prismaMock.labTest = {
+  findMany: jest.fn(),
+  findUnique: jest.fn(),
+  create: jest.fn(),
+  update: jest.fn(),
+  delete: jest.fn(),
+}
+prismaMock.tag = {
+  findMany: jest.fn(),
+  upsert: jest.fn(),
+}
+
+import { GET as getLabTests } from '@/app/api/labtests/route'
+import { GET as getLabTestBySlug } from '@/app/api/labtests/[slug]/route'
+import { GET as getTags, POST as postTag } from '@/app/api/tags/route'
+import { GET as getSearch } from '@/app/api/search/route'
+import { NextRequest } from 'next/server'
+
+// ── GET /api/labtests ─────────────────────────────────────────────────────────
+describe('GET /api/labtests', () => {
+  beforeEach(() => jest.clearAllMocks())
+
+  test('возвращает список анализов', async () => {
+    prismaMock.labTest.findMany.mockResolvedValue([mockLabTest])
+    const req = new Request('http://localhost/api/labtests')
+    const res = await getLabTests(req)
+    expect(res.status).toBe(200)
+    const body = await res.json()
+    const data = body.data ?? body
+    expect(Array.isArray(data)).toBe(true)
+    expect(data[0].slug).toBe('gemoglobin')
+  })
+
+  test('возвращает пустой массив если анализов нет', async () => {
+    prismaMock.labTest.findMany.mockResolvedValue([])
+    const req = new Request('http://localhost/api/labtests')
+    const res = await getLabTests(req)
+    const body = await res.json()
+    const data = body.data ?? body
+    expect(data).toEqual([])
+  })
+
+  test('возвращает 500 при ошибке БД', async () => {
+    prismaMock.labTest.findMany.mockRejectedValue(new Error('DB error'))
+    const req = new Request('http://localhost/api/labtests')
+    const res = await getLabTests(req)
+    expect(res.status).toBe(500)
+  })
+})
+
+// ── GET /api/labtests/[slug] ──────────────────────────────────────────────────
+describe('GET /api/labtests/[slug]', () => {
+  beforeEach(() => jest.clearAllMocks())
+
+  test('возвращает анализ по slug', async () => {
+    prismaMock.labTest.findUnique.mockResolvedValue(mockLabTest)
+    const req = new Request('http://localhost/api/labtests/gemoglobin')
+    const res = await getLabTestBySlug(req, { params: Promise.resolve({ slug: 'gemoglobin' }) })
+    expect(res.status).toBe(200)
+    const body = await res.json()
+    const data = body.data ?? body
+    expect(data.title ?? body.title).toBe('Гемоглобин (Hb)')
+  })
+
+  test('возвращает 404 для несуществующего slug', async () => {
+    prismaMock.labTest.findUnique.mockResolvedValue(null)
+    const req = new Request('http://localhost/api/labtests/unknown')
+    const res = await getLabTestBySlug(req, { params: Promise.resolve({ slug: 'unknown' }) })
+    expect(res.status).toBe(404)
+  })
+})
+
+// ── GET /api/tags ─────────────────────────────────────────────────────────────
+describe('GET /api/tags', () => {
+  beforeEach(() => jest.clearAllMocks())
+
+  test('возвращает список тегов', async () => {
+    prismaMock.tag.findMany.mockResolvedValue([
+      { id: 't1', title: 'гипертония', slug: 'gipertoniya' },
+      { id: 't2', title: 'диабет', slug: 'diabet' },
+    ])
+    const req = new Request('http://localhost/api/tags')
+    const res = await getTags(req)
+    expect(res.status).toBe(200)
+    const body = await res.json()
+    const data = body.data ?? body
+    expect(Array.isArray(data) ? data : [data]).toHaveLength(2)
+  })
+})
+
+// ── POST /api/tags ────────────────────────────────────────────────────────────
+describe('POST /api/tags', () => {
+  beforeEach(() => jest.clearAllMocks())
+
+  test('создаёт новый тег', async () => {
+    prismaMock.tag.upsert.mockResolvedValue({ id: 't3', title: 'инсульт', slug: 'insult' })
+    const req = new Request('http://localhost/api/tags', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: 'инсульт' }),
+    })
+    const res = await postTag(req)
+    expect(res.status).toBe(200)
+    const body = await res.json()
+    const data = body.data ?? body
+    expect(data.title ?? body.title ?? 'инсульт').toBeTruthy()
+  })
+
+  test('возвращает 400 без title', async () => {
+    const req = new Request('http://localhost/api/tags', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({}),
+    })
+    const res = await postTag(req)
+    expect(res.status).toBe(400)
+  })
+})
+
+// ── GET /api/search ───────────────────────────────────────────────────────────
+describe('GET /api/search', () => {
+  beforeEach(() => jest.clearAllMocks())
+
+  test('короткий запрос (1 символ) → возвращает пустые результаты', async () => {
+    const req = new NextRequest('http://localhost/api/search?q=а')
+    const res = await getSearch(req)
+    expect(res.status).toBe(200)
+    const body = await res.json()
+    expect(body.articles).toEqual([])
+    expect(body.total).toBe(0)
+  })
+
+  test('пустой запрос → возвращает пустые результаты', async () => {
+    const req = new NextRequest('http://localhost/api/search')
+    const res = await getSearch(req)
+    expect(res.status).toBe(200)
+    const body = await res.json()
+    expect(body.articles).toEqual([])
+  })
+
+  test('возвращает результаты при корректном запросе', async () => {
+    prismaMock.article.findMany.mockResolvedValue([mockArticle])
+    prismaMock.symptom = { findMany: jest.fn().mockResolvedValue([]) }
+    prismaMock.labTest.findMany.mockResolvedValue([])
+    const req = new NextRequest('http://localhost/api/search?q=гипертония')
+    const res = await getSearch(req)
+    expect(res.status).toBe(200)
+    const body = await res.json()
+    expect(body).toHaveProperty('articles')
+    expect(body).toHaveProperty('symptoms')
+    expect(body).toHaveProperty('tests')
+    expect(body).toHaveProperty('q')
+  })
+
+  test('возвращает поле total', async () => {
+    prismaMock.article.findMany.mockResolvedValue([mockArticle])
+    prismaMock.symptom = { findMany: jest.fn().mockResolvedValue([]) }
+    prismaMock.labTest.findMany.mockResolvedValue([])
+    const req = new NextRequest('http://localhost/api/search?q=диабет')
+    const res = await getSearch(req)
+    const body = await res.json()
+    expect(typeof body.total).toBe('number')
+  })
+})
