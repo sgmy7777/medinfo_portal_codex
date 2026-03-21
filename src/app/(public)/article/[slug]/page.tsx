@@ -32,7 +32,7 @@ export async function generateMetadata(
       description: (article.metaDescription ?? article.excerpt) ?? undefined,
       images: article.ogImageUrl ? [article.ogImageUrl] : [],
       type: 'article',
-      publishedTime: article.publishedAt ?? undefined,
+      publishedTime: article.publishedAt ? article.publishedAt.toISOString() : undefined,
     },
     other: {
       'script:ld+json': JSON.stringify({
