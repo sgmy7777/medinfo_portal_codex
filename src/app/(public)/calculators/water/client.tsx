@@ -64,12 +64,7 @@ export default function WaterCalculatorClient() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8; --bord-m: #8B2D3A;
-          --paper: #F7F2EA; --paper-d: #EDE5D8; --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --rule: #DDD5C5; --water: #2D6EA0; --water-l: #EBF4FD;
-        }
-        body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
+body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
         .wt { background: var(--bord-d); }
         .wt-top { background: var(--bord); padding: 6px 0; text-align: center; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
         .wt-main { padding: 18px 24px 16px; display: flex; align-items: center; justify-content: center; }
@@ -86,21 +81,21 @@ export default function WaterCalculatorClient() {
         .wt-ico { font-size: 44px; margin-bottom: 12px; display: block; }
         .wt-ttl { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--ink); margin-bottom: 8px; }
         .wt-sub { font-size: 15px; color: var(--ink-60); line-height: 1.6; }
-        .wt-card { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
+        .wt-card { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
         .wt-card-ttl { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
         .wt-field { margin-bottom: 20px; }
         .wt-label { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-60); margin-bottom: 8px; display: block; }
         .wt-input { width: 100%; padding: 12px 14px; border: 1px solid var(--rule); border-radius: 2px; font-size: 16px; font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); outline: none; transition: border-color 0.15s; }
         .wt-input:focus { border-color: var(--water); }
         .wt-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-        .wt-pill { padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; background: white; border: 1px solid var(--rule); border-radius: 20px; color: var(--ink-60); transition: all 0.15s; font-family: 'Golos Text', sans-serif; }
+        .wt-pill { padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; background: var(--white); border: 1px solid var(--rule); border-radius: 20px; color: var(--ink-60); transition: all 0.15s; font-family: 'Golos Text', sans-serif; }
         .wt-pill.active { background: var(--water); border-color: var(--water); color: white; }
         .wt-pill:hover:not(.active) { border-color: var(--water); color: var(--water); }
         .wt-btn { width: 100%; padding: 14px; background: var(--water); color: white; border: none; border-radius: 2px; font-size: 15px; font-weight: 700; cursor: pointer; letter-spacing: 0.04em; transition: background 0.15s; font-family: 'Golos Text', sans-serif; }
         .wt-btn:hover { background: #235A8A; }
         .wt-error { font-size: 13px; color: #DC2626; margin-top: 10px; padding: 10px 14px; background: #FFF1F2; border: 1px solid #FECDD3; border-radius: 2px; }
 
-        .wt-result { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
+        .wt-result { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
         .wt-big { text-align: center; margin-bottom: 28px; }
         .wt-big-val { font-family: 'Playfair Display', serif; font-size: 80px; font-weight: 900; color: var(--water); line-height: 1; }
         .wt-big-unit { font-size: 28px; }
@@ -124,14 +119,14 @@ export default function WaterCalculatorClient() {
         .wt-br-val { font-weight: 600; color: var(--water); }
 
         .wt-reset { font-size: 13px; color: var(--bord); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; margin-top: 16px; }
-        .wt-tips { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 24px 28px; }
+        .wt-tips { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 24px 28px; }
         .wt-tips-ttl { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 14px; }
         .wt-tip { display: flex; gap: 10px; margin-bottom: 12px; font-size: 14px; color: var(--ink-60); line-height: 1.6; }
         .wt-tip-ico { flex-shrink: 0; }
-        .wt-ad-box { background: white; border: 1px solid var(--rule); padding: 14px; margin-bottom: 24px; }
+        .wt-ad-box { background: var(--white); border: 1px solid var(--rule); padding: 14px; margin-bottom: 24px; }
         .wt-ad-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 8px; }
         .wt-ad-slot { min-height: 250px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; padding: 16px; }
-        .wt-ad-under { background: white; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
+        .wt-ad-under { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
         .wt-ad-under-in { max-width: 800px; margin: 0 auto; padding: 0 24px; }
         .wt-ad-under-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
 

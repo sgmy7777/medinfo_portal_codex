@@ -36,20 +36,14 @@ export default function AuthorPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8; --bord-m: #8B2D3A;
-          --paper: #F7F2EA; --paper-d: #EDE5D8;
-          --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --rule: #DDD5C5;
-        }
-        body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
+body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
 
         .au-crumbs { background: var(--paper-d); border-bottom: 1px solid var(--rule); }
         .au-crumbs-in { max-width: 860px; margin: 0 auto; padding: 10px 24px; font-size: 12px; color: var(--ink-30); display: flex; gap: 6px; align-items: center; }
         .au-crumbs a { color: var(--ink-60); text-decoration: none; }
         .au-crumbs a:hover { color: var(--bord); }
 
-        .au-hero { background: white; border-bottom: 2px solid var(--ink); padding: 56px 24px 48px; }
+        .au-hero { background: var(--white); border-bottom: 2px solid var(--ink); padding: 56px 24px 48px; }
         .au-hero-in { max-width: 860px; margin: 0 auto; display: flex; gap: 40px; align-items: flex-start; }
 
         .au-avatar { width: 120px; height: 120px; border-radius: 50%; background: var(--bord); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: white; flex-shrink: 0; }
@@ -70,7 +64,7 @@ export default function AuthorPage() {
         .au-text { font-size: 15px; color: var(--ink-60); line-height: 1.8; margin-bottom: 14px; }
         .au-text:last-child { margin-bottom: 0; }
 
-        .au-edu-item { background: white; border: 1px solid var(--rule); border-left: 3px solid var(--bord); border-radius: 2px; padding: 16px 20px; margin-bottom: 10px; }
+        .au-edu-item { background: var(--white); border: 1px solid var(--rule); border-left: 3px solid var(--bord); border-radius: 2px; padding: 16px 20px; margin-bottom: 10px; }
         .au-edu-name { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
         .au-edu-spec { font-size: 13px; color: var(--ink-60); }
         .au-edu-year { font-size: 12px; color: var(--acc); font-weight: 600; margin-top: 4px; }

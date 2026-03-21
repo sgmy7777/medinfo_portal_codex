@@ -56,12 +56,7 @@ export default async function TestsPage() {
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { overflow-x: hidden; max-width: 100%; }
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8; --bord-m: #8B2D3A;
-          --paper: #F7F2EA; --paper-d: #EDE5D8; --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --acc-l: #FBF3E3; --rule: #DDD5C5; --white: #FFFFFF;
-        }
-        .ts { font-family: 'Golos Text', sans-serif; background: var(--bord-d); }
+.ts { font-family: 'Golos Text', sans-serif; background: var(--bord-d); }
         .ts-top { background: var(--bord); padding: 6px 0; text-align: center; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
         .ts-main { padding: 18px 24px 16px; display: flex; align-items: center; justify-content: center; }
         .ts-logo { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: white; text-decoration: none; }
@@ -77,7 +72,7 @@ export default async function TestsPage() {
         .ts-hero-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--acc); margin-bottom: 12px; }
         .ts-hero-ttl { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 900; color: white; margin-bottom: 12px; }
         .ts-hero-sub { font-size: 16px; color: rgba(255,255,255,0.65); max-width: 540px; margin: 0 auto 24px; line-height: 1.6; }
-        .ts-decode-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 12px 24px; background: white; color: var(--bord); font-size: 13px; font-weight: 700; text-decoration: none; border: 2px solid rgba(255,255,255,0.3); border-radius: 2px; letter-spacing: 0.05em; transition: all 0.15s; }
+        .ts-decode-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 12px 24px; background: var(--white); color: var(--bord); font-size: 13px; font-weight: 700; text-decoration: none; border: 2px solid rgba(255,255,255,0.3); border-radius: 2px; letter-spacing: 0.05em; transition: all 0.15s; }
         .ts-decode-btn:hover { background: var(--bord-l); border-color: var(--bord-l); }
         .ts-disclaimer { display: inline-block; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 2px; padding: 10px 18px; font-size: 12px; color: rgba(255,255,255,0.55); max-width: 560px; line-height: 1.6; }
 
@@ -85,7 +80,7 @@ export default async function TestsPage() {
         .ts-wrap { max-width: 1200px; margin: 0 auto; padding: 48px 24px 72px; }
 
         .ts-cat-anchors { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; padding-bottom: 28px; border-bottom: 1px solid var(--rule); }
-        .ts-anchor-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; font-size: 12px; font-weight: 600; color: var(--ink-60); background: white; border: 1px solid var(--rule); border-radius: 2px; text-decoration: none; transition: all 0.15s; }
+        .ts-anchor-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; font-size: 12px; font-weight: 600; color: var(--ink-60); background: var(--white); border: 1px solid var(--rule); border-radius: 2px; text-decoration: none; transition: all 0.15s; }
         .ts-anchor-btn:hover { background: var(--bord-l); border-color: var(--bord); color: var(--bord); }
 
         .ts-section { margin-bottom: 52px; }
@@ -97,7 +92,7 @@ export default async function TestsPage() {
         .ts-sec-cnt { font-size: 12px; color: var(--ink-30); }
 
         .ts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .ts-card { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 16px 18px; text-decoration: none; display: block; transition: all 0.18s; border-left: 3px solid transparent; }
+        .ts-card { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 16px 18px; text-decoration: none; display: block; transition: all 0.18s; border-left: 3px solid transparent; }
         .ts-card:hover { border-color: var(--bord); border-left-color: var(--bord); box-shadow: 0 2px 12px rgba(107,31,42,0.08); }
         .ts-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 5px; }
         .ts-card-ttl { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--ink); line-height: 1.25; }
@@ -107,8 +102,8 @@ export default async function TestsPage() {
         .ts-card-foot { font-size: 11px; color: var(--ink-30); }
         .ts-card-foot strong { color: var(--bord); }
 
-        .ts-ad-box { background: white; border: 1px solid var(--rule); padding: 14px; margin: 32px 0; }
-        .ts-ad-under { background: white; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; margin-top: 8px; }
+        .ts-ad-box { background: var(--white); border: 1px solid var(--rule); padding: 14px; margin: 32px 0; }
+        .ts-ad-under { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; margin-top: 8px; }
         .ts-ad-under-in { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         .ts-ad-under-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
         .ts-ad-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 8px; }
@@ -139,7 +134,7 @@ export default async function TestsPage() {
         <h1 className="ts-hero-ttl">Справочник анализов</h1>
         <p className="ts-hero-sub">Нормы показателей, расшифровка отклонений и подготовка к сдаче — для каждого анализа</p>
         <div className="ts-disclaimer">⚠️ Расшифровка носит ознакомительный характер. Интерпретировать результаты и назначать лечение должен только врач.</div>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16 }}><Link href="/tests/decode" className="ts-decode-btn">🔬 Расшифровать мои анализы →</Link><Link href="/calculators/lab" className="ts-decode-btn" style={{ background: "white", borderColor: "white", color: "var(--bord)" }}>🧪 Калькуляторы анализов →</Link></div>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16 }}><Link href="/tests/decode" className="ts-decode-btn">🔬 Расшифровать мои анализы →</Link><Link href="/calculators/lab" className="ts-decode-btn" >🧪 Калькуляторы анализов →</Link></div>
       </div>
 
       <div className="ts-body">

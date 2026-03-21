@@ -194,12 +194,7 @@ export default async function SymptomPage({ params }: Props) {
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { overflow-x: hidden; max-width: 100%; }
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8; --bord-m: #8B2D3A;
-          --paper: #F7F2EA; --paper-d: #EDE5D8; --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --acc-l: #FBF3E3; --rule: #DDD5C5; --white: #FFFFFF;
-        }
-        .sp { font-family: 'Golos Text', sans-serif; background: var(--bord-d); }
+.sp { font-family: 'Golos Text', sans-serif; background: var(--bord-d); }
         .sp-top { background: var(--bord); padding: 6px 0; text-align: center; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
         .sp-main { padding: 18px 24px 16px; display: flex; align-items: center; justify-content: center; }
         .sp-logo { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: white; text-decoration: none; }
@@ -219,9 +214,9 @@ export default async function SymptomPage({ params }: Props) {
         .sp-bread-sep { color: var(--rule); }
 
         /* HERO */
-        .sp-crumbs { background: #EDE5D8; border-bottom: 1px solid #DDD5C5; }
+        .sp-crumbs { background: var(--paper-d); border-bottom: 1px solid var(--rule); }
         .sp-crumbs-in { max-width: 1200px; margin: 0 auto; padding: 10px 24px; }
-        .sp-hero { background: white; border-bottom: 2px solid var(--ink); padding: 40px 24px 36px; }
+        .sp-hero { background: var(--white); border-bottom: 2px solid var(--ink); padding: 40px 24px 36px; }
         .sp-hero-in { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 280px; gap: 48px; align-items: start; }
         .sp-sys-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bord); margin-bottom: 14px; }
         .sp-title { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 900; color: var(--ink); line-height: 1.15; margin-bottom: 16px; }
@@ -253,7 +248,7 @@ export default async function SymptomPage({ params }: Props) {
         .sp-sec-ttl { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); }
         .sp-sec-line { flex: 1; height: 1px; background: var(--rule); }
         .sp-art-list { display: flex; flex-direction: column; gap: 16px; }
-        .sp-art-item { background: white; border: 1px solid var(--rule); border-radius: 2px; display: grid; grid-template-columns: 140px 1fr; gap: 0; text-decoration: none; transition: box-shadow 0.18s; overflow: hidden; }
+        .sp-art-item { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; display: grid; grid-template-columns: 140px 1fr; gap: 0; text-decoration: none; transition: box-shadow 0.18s; overflow: hidden; }
         .sp-art-item:hover { box-shadow: 0 2px 16px rgba(107,31,42,0.10); }
         .sp-art-img { height: 100px; overflow: hidden; background: var(--bord-l); }
         .sp-art-img img { width: 100%; height: 100%; object-fit: cover; }
@@ -277,12 +272,12 @@ export default async function SymptomPage({ params }: Props) {
         .sp-foot-copy { font-size: 11px; color: rgba(255,255,255,0.35); width: 100%; text-align: center; margin-top: 8px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
 
         /* AD BLOCKS */
-        .sp-ad-box { background: white; border: 1px solid var(--rule); padding: 14px; }
+        .sp-ad-box { background: var(--white); border: 1px solid var(--rule); padding: 14px; }
         .sp-ad-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 8px; }
         .sp-ad-slot { min-height: 250px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; padding: 16px; }
-        .sp-ad-incontent { margin: 28px 0; padding: 14px; background: white; border: 1px solid var(--rule); border-top: 2px solid var(--bord); }
+        .sp-ad-incontent { margin: 28px 0; padding: 14px; background: var(--white); border: 1px solid var(--rule); border-top: 2px solid var(--bord); }
         .sp-ad-incontent-slot { min-height: 180px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; padding: 16px; }
-        .sp-ad-under { background: white; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
+        .sp-ad-under { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
         .sp-ad-under-in { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         .sp-ad-under-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
 
@@ -303,7 +298,7 @@ export default async function SymptomPage({ params }: Props) {
         }
         .sp-faq { margin-top: 32px; margin-bottom: 8px; }
         .sp-faq-ttl { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: var(--bord); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--bord); }
-        .sp-faq-item { border: 1px solid var(--rule); border-radius: 2px; margin-bottom: 6px; background: white; transition: border-color 0.15s; }
+        .sp-faq-item { border: 1px solid var(--rule); border-radius: 2px; margin-bottom: 6px; background: var(--white); transition: border-color 0.15s; }
         .sp-faq-item:hover { border-color: var(--bord); }
         .sp-faq-q { padding: 13px 16px; font-size: 14px; font-weight: 600; color: var(--ink); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; line-height: 1.4; }
         .sp-faq-q::-webkit-details-marker { display: none; }

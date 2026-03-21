@@ -140,12 +140,7 @@ export default async function TestPage({ params }: Props) {
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { overflow-x: hidden; max-width: 100%; }
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8; --bord-m: #8B2D3A;
-          --paper: #F7F2EA; --paper-d: #EDE5D8; --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --acc-l: #FBF3E3; --rule: #DDD5C5; --white: #FFFFFF;
-        }
-        .tt { font-family: 'Golos Text', sans-serif; background: var(--bord-d); }
+.tt { font-family: 'Golos Text', sans-serif; background: var(--bord-d); }
         .tt-top { background: var(--bord); padding: 6px 0; text-align: center; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
         .tt-main { padding: 18px 24px 16px; display: flex; align-items: center; justify-content: center; }
         .tt-logo { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: white; text-decoration: none; }
@@ -165,7 +160,7 @@ export default async function TestPage({ params }: Props) {
         .tt-bread-sep { color: var(--rule); }
 
         /* HERO */
-        .tt-hero { background: white; border-bottom: 2px solid var(--ink); padding: 40px 24px 36px; }
+        .tt-hero { background: var(--white); border-bottom: 2px solid var(--ink); padding: 40px 24px 36px; }
         .tt-hero-in { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 280px; gap: 48px; align-items: start; }
 
         .tt-cat-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bord); margin-bottom: 14px; }
@@ -210,9 +205,9 @@ export default async function TestPage({ params }: Props) {
         .tt-ad-box { background: var(--white); border: 1px solid var(--rule); padding: 14px; margin-bottom: 16px; }
         .tt-ad-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 8px; }
         .tt-ad-slot { min-height: 250px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; padding: 16px; }
-        .tt-ad-incontent { margin: 28px 0; padding: 14px; background: white; border: 1px solid var(--rule); border-top: 2px solid var(--bord); }
+        .tt-ad-incontent { margin: 28px 0; padding: 14px; background: var(--white); border: 1px solid var(--rule); border-top: 2px solid var(--bord); }
         .tt-ad-incontent-slot { min-height: 180px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; padding: 16px; }
-        .tt-ad-under { background: white; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
+        .tt-ad-under { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
         .tt-ad-under-in { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         .tt-ad-under-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
 
@@ -223,7 +218,7 @@ export default async function TestPage({ params }: Props) {
         .tt-sec-ttl { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); }
         .tt-sec-line { flex: 1; height: 1px; background: var(--rule); }
         .tt-art-list { display: flex; flex-direction: column; gap: 16px; }
-        .tt-art-item { background: white; border: 1px solid var(--rule); border-radius: 2px; display: grid; grid-template-columns: 140px 1fr; text-decoration: none; transition: box-shadow 0.18s; overflow: hidden; }
+        .tt-art-item { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; display: grid; grid-template-columns: 140px 1fr; text-decoration: none; transition: box-shadow 0.18s; overflow: hidden; }
         .tt-art-item:hover { box-shadow: 0 2px 16px rgba(107,31,42,0.10); }
         .tt-art-img { height: 100px; overflow: hidden; background: var(--bord-l); }
         .tt-art-img img { width: 100%; height: 100%; object-fit: cover; }
@@ -265,7 +260,7 @@ export default async function TestPage({ params }: Props) {
       
 
 
-      <div style={{ background: '#EDE5D8', borderBottom: '1px solid #DDD5C5' }}>
+      <div style={{ background: 'var(--paper-d)', borderBottom: '1px solid var(--rule)' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto', padding: '10px 24px' }}>
             <Breadcrumbs items={[
               { label: 'Анализы', href: '/tests' },

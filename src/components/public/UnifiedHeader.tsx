@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import ThemeToggle from './ThemeToggle'
 
 type HeaderCategory = {
   id: string
@@ -76,6 +77,7 @@ export default function UnifiedHeader({ categories }: { categories: HeaderCatego
               →
             </button>
           </form>
+          <ThemeToggle />
 
           <span className="hidden lg:block text-[11px] italic text-white/30">{today}</span>
         </div>

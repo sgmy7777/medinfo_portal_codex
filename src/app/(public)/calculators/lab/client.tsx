@@ -233,12 +233,7 @@ export default function LabCalculatorsPageClient() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8; --bord-m: #8B2D3A;
-          --paper: #F7F2EA; --paper-d: #EDE5D8; --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --rule: #DDD5C5; --white: #FFFFFF;
-        }
-        body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
+body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
         .lc { background: var(--bord-d); }
         .lc-top { background: var(--bord); padding: 6px 0; text-align: center; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
         .lc-main { padding: 18px 24px 16px; display: flex; align-items: center; justify-content: center; }
@@ -257,7 +252,7 @@ export default function LabCalculatorsPageClient() {
         .lc-sub { font-size: 15px; color: var(--ink-60); line-height: 1.6; }
 
         .lc-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 28px; }
-        .lc-tab { padding: 14px 10px; background: white; border: 1px solid var(--rule); border-radius: 2px; cursor: pointer; text-align: center; transition: all 0.15s; font-family: 'Golos Text', sans-serif; border-top: 3px solid var(--rule); }
+        .lc-tab { padding: 14px 10px; background: var(--white); border: 1px solid var(--rule); border-radius: 2px; cursor: pointer; text-align: center; transition: all 0.15s; font-family: 'Golos Text', sans-serif; border-top: 3px solid var(--rule); }
         .lc-tab.active { border-top-color: var(--bord); background: var(--bord-l); }
         .lc-tab:hover:not(.active) { border-top-color: var(--bord-m); }
         .lc-tab-ico { font-size: 22px; margin-bottom: 4px; }
@@ -265,12 +260,12 @@ export default function LabCalculatorsPageClient() {
         .lc-tab-desc { font-size: 10px; color: var(--ink-30); margin-top: 2px; display: none; }
         .lc-tab.active .lc-tab-desc { display: block; }
 
-        .lc-card { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 28px; margin-bottom: 24px; }
+        .lc-card { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 28px; margin-bottom: 24px; }
         .lc-card-ttl { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
         .lc-card-sub { font-size: 13px; color: var(--ink-30); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
 
         .lc-sex { display: flex; gap: 0; margin-bottom: 20px; border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
-        .lc-sex-btn { flex: 1; padding: 10px; font-size: 13px; font-weight: 600; text-align: center; cursor: pointer; background: white; border: none; color: var(--ink-60); transition: all 0.15s; font-family: 'Golos Text', sans-serif; }
+        .lc-sex-btn { flex: 1; padding: 10px; font-size: 13px; font-weight: 600; text-align: center; cursor: pointer; background: var(--white); border: none; color: var(--ink-60); transition: all 0.15s; font-family: 'Golos Text', sans-serif; }
         .lc-sex-btn.active { background: var(--bord); color: white; }
         .lc-sex-btn:hover:not(.active) { background: var(--bord-l); color: var(--bord); }
 
@@ -294,14 +289,14 @@ export default function LabCalculatorsPageClient() {
         .lc-result-desc { font-size: 13px; line-height: 1.6; opacity: 0.85; }
         .lc-reset { font-size: 12px; background: none; border: none; cursor: pointer; text-decoration: underline; margin-top: 8px; padding: 0; font-family: 'Golos Text', sans-serif; }
 
-        .lc-info { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 20px 24px; margin-bottom: 24px; }
+        .lc-info { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 20px 24px; margin-bottom: 24px; }
         .lc-info-ttl { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
         .lc-info-p { font-size: 13px; color: var(--ink-60); line-height: 1.7; margin-bottom: 8px; }
 
-        .lc-ad-box { background: white; border: 1px solid var(--rule); padding: 14px; margin-bottom: 24px; }
+        .lc-ad-box { background: var(--white); border: 1px solid var(--rule); padding: 14px; margin-bottom: 24px; }
         .lc-ad-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 8px; }
         .lc-ad-slot { min-height: 250px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; padding: 16px; }
-        .lc-ad-under { background: white; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
+        .lc-ad-under { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
         .lc-ad-under-in { max-width: 860px; margin: 0 auto; padding: 0 24px; }
         .lc-ad-under-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
 

@@ -64,12 +64,7 @@ export default function CaloriesCalculatorClient() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8; --bord-m: #8B2D3A;
-          --paper: #F7F2EA; --paper-d: #EDE5D8; --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --rule: #DDD5C5; --white: #FFFFFF;
-        }
-        body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
+body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
         .cl { background: var(--bord-d); }
         .cl-top { background: var(--bord); padding: 6px 0; text-align: center; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
         .cl-main { padding: 18px 24px 16px; display: flex; align-items: center; justify-content: center; }
@@ -86,10 +81,10 @@ export default function CaloriesCalculatorClient() {
         .cl-ico { font-size: 44px; margin-bottom: 12px; display: block; }
         .cl-ttl { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--ink); margin-bottom: 8px; }
         .cl-sub { font-size: 15px; color: var(--ink-60); line-height: 1.6; }
-        .cl-card { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
+        .cl-card { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
         .cl-card-ttl { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
         .cl-sex { display: flex; gap: 0; margin-bottom: 20px; border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
-        .cl-sex-btn { flex: 1; padding: 11px; font-size: 14px; font-weight: 600; text-align: center; cursor: pointer; background: white; border: none; color: var(--ink-60); transition: all 0.15s; font-family: 'Golos Text', sans-serif; }
+        .cl-sex-btn { flex: 1; padding: 11px; font-size: 14px; font-weight: 600; text-align: center; cursor: pointer; background: var(--white); border: none; color: var(--ink-60); transition: all 0.15s; font-family: 'Golos Text', sans-serif; }
         .cl-sex-btn.active { background: var(--bord); color: white; }
         .cl-sex-btn:hover:not(.active) { background: var(--bord-l); color: var(--bord); }
         .cl-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 20px; }
@@ -99,7 +94,7 @@ export default function CaloriesCalculatorClient() {
         .cl-input:focus { border-color: var(--bord); }
         .cl-act-label { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-60); margin-bottom: 8px; display: block; }
         .cl-act-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-        .cl-act-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--rule); border-radius: 2px; cursor: pointer; transition: all 0.15s; background: white; }
+        .cl-act-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--rule); border-radius: 2px; cursor: pointer; transition: all 0.15s; background: var(--white); }
         .cl-act-item.active { border-color: var(--bord); background: var(--bord-l); }
         .cl-act-item:hover:not(.active) { background: var(--paper); border-color: var(--ink-30); }
         .cl-act-radio { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--rule); flex-shrink: 0; transition: all 0.15s; }
@@ -110,7 +105,7 @@ export default function CaloriesCalculatorClient() {
         .cl-btn:hover { background: var(--bord-m); }
         .cl-error { font-size: 13px; color: #DC2626; margin-top: 10px; padding: 10px 14px; background: #FFF1F2; border: 1px solid #FECDD3; border-radius: 2px; }
 
-        .cl-result { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
+        .cl-result { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
         .cl-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--rule); }
         .cl-stat { background: var(--paper); border-radius: 2px; padding: 16px; text-align: center; }
         .cl-stat-val { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--bord); line-height: 1; }
@@ -127,13 +122,13 @@ export default function CaloriesCalculatorClient() {
         .cl-goal-val { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; flex-shrink: 0; min-width: 70px; text-align: right; }
         .cl-goal-unit { font-size: 11px; color: var(--ink-30); font-weight: 400; }
         .cl-reset { font-size: 13px; color: var(--bord); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; margin-top: 16px; }
-        .cl-info { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 24px 28px; }
+        .cl-info { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 24px 28px; }
         .cl-info-ttl { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 14px; }
         .cl-info-p { font-size: 14px; color: var(--ink-60); line-height: 1.7; margin-bottom: 10px; }
-        .cl-ad-box { background: white; border: 1px solid var(--rule); padding: 14px; margin-bottom: 24px; }
+        .cl-ad-box { background: var(--white); border: 1px solid var(--rule); padding: 14px; margin-bottom: 24px; }
         .cl-ad-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 8px; }
         .cl-ad-slot { min-height: 250px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; padding: 16px; }
-        .cl-ad-under { background: white; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
+        .cl-ad-under { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
         .cl-ad-under-in { max-width: 800px; margin: 0 auto; padding: 0 24px; }
         .cl-ad-under-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
 

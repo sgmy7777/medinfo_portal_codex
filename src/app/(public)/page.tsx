@@ -65,25 +65,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { overflow-x: hidden; max-width: 100%; }
-
-        :root {
-          --bord: #6B1F2A;
-          --bord-d: #4A0F17;
-          --bord-l: #F5EBE8;
-          --bord-m: #8B2D3A;
-          --paper: #F7F2EA;
-          --paper-d: #EDE5D8;
-          --paper-dd: #E0D5C4;
-          --ink: #1C1208;
-          --ink-60: #5A4A38;
-          --ink-30: #9A8A78;
-          --acc: #C8913A;
-          --acc-l: #F5EDD8;
-          --rule: #D8CCBA;
-          --white: #FFFDF9;
-        }
-
-        body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
+body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
         .serif { font-family: 'Playfair Display', serif; }
 
         /* ── HEADER ── */

@@ -526,12 +526,7 @@ export default function DecodePageClient() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8; --bord-m: #8B2D3A;
-          --paper: #F7F2EA; --paper-d: #EDE5D8; --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --rule: #DDD5C5; --white: #FFFFFF;
-        }
-        body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
+body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
 
         .dc { background: var(--bord-d); }
         .dc-top { background: var(--bord); padding: 6px 0; text-align: center; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
@@ -553,18 +548,18 @@ export default function DecodePageClient() {
         .dc-ico { font-size: 40px; margin-bottom: 10px; display: block; }
         .dc-ttl { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: var(--ink); margin-bottom: 6px; }
         .dc-sub { font-size: 14px; color: var(--ink-60); line-height: 1.6; margin-bottom: 8px; }
-        .dc-disclaimer { font-size: 11px; color: var(--ink-30); line-height: 1.5; padding: 8px 12px; background: white; border-left: 2px solid var(--rule); }
+        .dc-disclaimer { font-size: 11px; color: var(--ink-30); line-height: 1.5; padding: 8px 12px; background: var(--white); border-left: 2px solid var(--rule); }
 
-        .dc-card { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 24px; position: sticky; top: 16px; }
+        .dc-card { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 24px; position: sticky; top: 16px; }
         .dc-card-ttl { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 18px; }
 
         .dc-sex { display: flex; gap: 0; margin-bottom: 18px; border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
-        .dc-sex-btn { flex: 1; padding: 10px; font-size: 13px; font-weight: 600; text-align: center; cursor: pointer; background: white; border: none; color: var(--ink-60); transition: all 0.15s; font-family: 'Golos Text', sans-serif; }
+        .dc-sex-btn { flex: 1; padding: 10px; font-size: 13px; font-weight: 600; text-align: center; cursor: pointer; background: var(--white); border: none; color: var(--ink-60); transition: all 0.15s; font-family: 'Golos Text', sans-serif; }
         .dc-sex-btn.active { background: var(--bord); color: white; }
         .dc-sex-btn:hover:not(.active) { background: var(--bord-l); color: var(--bord); }
 
         .dc-cat-tabs { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 16px; }
-        .dc-cat-tab { padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer; background: white; border: 1px solid var(--rule); border-radius: 20px; color: var(--ink-60); transition: all 0.15s; font-family: 'Golos Text', sans-serif; }
+        .dc-cat-tab { padding: 5px 12px; font-size: 11px; font-weight: 600; cursor: pointer; background: var(--white); border: 1px solid var(--rule); border-radius: 20px; color: var(--ink-60); transition: all 0.15s; font-family: 'Golos Text', sans-serif; }
         .dc-cat-tab.active { background: var(--bord-d); border-color: var(--bord-d); color: white; }
         .dc-cat-tab:hover:not(.active) { border-color: var(--bord); color: var(--bord); }
 
@@ -589,7 +584,7 @@ export default function DecodePageClient() {
         .dc-empty-ico { font-size: 48px; opacity: 0.2; margin-bottom: 12px; }
         .dc-empty-txt { font-size: 14px; color: var(--ink-30); line-height: 1.6; }
 
-        .dc-result { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 24px; position: relative; }
+        .dc-result { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 24px; position: relative; }
         .dc-result-close { position: absolute; top: 14px; right: 14px; background: none; border: none; cursor: pointer; color: var(--ink-30); font-size: 16px; line-height: 1; padding: 4px; }
         .dc-result-close:hover { color: var(--bord); }
         .dc-result-top { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
@@ -611,7 +606,7 @@ export default function DecodePageClient() {
         .dc-interp-ok { background: #F0FDF4; color: #166534; }
         .dc-interp-ttl { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 6px; }
         .dc-interp-txt { font-size: 13px; color: var(--ink-60); line-height: 1.65; }
-        .dc-interp-doctor { margin-top: 10px; font-size: 13px; color: var(--ink); padding: 8px 12px; background: white; border-left: 2px solid var(--bord); }
+        .dc-interp-doctor { margin-top: 10px; font-size: 13px; color: var(--ink); padding: 8px 12px; background: var(--white); border-left: 2px solid var(--bord); }
         .dc-interp-doctor strong { color: var(--bord); }
 
         .dc-result-actions { display: flex; align-items: center; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
@@ -619,10 +614,10 @@ export default function DecodePageClient() {
         .dc-link-btn:hover { background: var(--bord-l); }
         .dc-reset { font-size: 12px; color: var(--ink-30); background: none; border: none; cursor: pointer; text-decoration: underline; padding: 0; }
 
-        .dc-ad-box { background: white; border: 1px solid var(--rule); padding: 14px; margin-top: 28px; }
+        .dc-ad-box { background: var(--white); border: 1px solid var(--rule); padding: 14px; margin-top: 28px; }
         .dc-ad-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 8px; }
         .dc-ad-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
-        .dc-ad-under { background: white; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
+        .dc-ad-under { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
         .dc-ad-under-in { max-width: 860px; margin: 0 auto; padding: 0 24px; }
         .dc-ad-under-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
 

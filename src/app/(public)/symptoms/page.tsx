@@ -66,14 +66,7 @@ export default async function SymptomsPage() {
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { overflow-x: hidden; max-width: 100%; }
-
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8; --bord-m: #8B2D3A;
-          --paper: #F7F2EA; --paper-d: #EDE5D8; --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --acc-l: #FBF3E3; --rule: #DDD5C5; --white: #FFFFFF;
-        }
-
-        /* HEADER */
+/* HEADER */
         .sy { font-family: 'Golos Text', sans-serif; background: var(--bord-d); }
         .sy-top { background: var(--bord); padding: 6px 0; text-align: center; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
         .sy-main { padding: 18px 24px 16px; display: flex; align-items: center; justify-content: center; }
@@ -99,7 +92,7 @@ export default async function SymptomsPage() {
 
         /* SYSTEM ANCHORS */
         .sy-anchors { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; padding-bottom: 28px; border-bottom: 1px solid var(--rule); }
-        .sy-anchor-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; font-size: 12px; font-weight: 600; color: var(--ink-60); background: white; border: 1px solid var(--rule); border-radius: 2px; text-decoration: none; transition: all 0.15s; }
+        .sy-anchor-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; font-size: 12px; font-weight: 600; color: var(--ink-60); background: var(--white); border: 1px solid var(--rule); border-radius: 2px; text-decoration: none; transition: all 0.15s; }
         .sy-anchor-btn:hover { background: var(--bord-l); border-color: var(--bord); color: var(--bord); }
 
         /* SYSTEM SECTION */
@@ -112,7 +105,7 @@ export default async function SymptomsPage() {
 
         /* SYMPTOM GRID */
         .sy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .sy-card { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 16px 18px; text-decoration: none; display: block; transition: all 0.18s; position: relative; border-left: 3px solid transparent; }
+        .sy-card { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 16px 18px; text-decoration: none; display: block; transition: all 0.18s; position: relative; border-left: 3px solid transparent; }
         .sy-card:hover { border-color: var(--bord); border-left-color: var(--bord); box-shadow: 0 2px 12px rgba(107,31,42,0.08); }
         .sy-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
         .sy-card-ttl { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--ink); line-height: 1.25; }
@@ -132,11 +125,11 @@ export default async function SymptomsPage() {
         .sy-foot-copy { font-size: 11px; color: rgba(255,255,255,0.35); width: 100%; text-align: center; margin-top: 8px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
 
         @media (max-width: 900px) { .sy-grid { grid-template-columns: repeat(2, 1fr); } }
-        .sy-ad { background: white; border: 1px solid var(--rule); padding: 14px; margin: 28px 0; }
+        .sy-ad { background: var(--white); border: 1px solid var(--rule); padding: 14px; margin: 28px 0; }
         .sy-ad-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 8px; }
         .sy-ad-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
         .sy-ad-slot-tall { min-height: 250px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
-        .sy-ad-under { background: white; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; margin-top: 8px; }
+        .sy-ad-under { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; margin-top: 8px; }
         .sy-ad-under-in { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         @media (max-width: 600px) {
           .sy-hero-ttl { font-size: 28px; }

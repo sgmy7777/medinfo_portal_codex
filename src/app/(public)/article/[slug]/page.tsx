@@ -74,25 +74,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { overflow-x: hidden; max-width: 100%; }
-
-        :root {
-          --bord: #6B1F2A;
-          --bord-d: #4A0F17;
-          --bord-l: #F5EBE8;
-          --bord-m: #8B2D3A;
-          --paper: #F7F2EA;
-          --paper-d: #EDE5D8;
-          --paper-dd: #E0D5C4;
-          --ink: #1C1208;
-          --ink-60: #5A4A38;
-          --ink-30: #9A8A78;
-          --acc: #C8913A;
-          --acc-l: #F5EDD8;
-          --rule: #D8CCBA;
-          --white: #FFFDF9;
-        }
-
-        .ap { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; }
+.ap { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; }
 
         /* HEADER */
         .ap-hdr { background: var(--bord-d); }
@@ -113,7 +95,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         .ap-cat-lnk:hover { color: white; background: rgba(0,0,0,0.15); border-bottom-color: var(--acc); }
 
         /* BODY */
-        .ap-crumbs { background: var(--paper-d, #EDE5D8); border-bottom: 1px solid var(--rule, #DDD5C5); }
+        .ap-crumbs { background: var(--paper-d); border-bottom: 1px solid var(--rule); }
         .ap-crumbs-in { max-width: 1200px; margin: 0 auto; padding: 10px 24px; }
         .ap-body { flex: 1; }
         .ap-body-in { max-width: 1200px; width: 100%; margin: 0 auto; padding: 40px 24px 60px; display: grid; grid-template-columns: 1fr 280px; gap: 52px; }

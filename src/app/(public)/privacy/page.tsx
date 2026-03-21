@@ -15,13 +15,7 @@ export default async function PrivacyPage() {
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { overflow-x: hidden; max-width: 100%; }
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8;
-          --paper: #F7F2EA; --paper-d: #EDE5D8;
-          --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --rule: #D8CCBA; --white: #FFFDF9;
-        }
-        body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
+body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
 
         .pv-hdr { background: var(--bord-d); }
         .pv-hdr-top { border-bottom: 1px solid rgba(255,255,255,0.07); padding: 6px 0; }

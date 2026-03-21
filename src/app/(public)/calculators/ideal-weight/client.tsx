@@ -73,12 +73,7 @@ export default function IdealWeightCalculatorClient() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8; --bord-m: #8B2D3A;
-          --paper: #F7F2EA; --paper-d: #EDE5D8; --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --rule: #DDD5C5; --white: #FFFFFF; --green: #16A34A;
-        }
-        body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
+body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
         .iw { background: var(--bord-d); }
         .iw-top { background: var(--bord); padding: 6px 0; text-align: center; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
         .iw-main { padding: 18px 24px 16px; display: flex; align-items: center; justify-content: center; }
@@ -95,10 +90,10 @@ export default function IdealWeightCalculatorClient() {
         .iw-ico { font-size: 44px; margin-bottom: 12px; display: block; }
         .iw-ttl { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--ink); margin-bottom: 8px; }
         .iw-sub { font-size: 15px; color: var(--ink-60); line-height: 1.6; }
-        .iw-card { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
+        .iw-card { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
         .iw-card-ttl { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
         .iw-sex { display: flex; gap: 0; margin-bottom: 20px; border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
-        .iw-sex-btn { flex: 1; padding: 11px; font-size: 14px; font-weight: 600; text-align: center; cursor: pointer; background: white; border: none; color: var(--ink-60); transition: all 0.15s; font-family: 'Golos Text', sans-serif; }
+        .iw-sex-btn { flex: 1; padding: 11px; font-size: 14px; font-weight: 600; text-align: center; cursor: pointer; background: var(--white); border: none; color: var(--ink-60); transition: all 0.15s; font-family: 'Golos Text', sans-serif; }
         .iw-sex-btn.active { background: var(--bord); color: white; }
         .iw-sex-btn:hover:not(.active) { background: var(--bord-l); color: var(--bord); }
         .iw-field { margin-bottom: 20px; }
@@ -109,7 +104,7 @@ export default function IdealWeightCalculatorClient() {
         .iw-btn:hover { background: var(--bord-m); }
         .iw-error { font-size: 13px; color: #DC2626; margin-top: 10px; padding: 10px 14px; background: #FFF1F2; border: 1px solid #FECDD3; border-radius: 2px; }
 
-        .iw-result { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
+        .iw-result { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
         .iw-avg { text-align: center; margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--rule); }
         .iw-avg-val { font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 900; color: var(--green); line-height: 1; }
         .iw-avg-lbl { font-size: 13px; color: var(--ink-30); margin-top: 4px; }
@@ -124,13 +119,13 @@ export default function IdealWeightCalculatorClient() {
         .iw-formula-unit { font-size: 12px; color: var(--ink-30); margin-left: 2px; }
 
         .iw-reset { font-size: 13px; color: var(--bord); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; margin-top: 16px; }
-        .iw-info { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 24px 28px; }
+        .iw-info { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 24px 28px; }
         .iw-info-ttl { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 14px; }
         .iw-info-p { font-size: 14px; color: var(--ink-60); line-height: 1.7; margin-bottom: 10px; }
-        .iw-ad-box { background: white; border: 1px solid var(--rule); padding: 14px; margin-bottom: 24px; }
+        .iw-ad-box { background: var(--white); border: 1px solid var(--rule); padding: 14px; margin-bottom: 24px; }
         .iw-ad-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 8px; }
         .iw-ad-slot { min-height: 250px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; padding: 16px; }
-        .iw-ad-under { background: white; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
+        .iw-ad-under { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
         .iw-ad-under-in { max-width: 800px; margin: 0 auto; padding: 0 24px; }
         .iw-ad-under-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
 

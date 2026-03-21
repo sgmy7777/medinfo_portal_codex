@@ -102,3 +102,144 @@
   color: #3f3f46;
 }
 .article-content strong { font-weight: 600; color: #1c1917; }
+
+
+/* ── Базовые переменные ЗдравИнфо (светлая тема) ──────────────────────── */
+:root {
+  --bord:   #6B1F2A;
+  --bord-d: #4A0F17;
+  --bord-m: #8B2D3A;
+  --bord-l: #F5EBE8;
+
+  --paper:   #F7F2EA;
+  --paper-d: #EDE5D8;
+
+  --ink:    #1C1208;
+  --ink-60: #5A4A38;
+  --ink-30: #9A8A78;
+
+  --acc:   #C8913A;
+  --acc-l: #FBF3E6;
+
+  --rule:  #DDD5C5;
+  --white: #FFFFFF;
+}
+
+/* ── Тёмная тема ЗдравИнфо ─────────────────────────────────────────────── */
+/* :root[data-theme] имеет более высокую специфичность чем :root в инлайн <style> */
+html[data-theme="dark"] {
+  --bord:   #A94455;
+  --bord-d: #7A2233;
+  --bord-m: #C05568;
+  --bord-l: #2A1218;
+
+  --paper:   #141210;
+  --paper-d: #1C1915;
+
+  --ink:    #EDE5D8;
+  --ink-60: #A89880;
+  --ink-30: #6A5A48;
+
+  --acc:   #D4A050;
+  --acc-l: #1E180E;
+
+  --rule:  #2E2820;
+  --white: #1C1915;
+}
+
+/* Прямые переопределения фона и цвета — для страниц с жёсткими значениями */
+[data-theme="dark"] body {
+  background: #141210 !important;
+  color: #EDE5D8 !important;
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  background: #141210;
+}
+
+/* Хедер в тёмной теме — чуть светлее фон */
+[data-theme="dark"] .zh-hdr,
+[data-theme="dark"] .ap-hdr,
+[data-theme="dark"] .sp-hdr,
+[data-theme="dark"] .tt-hdr {
+  background: #2A0D14 !important;
+}
+
+/* Белые карточки → тёмный фон */
+[data-theme="dark"] .lc-card,
+[data-theme="dark"] .tt-side-box,
+[data-theme="dark"] .au-edu-item,
+[data-theme="dark"] .sp-faq-item,
+[data-theme="dark"] .tt-art-item,
+[data-theme="dark"] .lc-result {
+  background: var(--paper-d) !important;
+  border-color: var(--rule) !important;
+}
+
+/* Текстовые инпуты */
+[data-theme="dark"] input,
+[data-theme="dark"] .lc-input {
+  background: #1C1915 !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+
+/* Плавный переход только для body */
+body { transition: background-color 0.25s ease, color 0.25s ease; }
+
+/* ── Дополнительные переопределения тёмной темы ──────────────────────── */
+
+/* Все основные контейнеры страниц */
+html[data-theme="dark"] body,
+html[data-theme="dark"] .zh-page,
+html[data-theme="dark"] .lc,
+html[data-theme="dark"] .sp-page,
+html[data-theme="dark"] .tt-page {
+  background: var(--paper) !important;
+}
+
+/* Блоки с жёстким светлым фоном */
+html[data-theme="dark"] .tt-norms-cell-lbl,
+html[data-theme="dark"] .tt-norms-note,
+html[data-theme="dark"] .tt-prep,
+html[data-theme="dark"] .lc-info,
+html[data-theme="dark"] .sp-side-box,
+html[data-theme="dark"] .au-disclaimer {
+  background: var(--paper-d) !important;
+  border-color: var(--rule) !important;
+}
+
+/* Текст поверх тёмных блоков */
+html[data-theme="dark"] .tt-norms-val { color: #E8A0A8; }
+html[data-theme="dark"] .tt-norms-cell-lbl { color: var(--ink-60); }
+
+/* Хедер — бордовый остаётся, просто темнее */
+html[data-theme="dark"] .UnifiedHeader,
+html[data-theme="dark"] [class*="-hdr"] {
+  background: #2A0D14;
+}
+
+/* Инпуты и формы */
+html[data-theme="dark"] input:not([type="range"]):not([type="checkbox"]):not([type="radio"]) {
+  background: #1E1A15 !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
+}
+html[data-theme="dark"] input::placeholder {
+  color: var(--ink-30) !important;
+}
+
+/* lc-btn в тёмной теме */
+html[data-theme="dark"] .lc-btn {
+  background: var(--bord) !important;
+  color: white !important;
+}
+
+/* Блоки с фоном paper/paper-d уже правильные через переменные */
+/* Блоки с background: var(--paper-d) в CSS отобразятся тёмно автоматически */
+
+/* Подсветка поиска в тёмной теме */
+html[data-theme="dark"] mark {
+  background: #5C4A00 !important;
+  color: var(--ink) !important;
+}

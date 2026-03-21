@@ -86,36 +86,36 @@ export default function SearchPage() {
   return (
     <>
       <style>{`
-        .sr-body{background:#F7F2EA;min-height:60vh}
+        .sr-body{background:var(--paper);min-height:60vh}
         .sr-wrap{max-width:860px;margin:0 auto;padding:48px 24px 72px}
-        .sr-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:#1C1208;margin-bottom:6px}
-        .sr-meta{font-size:14px;color:#9A8A78;margin-bottom:24px;min-height:20px}
-        .sr-meta strong{color:#6B1F2A}
+        .sr-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--ink);margin-bottom:6px}
+        .sr-meta{font-size:14px;color:var(--ink-30);margin-bottom:24px;min-height:20px}
+        .sr-meta strong{color:var(--bord)}
         .sr-form{position:relative;margin-bottom:36px}
-        .sr-input{width:100%;padding:14px 50px 14px 18px;border:2px solid #DDD5C5;border-radius:2px;font-size:17px;font-family:inherit;background:white;color:#1C1208;outline:none;transition:border-color .15s;box-sizing:border-box}
-        .sr-input:focus{border-color:#6B1F2A}
-        .sr-clear{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#9A8A78;font-size:18px;line-height:1;padding:4px}
-        .sr-clear:hover{color:#6B1F2A}
-        .sr-loading{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid #DDD5C5;border-top-color:#6B1F2A;border-radius:50%;animation:spin .6s linear infinite}
+        .sr-input{width:100%;padding:14px 50px 14px 18px;border:2px solid var(--rule);border-radius:2px;font-size:17px;font-family:inherit;background: var(--white);color:var(--ink);outline:none;transition:border-color .15s;box-sizing:border-box}
+        .sr-input:focus{border-color:var(--bord)}
+        .sr-clear{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink-30);font-size:18px;line-height:1;padding:4px}
+        .sr-clear:hover{color:var(--bord)}
+        .sr-loading{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid var(--rule);border-top-color:var(--bord);border-radius:50%;animation:spin .6s linear infinite}
         @keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
         .sr-section{margin-bottom:32px}
-        .sr-ttl{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9A8A78;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #DDD5C5;display:flex;justify-content:space-between}
-        .sr-card{background:white;border:1px solid #DDD5C5;border-radius:2px;padding:14px 18px;margin-bottom:6px;text-decoration:none;display:block;transition:border-color .15s,box-shadow .15s}
-        .sr-card:hover{border-color:#6B1F2A;box-shadow:0 2px 8px rgba(107,31,42,.08)}
-        .sr-cat{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6B1F2A;margin-bottom:3px}
-        .sr-name{font-size:15px;font-weight:600;color:#1C1208;line-height:1.4;margin-bottom:3px}
-        .sr-desc{font-size:13px;color:#5A4A38;line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-        .sr-badge{display:inline-block;font-size:11px;background:#EDE5D8;color:#9A8A78;padding:2px 8px;border-radius:2px;margin-top:4px}
-        .sr-more{display:inline-block;font-size:12px;font-weight:600;color:#6B1F2A;text-decoration:none;margin-top:4px;padding:5px 12px;border:1px solid #F5EBE8;border-radius:2px}
-        .sr-more:hover{background:#F5EBE8}
+        .sr-ttl{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-30);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between}
+        .sr-card{background: var(--white);border:1px solid var(--rule);border-radius:2px;padding:14px 18px;margin-bottom:6px;text-decoration:none;display:block;transition:border-color .15s,box-shadow .15s}
+        .sr-card:hover{border-color:var(--bord);box-shadow:0 2px 8px rgba(107,31,42,.08)}
+        .sr-cat{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--bord);margin-bottom:3px}
+        .sr-name{font-size:15px;font-weight:600;color:var(--ink);line-height:1.4;margin-bottom:3px}
+        .sr-desc{font-size:13px;color:var(--ink-60);line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+        .sr-badge{display:inline-block;font-size:11px;background:var(--paper-d);color:var(--ink-30);padding:2px 8px;border-radius:2px;margin-top:4px}
+        .sr-more{display:inline-block;font-size:12px;font-weight:600;color:var(--bord);text-decoration:none;margin-top:4px;padding:5px 12px;border:1px solid var(--bord-l);border-radius:2px}
+        .sr-more:hover{background:var(--bord-l)}
         .sr-empty{text-align:center;padding:48px 0}
         .sr-empty-ico{font-size:44px;opacity:.2;margin-bottom:10px}
-        .sr-empty-txt{font-size:15px;color:#9A8A78;line-height:1.7}
+        .sr-empty-txt{font-size:15px;color:var(--ink-30);line-height:1.7}
         .sr-suggest{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;justify-content:center}
-        .sr-suggest button{font-size:13px;color:#6B1F2A;background:none;border:1px solid #F5EBE8;border-radius:20px;padding:6px 14px;cursor:pointer;font-family:inherit}
-        .sr-suggest button:hover{background:#F5EBE8}
+        .sr-suggest button{font-size:13px;color:var(--bord);background:none;border:1px solid var(--bord-l);border-radius:20px;padding:6px 14px;cursor:pointer;font-family:inherit}
+        .sr-suggest button:hover{background:var(--bord-l)}
         mark{background:#FFF3C4;color:inherit;border-radius:2px;padding:0 1px}
-        .sr-kbd{display:inline-block;font-size:10px;color:#9A8A78;background:#F0ECE4;border:1px solid #DDD5C5;border-radius:3px;padding:1px 5px;margin-left:6px;font-family:monospace}
+        .sr-kbd{display:inline-block;font-size:10px;color:var(--ink-30);background:var(--paper-d);border:1px solid var(--rule);border-radius:3px;padding:1px 5px;margin-left:6px;font-family:monospace}
       `}</style>
 
       <div className="sr-body">
@@ -126,7 +126,7 @@ export default function SearchPage() {
           </h1>
 
           <p className="sr-meta">
-            {loading && inputVal.length >= 2 && <span style={{color:'#9A8A78'}}>Поиск...</span>}
+            {loading && inputVal.length >= 2 && <span style={{color:'var(--ink-30)'}}>Поиск...</span>}
             {!loading && q && total > 0 && <><strong>{total}</strong> результатов по запросу «<strong>{q}</strong>»</>}
             {!loading && q && total === 0 && q.length >= 2 && <>По запросу «<strong>{q}</strong>» ничего не найдено</>}
           </p>
@@ -166,9 +166,9 @@ export default function SearchPage() {
               <div className="sr-empty-ico">🤷</div>
               <div className="sr-empty-txt">
                 Ничего не найдено. Попробуйте другой запрос или перейдите в разделы:<br />
-                <Link href="/symptoms" style={{color:'#6B1F2A'}}>Симптомы</Link>{' · '}
-                <Link href="/tests" style={{color:'#6B1F2A'}}>Анализы</Link>{' · '}
-                <Link href="/calculators" style={{color:'#6B1F2A'}}>Калькуляторы</Link>
+                <Link href="/symptoms" style={{color:'var(--bord)'}}>Симптомы</Link>{' · '}
+                <Link href="/tests" style={{color:'var(--bord)'}}>Анализы</Link>{' · '}
+                <Link href="/calculators" style={{color:'var(--bord)'}}>Калькуляторы</Link>
               </div>
             </div>
           )}

@@ -104,12 +104,7 @@ export default function HeartRateCalculatorClient() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8; --bord-m: #8B2D3A;
-          --paper: #F7F2EA; --paper-d: #EDE5D8; --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --rule: #DDD5C5; --heart: #DC2626;
-        }
-        body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
+body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
         .hr { background: var(--bord-d); }
         .hr-top { background: var(--bord); padding: 6px 0; text-align: center; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
         .hr-main { padding: 18px 24px 16px; display: flex; align-items: center; justify-content: center; }
@@ -126,7 +121,7 @@ export default function HeartRateCalculatorClient() {
         .hr-ico { font-size: 44px; margin-bottom: 12px; display: block; }
         .hr-ttl { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--ink); margin-bottom: 8px; }
         .hr-sub { font-size: 15px; color: var(--ink-60); line-height: 1.6; }
-        .hr-card { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
+        .hr-card { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
         .hr-card-ttl { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
         .hr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
         .hr-field { display: flex; flex-direction: column; gap: 6px; }
@@ -138,7 +133,7 @@ export default function HeartRateCalculatorClient() {
         .hr-btn:hover { background: var(--bord-m); }
         .hr-error { font-size: 13px; color: #DC2626; margin-top: 10px; padding: 10px 14px; background: #FFF1F2; border: 1px solid #FECDD3; border-radius: 2px; }
 
-        .hr-result { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
+        .hr-result { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 32px; margin-bottom: 24px; }
         .hr-max-box { text-align: center; padding: 20px; background: var(--paper); border-radius: 2px; margin-bottom: 24px; }
         .hr-max-val { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 900; color: var(--heart); line-height: 1; }
         .hr-max-lbl { font-size: 12px; color: var(--ink-30); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
@@ -158,13 +153,13 @@ export default function HeartRateCalculatorClient() {
         .hr-zone-bar { height: 100%; border-radius: 2px; }
 
         .hr-reset { font-size: 13px; color: var(--bord); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; margin-top: 20px; }
-        .hr-info { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 24px 28px; }
+        .hr-info { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 24px 28px; }
         .hr-info-ttl { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 14px; }
         .hr-info-p { font-size: 14px; color: var(--ink-60); line-height: 1.7; margin-bottom: 10px; }
-        .hr-ad-box { background: white; border: 1px solid var(--rule); padding: 14px; margin-bottom: 24px; }
+        .hr-ad-box { background: var(--white); border: 1px solid var(--rule); padding: 14px; margin-bottom: 24px; }
         .hr-ad-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-30); margin-bottom: 8px; }
         .hr-ad-slot { min-height: 250px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; padding: 16px; }
-        .hr-ad-under { background: white; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
+        .hr-ad-under { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 20px 0; }
         .hr-ad-under-in { max-width: 800px; margin: 0 auto; padding: 0 24px; }
         .hr-ad-under-slot { min-height: 90px; background: var(--paper-d); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-30); text-align: center; }
 

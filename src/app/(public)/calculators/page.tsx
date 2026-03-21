@@ -69,12 +69,7 @@ export default function CalculatorsPage() {
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Golos+Text:wght@400;500;600&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { overflow-x: hidden; max-width: 100%; }
-        :root {
-          --bord: #6B1F2A; --bord-d: #4A0F17; --bord-l: #F5EBE8; --bord-m: #8B2D3A;
-          --paper: #F7F2EA; --paper-d: #EDE5D8; --ink: #1C1208; --ink-60: #5A4A38; --ink-30: #9A8A78;
-          --acc: #C8913A; --acc-l: #FBF3E3; --rule: #DDD5C5; --white: #FFFFFF;
-        }
-        body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
+body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: var(--ink); }
 
         .ca { background: var(--bord-d); }
         .ca-top { background: var(--bord); padding: 6px 0; text-align: center; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
@@ -95,7 +90,7 @@ export default function CalculatorsPage() {
         .ca-sec-line { flex: 1; height: 1px; background: var(--rule); position: relative; top: -2px; }
 
         .ca-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .ca-card { background: white; border: 1px solid var(--rule); border-radius: 2px; padding: 28px; text-decoration: none; display: block; transition: all 0.18s; position: relative; overflow: hidden; border-top: 3px solid var(--rule); }
+        .ca-card { background: var(--white); border: 1px solid var(--rule); border-radius: 2px; padding: 28px; text-decoration: none; display: block; transition: all 0.18s; position: relative; overflow: hidden; border-top: 3px solid var(--rule); }
         .ca-card:hover { box-shadow: 0 4px 20px rgba(107,31,42,0.1); transform: translateY(-2px); }
         .ca-card-ico { font-size: 36px; margin-bottom: 14px; display: block; }
         .ca-card-ttl { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 8px; line-height: 1.25; }
