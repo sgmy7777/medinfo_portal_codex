@@ -39,7 +39,7 @@ export default function SearchPage() {
   const [query, setQuery] = useState(initialQ)
   const [data, setData] = useState<SearchData | null>(null)
   const [loading, setLoading] = useState(false)
-  const debounceRef = useRef<NodeJS.Timeout>()
+  const debounceRef = useRef<NodeJS.Timeout | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const doSearch = useCallback(async (q: string) => {
@@ -58,7 +58,7 @@ export default function SearchPage() {
 
   // При изменении инпута — debounce 350ms
   useEffect(() => {
-    clearTimeout(debounceRef.current)
+    if (debounceRef.current) clearTimeout(debounceRef.current)
     if (!inputVal.trim()) { setData(null); setLoading(false); return }
     setLoading(true)
     debounceRef.current = setTimeout(() => {
@@ -68,7 +68,7 @@ export default function SearchPage() {
       const url = inputVal.trim() ? '/search?q=' + encodeURIComponent(inputVal.trim()) : '/search'
       window.history.replaceState(null, '', url)
     }, 350)
-    return () => clearTimeout(debounceRef.current)
+    return () => { if (debounceRef.current) clearTimeout(debounceRef.current) }
   }, [inputVal, doSearch])
 
   // Первый запуск при SSR-переходе с URL

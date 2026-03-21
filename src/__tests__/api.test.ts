@@ -317,7 +317,7 @@ describe('GET /api/labtests', () => {
 
   test('возвращает список анализов', async () => {
     prismaMock.labTest.findMany.mockResolvedValue([mockLabTest])
-    const req = new Request('http://localhost/api/labtests')
+    const req = new NextRequest('http://localhost/api/labtests')
     const res = await getLabTests(req)
     expect(res.status).toBe(200)
     const body = await res.json()
@@ -328,7 +328,7 @@ describe('GET /api/labtests', () => {
 
   test('возвращает пустой массив если анализов нет', async () => {
     prismaMock.labTest.findMany.mockResolvedValue([])
-    const req = new Request('http://localhost/api/labtests')
+    const req = new NextRequest('http://localhost/api/labtests')
     const res = await getLabTests(req)
     const body = await res.json()
     const data = body.data ?? body
@@ -337,7 +337,7 @@ describe('GET /api/labtests', () => {
 
   test('возвращает 500 при ошибке БД', async () => {
     prismaMock.labTest.findMany.mockRejectedValue(new Error('DB error'))
-    const req = new Request('http://localhost/api/labtests')
+    const req = new NextRequest('http://localhost/api/labtests')
     const res = await getLabTests(req)
     expect(res.status).toBe(500)
   })
@@ -349,8 +349,8 @@ describe('GET /api/labtests/[slug]', () => {
 
   test('возвращает анализ по slug', async () => {
     prismaMock.labTest.findUnique.mockResolvedValue(mockLabTest)
-    const req = new Request('http://localhost/api/labtests/gemoglobin')
-    const res = await getLabTestBySlug(req, { params: Promise.resolve({ slug: 'gemoglobin' }) })
+    const req = new NextRequest('http://localhost/api/labtests/gemoglobin')
+    const res = await getLabTestBySlug(req, { params: { slug: 'gemoglobin' } } as any)
     expect(res.status).toBe(200)
     const body = await res.json()
     const data = body.data ?? body
@@ -359,8 +359,8 @@ describe('GET /api/labtests/[slug]', () => {
 
   test('возвращает 404 для несуществующего slug', async () => {
     prismaMock.labTest.findUnique.mockResolvedValue(null)
-    const req = new Request('http://localhost/api/labtests/unknown')
-    const res = await getLabTestBySlug(req, { params: Promise.resolve({ slug: 'unknown' }) })
+    const req = new NextRequest('http://localhost/api/labtests/unknown')
+    const res = await getLabTestBySlug(req, { params: { slug: 'unknown' } } as any)
     expect(res.status).toBe(404)
   })
 })
@@ -374,8 +374,7 @@ describe('GET /api/tags', () => {
       { id: 't1', title: 'гипертония', slug: 'gipertoniya' },
       { id: 't2', title: 'диабет', slug: 'diabet' },
     ])
-    const req = new Request('http://localhost/api/tags')
-    const res = await getTags(req)
+    const res = await getTags()
     expect(res.status).toBe(200)
     const body = await res.json()
     const data = body.data ?? body
@@ -389,7 +388,7 @@ describe('POST /api/tags', () => {
 
   test('создаёт новый тег', async () => {
     prismaMock.tag.upsert.mockResolvedValue({ id: 't3', title: 'инсульт', slug: 'insult' })
-    const req = new Request('http://localhost/api/tags', {
+    const req = new NextRequest('http://localhost/api/tags', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: 'инсульт' }),
@@ -402,7 +401,7 @@ describe('POST /api/tags', () => {
   })
 
   test('возвращает 400 без title', async () => {
-    const req = new Request('http://localhost/api/tags', {
+    const req = new NextRequest('http://localhost/api/tags', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({}),

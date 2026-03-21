@@ -33,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       select: { slug: true, updatedAt: true },
       orderBy: { publishedAt: 'desc' },
     })
-    articles = rows.map(a => ({
+    articles = rows.map((a: (typeof rows)[number]) => ({
       url: `${BASE_URL}/article/${a.slug}`,
       lastModified: a.updatedAt,
       changeFrequency: 'monthly' as const,
@@ -47,7 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const rows = await prisma.category.findMany({
       select: { slug: true },
     })
-    categories = rows.map(cat => ({
+    categories = rows.map((cat: (typeof rows)[number]) => ({
       url: `${BASE_URL}/category/${cat.slug}`,
       lastModified: now,
       changeFrequency: 'weekly' as const,
@@ -61,7 +61,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const rows = await prisma.symptom.findMany({
       select: { slug: true, createdAt: true },
     })
-    symptoms = rows.map(s => ({
+    symptoms = rows.map((s: (typeof rows)[number]) => ({
       url: `${BASE_URL}/symptoms/${s.slug}`,
       lastModified: s.createdAt,
       changeFrequency: 'monthly' as const,
@@ -75,7 +75,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const rows = await prisma.labTest.findMany({
       select: { slug: true, createdAt: true },
     })
-    labTests = rows.map(t => ({
+    labTests = rows.map((t: (typeof rows)[number]) => ({
       url: `${BASE_URL}/tests/${t.slug}`,
       lastModified: t.createdAt,
       changeFrequency: 'monthly' as const,
