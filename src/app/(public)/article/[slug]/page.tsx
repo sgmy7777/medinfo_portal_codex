@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import Breadcrumbs from '@/components/public/Breadcrumbs'
 import { prisma } from '@/lib/prisma'
 import ViewCounter from '@/components/public/ViewCounter'
 
@@ -220,14 +219,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
       <div className="ap">
         
-        <div className="ap-crumbs">
-          <div className="ap-crumbs-in">
-            <Breadcrumbs items={[
-              { label: article.category.title, href: `/category/${article.category.slug}` },
-              { label: article.title },
-            ]} />
-          </div>
-        </div>
         <div className="ap-body">
           <div className="ap-body-in">
             <article>
