@@ -33,6 +33,12 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: 'ЗдравИнфо — Медицинский портал',
   description: 'Медицинский информационный портал. Статьи проверены практикующими врачами.',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/favicon.svg',
+  },
 }
 
 const themeScript = `(function(){try{var t=localStorage.getItem('zi-theme');if(t==='dark'){document.documentElement.setAttribute('data-theme','dark')}else if(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches){document.documentElement.setAttribute('data-theme','dark')}}catch(e){}})()`
