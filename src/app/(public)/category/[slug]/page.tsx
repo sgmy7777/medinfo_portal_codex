@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import Breadcrumbs from '@/components/public/Breadcrumbs'
 import { prisma } from '@/lib/prisma'
 
 const catIcons: Record<string, string> = {
@@ -224,13 +223,6 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
 
         {/* HEADER */}
         
-
-        {/* BREADCRUMBS */}
-        <div style={{ background: 'var(--paper-d)', borderBottom: '1px solid var(--rule)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto', padding: '10px 24px' }}>
-            <Breadcrumbs items={[{ label: category.title }]} />
-          </div>
-        </div>
 
         {/* HERO BANNER */}
         <div className="cp-hero">

@@ -311,18 +311,7 @@ export default async function SymptomPage({ params }: Props) {
       
 
 
-      <div className="sp-bread">
-        <div className="sp-bread-in">
-          <Link href="/">Главная</Link>
-          <span className="sp-bread-sep">›</span>
-          <Link href="/symptoms">Симптомы</Link>
-          <span className="sp-bread-sep">›</span>
-          <span>{symptom.title}</span>
-        </div>
-      </div>
-
-      <div style={{ background: 'white' }}>
-        <div className="sp-crumbs">
+      <div className="sp-crumbs">
           <div className="sp-crumbs-in">
             <Breadcrumbs items={[
               { label: 'Симптомы', href: '/symptoms' },
@@ -386,7 +375,6 @@ export default async function SymptomPage({ params }: Props) {
             </div>
           </div>
         </div>
-      </div>
 
       <div className="sp-body">
         <div className="sp-wrap">
