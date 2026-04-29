@@ -48,6 +48,15 @@ const catIcons: Record<string, string> = {
   'pulmonologiya': '🫁', 'revmatologiya': '💊', 'nefrologiya': '🫘',
 }
 
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+  const { page: pageStr } = await searchParams
+  const page = Math.max(1, parseInt(pageStr ?? '1') || 1)
+  return {
+    alternates: { canonical: 'https://zdravinfa.ru/' },
+    ...(page > 1 && { robots: { index: false, follow: true } }),
+  }
+}
+
 export default async function HomePage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   const { page: pageStr } = await searchParams
   const page = Math.max(1, parseInt(pageStr ?? '1') || 1)
