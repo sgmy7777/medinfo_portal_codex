@@ -51,9 +51,14 @@ const catIcons: Record<string, string> = {
 export async function generateMetadata({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   const { page: pageStr } = await searchParams
   const page = Math.max(1, parseInt(pageStr ?? '1') || 1)
+  if (page <= 1) {
+    return {
+      alternates: { canonical: 'https://zdravinfa.ru/' },
+    }
+  }
   return {
     alternates: { canonical: 'https://zdravinfa.ru/' },
-    ...(page > 1 && { robots: { index: false, follow: true } }),
+    robots: { index: false, follow: true },
   }
 }
 
