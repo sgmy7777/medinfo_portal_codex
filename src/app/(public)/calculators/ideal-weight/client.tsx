@@ -205,10 +205,6 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
           )}
 
 
-          <div className="iw-ad-box">
-            <div className="iw-ad-label">Реклама</div>
-            <div id="yandex_rtb_calc_ideal_weight_1" className="iw-ad-slot">Реклама РСЯ — блок 1</div>
-          </div>
 
           <div className="iw-info">
             <div className="iw-info-ttl">Почему формулы дают разные результаты?</div>
@@ -217,20 +213,10 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
             <p className="iw-info-p" style={{ marginBottom: 0 }}>Используйте результат как отправную точку для разговора с врачом или диетологом, а не как жёсткую цель.</p>
           </div>
 
-          <div className="iw-ad-box">
-            <div className="iw-ad-label">Реклама</div>
-            <div id="yandex_rtb_calc_ideal_weight_2" className="iw-ad-slot">Реклама РСЯ — блок 2</div>
-          </div>
 
         </div>
       </div>
 
-      <div className="iw-ad-under">
-        <div className="iw-ad-under-in">
-          <div className="iw-ad-label">Реклама</div>
-          <div id="yandex_rtb_calc_ideal_weight_under" className="iw-ad-under-slot">Реклама под калькулятором (горизонтальный баннер РСЯ 728×90)</div>
-        </div>
-      </div>
 
       
     </>

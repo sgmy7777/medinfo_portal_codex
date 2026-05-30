@@ -196,12 +196,6 @@ export default async function TestsPage() {
                 </div>
 
                 {/* Рекламный баннер после каждой второй секции */}
-                {(idx === 1 || idx === 3) && (
-                  <div className="ts-ad-box">
-                    <div className="ts-ad-label">Реклама</div>
-                    <div id={`yandex_rtb_tests_list_${idx}`} className="ts-ad-slot">Реклама РСЯ — горизонтальный баннер</div>
-                  </div>
-                )}
               </section>
             )
           })}
@@ -209,12 +203,6 @@ export default async function TestsPage() {
         </div>
       </div>
 
-      <div className="ts-ad-under">
-        <div className="ts-ad-under-in">
-          <div className="ts-ad-label">Реклама</div>
-          <div id="yandex_rtb_tests_hub_under" className="ts-ad-under-slot">Реклама РСЯ — горизонтальный баннер 728×90</div>
-        </div>
-      </div>
 
     </>
   )

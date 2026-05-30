@@ -736,25 +736,11 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
           )}
 
 
-          <div className="lc-ad-box">
-            <div className="lc-ad-label">Реклама</div>
-            <div id="yandex_rtb_calc_lab_1" className="lc-ad-slot">Реклама РСЯ — блок 1</div>
-          </div>
 
-          <div className="lc-ad-box">
-            <div className="lc-ad-label">Реклама</div>
-            <div id="yandex_rtb_calc_lab_2" className="lc-ad-slot">Реклама РСЯ — блок 2</div>
-          </div>
 
         </div>
       </div>
 
-      <div className="lc-ad-under">
-        <div className="lc-ad-under-in">
-          <div className="lc-ad-label">Реклама</div>
-          <div id="yandex_rtb_calc_lab_under" className="lc-ad-under-slot">Реклама под калькулятором (горизонтальный баннер РСЯ 728×90)</div>
-        </div>
-      </div>
 
       
     </>

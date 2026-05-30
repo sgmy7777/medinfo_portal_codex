@@ -263,10 +263,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
               <div className="ap-content" dangerouslySetInnerHTML={{ __html: article.content }} />
 
-              <div className="ap-in-content-ad">
-                <div className="ap-ad-label">Реклама</div>
-                <div id="yandex_rtb_incontent" className="ap-ad-slot" style={{ minHeight: "200px" }}>Реклама внутри статьи (РСЯ)</div>
-              </div>
+              {/* <div className="ap-in-content-ad">
+              </div> */}
 
               {article.tags?.length > 0 && (
                 <div className="ap-tags">
@@ -282,10 +280,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             </article>
 
             <aside className="ap-side">
-              <div className="ap-ad-box">
-                <div className="ap-ad-label">Реклама</div>
-                <div id="yandex_rtb_sidebar_1" className="ap-ad-slot">Реклама РСЯ — блок 1</div>
-              </div>
 
               <div className="ap-note-box">
                 <div className="ap-note-ttl">Важно знать</div>
@@ -294,15 +288,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 </div>
               </div>
 
-              <div className="ap-ad-box">
-                <div className="ap-ad-label">Реклама</div>
-                <div id="yandex_rtb_sidebar_2" className="ap-ad-slot">Реклама РСЯ — блок 2</div>
-              </div>
 
-              <div className="ap-ad-box">
-                <div className="ap-ad-label">Реклама</div>
-                <div id="yandex_rtb_sidebar_3" className="ap-ad-slot">Реклама РСЯ — блок 3</div>
-              </div>
             </aside>
           </div>
         </div>
@@ -330,8 +316,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
         <div className="ap-under-ad">
           <div className="ap-under-ad-in">
-            <div className="ap-ad-label">Реклама</div>
-            <div id="yandex_rtb_under_article" className="ap-under-ad-slot">Реклама под статьёй (горизонтальный баннер РСЯ 728×90)</div>
           </div>
         </div>
 

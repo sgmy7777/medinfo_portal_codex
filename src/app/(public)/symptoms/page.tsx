@@ -202,18 +202,14 @@ export default async function SymptomsPage() {
                   })}
                 </div>
                 </section>
-                {idx === 1 && (
+                {/* {idx === 1 && (
                   <div className="sy-ad">
-                    <div className="sy-ad-label">Реклама</div>
-                    <div id="yandex_rtb_symptoms_hub_1" className="sy-ad-slot">Реклама РСЯ — 728×90</div>
                   </div>
                 )}
                 {idx === 3 && (
                   <div className="sy-ad">
-                    <div className="sy-ad-label">Реклама</div>
-                    <div id="yandex_rtb_symptoms_hub_2" className="sy-ad-slot">Реклама РСЯ — 728×90</div>
                   </div>
-                )}
+                )} */}
               </React.Fragment>
             )
           })}
@@ -221,12 +217,6 @@ export default async function SymptomsPage() {
         </div>
       </div>
 
-      <div className="sy-ad-under">
-        <div className="sy-ad-under-in">
-          <div className="sy-ad-label">Реклама</div>
-          <div id="yandex_rtb_symptoms_hub_under" className="sy-ad-slot">Реклама РСЯ — горизонтальный баннер 728×90</div>
-        </div>
-      </div>
 
     </>
   )

@@ -245,10 +245,6 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
           )}
 
 
-          <div className="cl-ad-box">
-            <div className="cl-ad-label">Реклама</div>
-            <div id="yandex_rtb_calc_calories_1" className="cl-ad-slot">Реклама РСЯ — блок 1</div>
-          </div>
 
           <div className="cl-info">
             <div className="cl-info-ttl">О формуле Миффлина–Сан-Жеора</div>
@@ -257,20 +253,10 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
             <p className="cl-info-p" style={{ marginBottom: 0 }}>Безопасный дефицит для похудения — 300–500 ккал от TDEE. Не рекомендуется снижать потребление ниже 1200 ккал (женщины) и 1500 ккал (мужчины) без наблюдения врача.</p>
           </div>
 
-          <div className="cl-ad-box">
-            <div className="cl-ad-label">Реклама</div>
-            <div id="yandex_rtb_calc_calories_2" className="cl-ad-slot">Реклама РСЯ — блок 2</div>
-          </div>
 
         </div>
       </div>
 
-      <div className="cl-ad-under">
-        <div className="cl-ad-under-in">
-          <div className="cl-ad-label">Реклама</div>
-          <div id="yandex_rtb_calc_calories_under" className="cl-ad-under-slot">Реклама под калькулятором (горизонтальный баннер РСЯ 728×90)</div>
-        </div>
-      </div>
 
       
     </>

@@ -315,10 +315,6 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
 
               {/* SIDEBAR */}
               <aside className="cp-side">
-                <div className="cp-ad-box">
-                  <div className="cp-ad-label">Реклама</div>
-                  <div id="yandex_rtb_cat_sidebar" className="cp-ad-slot">Реклама РСЯ</div>
-                </div>
 
                 <div className="cp-side-box">
                   <div className="cp-side-ttl">Другие разделы</div>
