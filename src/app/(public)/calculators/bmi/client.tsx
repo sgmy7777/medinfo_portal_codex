@@ -290,10 +290,6 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
             </div>
           )}
 
-          <div className="bm-ad-box">
-            <div className="bm-ad-label">Реклама</div>
-            <div id="yandex_rtb_calc_bmi_1" className="bm-ad-slot">Реклама РСЯ — блок 1</div>
-          </div>
 
           <div className="bm-info">
             <div className="bm-info-ttl">Что такое ИМТ?</div>
@@ -302,20 +298,10 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
             <p className="bm-info-p" style={{ marginBottom: 0 }}>Для более точной оценки состава тела используйте дополнительные методы: измерение окружности талии, биоимпедансный анализ или консультацию с врачом.</p>
           </div>
 
-          <div style={{ marginTop: 24 }} className="bm-ad-box">
-            <div className="bm-ad-label">Реклама</div>
-            <div id="yandex_rtb_calc_bmi_2" className="bm-ad-slot">Реклама РСЯ — блок 2</div>
-          </div>
 
         </div>
       </div>
 
-      <div className="bm-ad-under">
-        <div className="bm-ad-under-in">
-          <div className="bm-ad-label">Реклама</div>
-          <div id="yandex_rtb_calc_bmi_under" className="bm-ad-under-slot">Реклама под калькулятором (горизонтальный баннер РСЯ 728×90)</div>
-        </div>
-      </div>
 
       
     </>

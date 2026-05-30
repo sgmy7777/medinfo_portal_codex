@@ -254,10 +254,6 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
           )}
 
 
-          <div className="hr-ad-box">
-            <div className="hr-ad-label">Реклама</div>
-            <div id="yandex_rtb_calc_heart_rate_1" className="hr-ad-slot">Реклама РСЯ — блок 1</div>
-          </div>
 
           <div className="hr-info">
             <div className="hr-info-ttl">Как использовать пульсовые зоны?</div>
@@ -266,20 +262,10 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
             <p className="hr-info-p" style={{ marginBottom: 0 }}>Зоны 4 и 5 — интервальные тренировки. Они эффективны для повышения результатов, но требуют достаточного восстановления. Людям с заболеваниями сердца перед началом тренировок в высоких зонах необходима консультация кардиолога.</p>
           </div>
 
-          <div className="hr-ad-box">
-            <div className="hr-ad-label">Реклама</div>
-            <div id="yandex_rtb_calc_heart_rate_2" className="hr-ad-slot">Реклама РСЯ — блок 2</div>
-          </div>
 
         </div>
       </div>
 
-      <div className="hr-ad-under">
-        <div className="hr-ad-under-in">
-          <div className="hr-ad-label">Реклама</div>
-          <div id="yandex_rtb_calc_heart_rate_under" className="hr-ad-under-slot">Реклама под калькулятором (горизонтальный баннер РСЯ 728×90)</div>
-        </div>
-      </div>
 
       
     </>

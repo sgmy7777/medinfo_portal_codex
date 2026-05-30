@@ -708,13 +708,6 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
 
                 <button className="dc-btn" onClick={decode}>Расшифровать →</button>
                 {error && <div className="dc-error">{error}</div>}
-
-                {results.length > 0 && (
-                  <div className="dc-ad-box" style={{ marginTop: 20 }}>
-                    <div className="dc-ad-label">Реклама</div>
-                    <div id="yandex_rtb_decode_sidebar" className="dc-ad-slot">Реклама РСЯ</div>
-                  </div>
-                )}
               </div>
             </div>
 
@@ -739,19 +732,9 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
             </div>
           </div>
 
-          <div className="dc-ad-box">
-            <div className="dc-ad-label">Реклама</div>
-            <div id="yandex_rtb_decode_1" className="dc-ad-slot">Реклама РСЯ — горизонтальный баннер</div>
-          </div>
         </div>
       </div>
 
-      <div className="dc-ad-under">
-        <div className="dc-ad-under-in">
-          <div className="dc-ad-label">Реклама</div>
-          <div id="yandex_rtb_decode_under" className="dc-ad-under-slot">Реклама под расшифровщиком (728×90)</div>
-        </div>
-      </div>
 
       
     </>

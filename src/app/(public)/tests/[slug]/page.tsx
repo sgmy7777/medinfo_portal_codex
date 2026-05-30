@@ -330,10 +330,6 @@ export default async function TestPage({ params }: Props) {
 
           {/* Sidebar */}
           <div className="tt-side">
-            <div className="tt-ad-box">
-              <div className="tt-ad-label">Реклама</div>
-              <div id="yandex_rtb_test_sidebar_1" className="tt-ad-slot">Реклама РСЯ</div>
-            </div>
             {sameCategory.length > 0 && (
               <div className="tt-side-box">
                 <div className="tt-side-ttl">Другие анализы</div>
@@ -379,10 +375,8 @@ export default async function TestPage({ params }: Props) {
                   </Link>
                 ))}
               </div>
-              <div className="tt-ad-incontent">
-                <div className="tt-ad-label">Реклама</div>
-                <div id="yandex_rtb_test_incontent" className="tt-ad-incontent-slot">Реклама внутри страницы анализа (РСЯ)</div>
-              </div>
+              {/* <div className="tt-ad-incontent">
+              </div> */}
             </>
           ) : (
             <div className="tt-empty">Статьи по этому анализу скоро появятся</div>
@@ -390,12 +384,6 @@ export default async function TestPage({ params }: Props) {
         </div>
       </div>
 
-      <div className="tt-ad-under">
-        <div className="tt-ad-under-in">
-          <div className="tt-ad-label">Реклама</div>
-          <div id="yandex_rtb_test_under" className="tt-ad-under-slot">Реклама под страницей анализа (горизонтальный баннер РСЯ 728×90)</div>
-        </div>
-      </div>
 
       
     </>

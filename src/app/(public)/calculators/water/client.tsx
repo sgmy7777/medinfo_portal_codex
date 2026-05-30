@@ -250,10 +250,6 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
             </div>
           )}
 
-          <div className="wt-ad-box">
-            <div className="wt-ad-label">Реклама</div>
-            <div id="yandex_rtb_calc_water_1" className="wt-ad-slot">Реклама РСЯ — блок 1</div>
-          </div>
 
           <div className="wt-tips">
             <div className="wt-tips-ttl">Советы по гидратации</div>
@@ -271,20 +267,10 @@ body { font-family: 'Golos Text', sans-serif; background: var(--paper); color: v
             ))}
           </div>
 
-          <div className="wt-ad-box">
-            <div className="wt-ad-label">Реклама</div>
-            <div id="yandex_rtb_calc_water_2" className="wt-ad-slot">Реклама РСЯ — блок 2</div>
-          </div>
 
         </div>
       </div>
 
-      <div className="wt-ad-under">
-        <div className="wt-ad-under-in">
-          <div className="wt-ad-label">Реклама</div>
-          <div id="yandex_rtb_calc_water_under" className="wt-ad-under-slot">Реклама под калькулятором (горизонтальный баннер РСЯ 728×90)</div>
-        </div>
-      </div>
 
       
     </>

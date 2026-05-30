@@ -363,15 +363,7 @@ export default async function SymptomPage({ params }: Props) {
                 </ul>
               </div>
 
-              <div className="sp-ad-box">
-                <div className="sp-ad-label">Реклама</div>
-                <div id="yandex_rtb_symptom_sidebar_1" className="sp-ad-slot">Реклама РСЯ — блок 1</div>
-              </div>
 
-              <div className="sp-ad-box">
-                <div className="sp-ad-label">Реклама</div>
-                <div id="yandex_rtb_symptom_sidebar_2" className="sp-ad-slot">Реклама РСЯ — блок 2</div>
-              </div>
             </div>
           </div>
         </div>
@@ -421,10 +413,8 @@ export default async function SymptomPage({ params }: Props) {
                 ))}
               </div>
 
-              <div className="sp-ad-incontent">
-                <div className="sp-ad-label">Реклама</div>
-                <div id="yandex_rtb_symptom_incontent" className="sp-ad-incontent-slot">Реклама внутри страницы симптома (РСЯ)</div>
-              </div>
+              {/* <div className="sp-ad-incontent">
+              </div> */}
             </>
           ) : (
             <div className="sp-empty">Статьи по этому симптому скоро появятся</div>
@@ -432,12 +422,6 @@ export default async function SymptomPage({ params }: Props) {
         </div>
       </div>
 
-      <div className="sp-ad-under">
-        <div className="sp-ad-under-in">
-          <div className="sp-ad-label">Реклама</div>
-          <div id="yandex_rtb_symptom_under" className="sp-ad-under-slot">Реклама под страницей симптома (горизонтальный баннер РСЯ 728×90)</div>
-        </div>
-      </div>
 
       
     </>
